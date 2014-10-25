@@ -34,7 +34,7 @@ public class CadastroDiretorForm extends javax.swing.JFrame {
         txtEmail = new javax.swing.JTextField();
         lblSenha = new javax.swing.JLabel();
         txtSenha = new javax.swing.JTextField();
-        btnSalvar = new javax.swing.JButton();
+        btnCadastrar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Cadastro Diretor");
@@ -88,7 +88,8 @@ public class CadastroDiretorForm extends javax.swing.JFrame {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        btnSalvar.setText("Salvar");
+        btnCadastrar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/edu/ifnmg/alvespereira/segurancadados/icones/user_add.png"))); // NOI18N
+        btnCadastrar.setText("Cadastrar");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -99,8 +100,8 @@ public class CadastroDiretorForm extends javax.swing.JFrame {
                 .addComponent(jPanelDados, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addContainerGap())
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(172, Short.MAX_VALUE)
-                .addComponent(btnSalvar)
+                .addContainerGap(154, Short.MAX_VALUE)
+                .addComponent(btnCadastrar)
                 .addGap(165, 165, 165))
         );
         layout.setVerticalGroup(
@@ -109,7 +110,7 @@ public class CadastroDiretorForm extends javax.swing.JFrame {
                 .addContainerGap()
                 .addComponent(jPanelDados, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(btnSalvar)
+                .addComponent(btnCadastrar)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -152,7 +153,7 @@ public class CadastroDiretorForm extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btnSalvar;
+    private javax.swing.JButton btnCadastrar;
     private javax.swing.JPanel jPanelDados;
     private javax.swing.JLabel lblEmail;
     private javax.swing.JLabel lblNome;
