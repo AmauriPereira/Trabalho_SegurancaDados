@@ -9,8 +9,8 @@ import java.sql.SQLException;
 public class SegurancaDadosDAO {
 
     private static final String SQL_INSERT_DEP = "INSERT INTO DEP(NOME)VALUES (?)";
-    private static final String SQL_INSERT_USER = "INSERT INTO USER( NOME, TIPO, SENHA, EMAIL, CODDEP )VALUES (?,?,?,?,?)";
-    private static final String SQL_SELECT_DIRETOR = "SELECT  NOME, TIPO, SENHA, EMAIL, CODDEP FROM USER WHERE TIPO = ?";
+    private static final String SQL_INSERT_USER = "INSERT INTO USER( NOME, TIPO, SENHA, EMAIL )VALUES (?,?,?,?)";
+    private static final String SQL_SELECT_DIRETOR = "SELECT  NOME, TIPO, SENHA, EMAIL FROM USER WHERE TIPO LIKE ?";
 
     public static void criaDEP() throws SQLException {
         Connection conexao = null;
@@ -40,7 +40,7 @@ public class SegurancaDadosDAO {
         }
     }
 
-    public static void criaUSER() throws SQLException {
+    public void criaUSER(Usuario user) throws SQLException {
         Connection conexao = null;
         PreparedStatement comando = null;
 
@@ -48,11 +48,10 @@ public class SegurancaDadosDAO {
 
             conexao = BancoDadosUtil.getConnection();
             comando = conexao.prepareStatement(SQL_INSERT_USER);
-            comando.setString(1, "thales");
-            comando.setString(2, "Diretor");
-            comando.setString(3, "123");
-            comando.setString(4, "thales@gmail.com");
-            comando.setInt(5, 2);
+            comando.setString(1, user.getNome());
+            comando.setString(2, user.getTipo());
+            comando.setString(3, user.getSenha());
+            comando.setString(4, user.getEmail());
 
             comando.execute();
             conexao.commit();
@@ -73,11 +72,11 @@ public class SegurancaDadosDAO {
         }
     }
 
-    public static Usuario selectDiretor() throws SQLException {
+    public Usuario selectDiretor() throws SQLException {
         Connection conexao = null;
         PreparedStatement comando = null;
         ResultSet resultado = null;
-        Usuario user = new Usuario();
+        Usuario user = null;
 
         try {
 
@@ -88,12 +87,12 @@ public class SegurancaDadosDAO {
             resultado = comando.executeQuery();
 
             if (resultado.next()) {
-
+                user = new Usuario();
                 user.setNome(resultado.getString("NOME"));
                 user.setTipo(resultado.getString("TIPO"));
                 user.setSenha(resultado.getString("SENHA"));
                 user.setEmail(resultado.getString("EMAIL"));
-                user.setDepartamento(resultado.getString("CODDEP"));
+                
 
             }
 

@@ -27,49 +27,43 @@
       <Properties>
         <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
           <Border info="org.netbeans.modules.form.compat2.border.TitledBorderInfo">
-            <TitledBorder title="Cadastro de Diretor">
-              <Font PropertyName="font" name="Tahoma" size="12" style="0"/>
-              <Color PropertyName="color" blue="ff" green="33" red="33" type="rgb"/>
+            <TitledBorder position="3" title="Cadastro de Diretor">
+              <Font PropertyName="font" name="Tahoma" size="12" style="1"/>
+              <Color PropertyName="color" blue="66" green="66" red="0" type="rgb"/>
             </TitledBorder>
           </Border>
         </Property>
       </Properties>
       <Constraints>
         <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignGridBagLayout" value="org.netbeans.modules.form.compat2.layouts.DesignGridBagLayout$GridBagConstraintsDescription">
-          <GridBagConstraints gridX="0" gridY="0" gridWidth="1" gridHeight="1" fill="0" ipadX="214" ipadY="19" insetsTop="11" insetsLeft="10" insetsBottom="11" insetsRight="10" anchor="18" weightX="0.0" weightY="0.0"/>
+          <GridBagConstraints gridX="0" gridY="0" gridWidth="1" gridHeight="1" fill="0" ipadX="0" ipadY="19" insetsTop="20" insetsLeft="20" insetsBottom="23" insetsRight="19" anchor="18" weightX="0.0" weightY="0.0"/>
         </Constraint>
       </Constraints>
 
       <Layout>
         <DimensionLayout dim="0">
           <Group type="103" groupAlignment="0" attributes="0">
-              <Group type="102" attributes="0">
+              <Group type="102" alignment="0" attributes="0">
                   <EmptySpace max="-2" attributes="0"/>
-                  <Group type="103" groupAlignment="0" attributes="0">
-                      <Group type="102" alignment="1" attributes="0">
-                          <Group type="103" groupAlignment="0" attributes="0">
-                              <Group type="102" attributes="0">
-                                  <Component id="lblEmail" min="-2" max="-2" attributes="0"/>
-                                  <EmptySpace min="0" pref="214" max="32767" attributes="0"/>
-                              </Group>
-                              <Component id="txtEmail" max="32767" attributes="0"/>
-                          </Group>
-                          <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                          <Group type="103" groupAlignment="0" attributes="0">
-                              <Component id="lblSenha" min="-2" max="-2" attributes="0"/>
-                              <Component id="txtSenha" min="-2" pref="112" max="-2" attributes="0"/>
-                          </Group>
-                      </Group>
+                  <Group type="103" groupAlignment="1" max="-2" attributes="0">
                       <Component id="txtNome" max="32767" attributes="0"/>
-                      <Group type="102" attributes="0">
-                          <Group type="103" groupAlignment="0" attributes="0">
-                              <Component id="lblNome" min="-2" max="-2" attributes="0"/>
-                              <Component id="btnCadastrar" alignment="0" min="-2" pref="111" max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="0" attributes="0">
+                          <Component id="lblNome" min="-2" max="-2" attributes="0"/>
+                          <Component id="btnCadastrar" min="-2" max="-2" attributes="0"/>
+                          <Group type="102" alignment="0" attributes="0">
+                              <Group type="103" groupAlignment="0" attributes="0">
+                                  <Component id="txtEmail" alignment="0" min="-2" pref="200" max="-2" attributes="0"/>
+                                  <Component id="lblEmail" alignment="0" min="-2" max="-2" attributes="0"/>
+                              </Group>
+                              <EmptySpace type="separate" max="-2" attributes="0"/>
+                              <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                                  <Component id="lblSenha" min="-2" max="-2" attributes="0"/>
+                                  <Component id="txtSenha" min="-2" pref="112" max="-2" attributes="0"/>
+                              </Group>
                           </Group>
-                          <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
                       </Group>
                   </Group>
-                  <EmptySpace max="-2" attributes="0"/>
+                  <EmptySpace max="32767" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
@@ -100,6 +94,9 @@
       <SubComponents>
         <Component class="javax.swing.JLabel" name="lblNome">
           <Properties>
+            <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+              <Color blue="66" green="66" red="0" type="rgb"/>
+            </Property>
             <Property name="text" type="java.lang.String" value="Nome:"/>
           </Properties>
         </Component>
@@ -107,6 +104,9 @@
         </Component>
         <Component class="javax.swing.JLabel" name="lblEmail">
           <Properties>
+            <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+              <Color blue="66" green="66" red="0" type="rgb"/>
+            </Property>
             <Property name="text" type="java.lang.String" value="E-mail:"/>
           </Properties>
         </Component>
@@ -114,6 +114,9 @@
         </Component>
         <Component class="javax.swing.JLabel" name="lblSenha">
           <Properties>
+            <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+              <Color blue="66" green="66" red="0" type="rgb"/>
+            </Property>
             <Property name="text" type="java.lang.String" value="Senha:"/>
           </Properties>
         </Component>
@@ -122,10 +125,13 @@
         <Component class="javax.swing.JButton" name="btnCadastrar">
           <Properties>
             <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-              <Image iconType="3" name="/br/edu/ifnmg/alvespereira/segurancadados/icones/user_add.png"/>
+              <Image iconType="3" name="/br/edu/ifnmg/alvespereira/segurancadados/icones/8441_32x32.png"/>
             </Property>
             <Property name="text" type="java.lang.String" value="Cadastrar"/>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnCadastrarActionPerformed"/>
+          </Events>
         </Component>
       </SubComponents>
     </Container>
