@@ -1,8 +1,4 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package br.edu.ifnmg.alvespereira.segurancadados.dados;
 
 import br.edu.ifnmg.alvespereira.segurancadados.entidades.Usuario;
@@ -18,7 +14,7 @@ import java.sql.SQLException;
  */
 public class SegurancaDadosDAO {
 
-    private static final String SQL_INSERT = "INSERT INTO USUARIO( SENHA,NOME )VALUES (?,?)";
+    private static final String SQL_INSERT = "INSERT INTO USER( SENHA,NOME )VALUES (?,?)";
 
     public void criaUsuario(Usuario usuario) throws SQLException {
         Connection conexao = null;
