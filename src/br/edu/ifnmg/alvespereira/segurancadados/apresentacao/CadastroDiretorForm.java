@@ -1,14 +1,11 @@
-
 package br.edu.ifnmg.alvespereira.segurancadados.apresentacao;
-
 
 public class CadastroDiretorForm extends javax.swing.JFrame {
 
- 
     public CadastroDiretorForm() {
         initComponents();
-    }
 
+    }
 
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -105,11 +102,12 @@ public class CadastroDiretorForm extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     public static void main(String args[]) {
-      
+
         java.awt.EventQueue.invokeLater(new Runnable() {
             @Override
             public void run() {
                 new CadastroDiretorForm().setVisible(true);
+
             }
         });
     }
