@@ -1,6 +1,4 @@
-
 package br.edu.ifnmg.alvespereira.segurancadados.entidades;
-
 
 public class Usuario {
 
@@ -8,7 +6,7 @@ public class Usuario {
     private String email;
     private String senha;
     private String tipo;
-    private Departamento departamento;
+    private String departamento;
 
     public String getNome() {
         return nome;
@@ -42,11 +40,11 @@ public class Usuario {
         this.tipo = tipo;
     }
 
-    public Departamento getDepartamento() {
+    public String getDepartamento() {
         return departamento;
     }
 
-    public void setDepartamento(Departamento departamento) {
+    public void setDepartamento(String departamento) {
         this.departamento = departamento;
     }
 
