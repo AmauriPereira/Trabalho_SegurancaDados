@@ -11,6 +11,7 @@ public class SegurancaDadosDAO {
     private static final String SQL_INSERT_DEP = "INSERT INTO DEP(NOME)VALUES (?)";
     private static final String SQL_INSERT_USER = "INSERT INTO USER( NOME, TIPO, SENHA, EMAIL )VALUES (?,?,?,?)";
     private static final String SQL_SELECT_DIRETOR = "SELECT  NOME, TIPO, SENHA, EMAIL FROM USER WHERE TIPO LIKE ?";
+    private static final String SQL_SELECT_LOGIN = "SELECT NOME, TIPO, SENHA, EMAIL, DEP FROM USER WHERE EMAIL LIKE ? AND SENHA LIKE ?";
 
     public static void criaDEP() throws SQLException {
         Connection conexao = null;
@@ -92,7 +93,6 @@ public class SegurancaDadosDAO {
                 user.setTipo(resultado.getString("TIPO"));
                 user.setSenha(resultado.getString("SENHA"));
                 user.setEmail(resultado.getString("EMAIL"));
-                
 
             }
 
