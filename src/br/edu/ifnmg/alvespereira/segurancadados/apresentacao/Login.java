@@ -2,7 +2,12 @@ package br.edu.ifnmg.alvespereira.segurancadados.apresentacao;
 
 import br.edu.ifnmg.alvespereira.segurancadados.dados.SegurancaDadosDAO;
 import br.edu.ifnmg.alvespereira.segurancadados.entidades.Usuario;
+import java.io.UnsupportedEncodingException;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 
 public class Login extends javax.swing.JFrame {
@@ -26,6 +31,23 @@ public class Login extends javax.swing.JFrame {
         SegurancaDadosDAO SDD = new SegurancaDadosDAO();
         String login = txtLogin.getText();
         String Senha = txtSenha.getText();
+
+        MessageDigest algorithm;
+        try {
+            algorithm = MessageDigest.getInstance("MD5");
+            byte messageDigest[] = algorithm.digest(Senha.getBytes("UTF-8"));
+
+            StringBuilder hexString = new StringBuilder();
+            for (byte b : messageDigest) {
+                hexString.append(String.format("%02X", 0xFF & b));
+            }
+            Senha = hexString.toString();
+
+        } catch (NoSuchAlgorithmException ex) {
+            Logger.getLogger(CadastroDiretorForm.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (UnsupportedEncodingException ex) {
+            Logger.getLogger(CadastroDiretorForm.class.getName()).log(Level.SEVERE, null, ex);
+        }
 
         Usuario user = SDD.selectLogin(login, Senha);
         if (user == null) {
@@ -57,6 +79,11 @@ public class Login extends javax.swing.JFrame {
 
         jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/edu/ifnmg/alvespereira/segurancadados/icones/8441_32x32.png"))); // NOI18N
         jButton1.setText("Acessar");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
 
         jButton2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/edu/ifnmg/alvespereira/segurancadados/icones/8443_32x32.png"))); // NOI18N
         jButton2.setText("Cancelar");
@@ -156,6 +183,14 @@ public class Login extends javax.swing.JFrame {
     private void jButton2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton2MouseClicked
         this.dispose();
     }//GEN-LAST:event_jButton2MouseClicked
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        try {
+            Logar();
+        } catch (SQLException ex) {
+            Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_jButton1ActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

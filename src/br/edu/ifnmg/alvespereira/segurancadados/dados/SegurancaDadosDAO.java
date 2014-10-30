@@ -11,7 +11,7 @@ public class SegurancaDadosDAO {
     private static final String SQL_INSERT_DEP = "INSERT INTO DEP(NOME)VALUES (?)";
     private static final String SQL_INSERT_USER = "INSERT INTO USER( NOME, TIPO, SENHA, EMAIL )VALUES (?,?,?,?)";
     private static final String SQL_SELECT_DIRETOR = "SELECT  NOME, TIPO, SENHA, EMAIL FROM USER WHERE TIPO LIKE ?";
-    private static final String SQL_SELECT_LOGIN = "SELECT NOME, TIPO, SENHA, EMAIL, DEP FROM USER WHERE EMAIL LIKE ? AND SENHA LIKE ?";
+    private static final String SQL_SELECT_LOGIN = "SELECT NOME, TIPO, SENHA, EMAIL FROM USER WHERE EMAIL LIKE ? AND SENHA LIKE ?";
 
     public static void criaDEP() throws SQLException {
         Connection conexao = null;
@@ -115,7 +115,7 @@ public class SegurancaDadosDAO {
         return user;
     }
 
-    public Usuario selectLogin(String Senha, String login) throws SQLException {
+    public Usuario selectLogin(String login, String Senha) throws SQLException {
         Connection conexao = null;
         PreparedStatement comando = null;
         ResultSet resultado = null;
@@ -133,11 +133,12 @@ public class SegurancaDadosDAO {
 
             if (resultado.next()) {
                 user = new Usuario();
+                
                 user.setNome(resultado.getString("NOME"));
                 user.setTipo(resultado.getString("TIPO"));
                 user.setSenha(resultado.getString("SENHA"));
                 user.setEmail(resultado.getString("EMAIL"));
-                user.setDepartamento(resultado.getString("DEP"));
+                //user.setDepartamento(resultado.getString("DEP"));
 
             }
 

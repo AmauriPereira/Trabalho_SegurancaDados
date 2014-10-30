@@ -3,6 +3,9 @@ package br.edu.ifnmg.alvespereira.segurancadados.apresentacao;
 import br.edu.ifnmg.alvespereira.segurancadados.dados.SegurancaDadosDAO;
 import br.edu.ifnmg.alvespereira.segurancadados.entidades.Usuario;
 import br.edu.ifnmg.alvespereira.segurancadados.negocio.UsuarioBO;
+import java.io.UnsupportedEncodingException;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -109,18 +112,40 @@ public class CadastroDiretorForm extends javax.swing.JFrame {
     private void btnCadastrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCadastrarActionPerformed
         Usuario user = new Usuario();
 
-        user.setNome(txtNome.getText());
-        user.setEmail(txtEmail.getText());
-        user.setSenha(txtSenha.getText());
+        String Nome, Email, Senha;
+        Nome = (txtNome.getText());
+        Email = (txtEmail.getText());
+        Senha = (txtSenha.getText());
+
+        MessageDigest algorithm;
+        try {
+            algorithm = MessageDigest.getInstance("MD5");
+            byte messageDigest[] = algorithm.digest(Senha.getBytes("UTF-8"));
+
+            StringBuilder hexString = new StringBuilder();
+            for (byte b : messageDigest) {
+                hexString.append(String.format("%02X", 0xFF & b));
+            }
+            Senha = hexString.toString();
+
+        } catch (NoSuchAlgorithmException ex) {
+            Logger.getLogger(CadastroDiretorForm.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (UnsupportedEncodingException ex) {
+            Logger.getLogger(CadastroDiretorForm.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        user.setNome(Nome);
+        user.setEmail(Email);
+        user.setSenha(Senha);
         user.setTipo("Diretor");
-        
+
         UsuarioBO userBO = new UsuarioBO();
         try {
             userBO.criarUser(user);
         } catch (SQLException ex) {
             Logger.getLogger(CadastroDiretorForm.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
+
 
     }//GEN-LAST:event_btnCadastrarActionPerformed
 
