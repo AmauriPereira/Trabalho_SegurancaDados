@@ -13,13 +13,13 @@ import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 
 public class CadastroDiretorForm extends javax.swing.JFrame {
-
+    
     public CadastroDiretorForm() {
         initComponents();
         this.setLocationRelativeTo(null);
-
+        
     }
-
+    
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -111,44 +111,46 @@ public class CadastroDiretorForm extends javax.swing.JFrame {
 
     private void btnCadastrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCadastrarActionPerformed
         Usuario user = new Usuario();
-
+        
         String Nome, Email, Senha;
         Nome = (txtNome.getText());
         Email = (txtEmail.getText());
         Senha = (txtSenha.getText());
-
-        MessageDigest algorithm;
+        
+        MessageDigest cript;
         try {
-            algorithm = MessageDigest.getInstance("MD5");
-            byte messageDigest[] = algorithm.digest(Senha.getBytes("UTF-8"));
-
+            cript = MessageDigest.getInstance("MD5");
+            byte messageDigest[] = cript.digest(Senha.getBytes("UTF-8"));
+            
             StringBuilder hexString = new StringBuilder();
             for (byte b : messageDigest) {
                 hexString.append(String.format("%02X", 0xFF & b));
             }
             Senha = hexString.toString();
-
+            
         } catch (NoSuchAlgorithmException ex) {
             Logger.getLogger(CadastroDiretorForm.class.getName()).log(Level.SEVERE, null, ex);
         } catch (UnsupportedEncodingException ex) {
             Logger.getLogger(CadastroDiretorForm.class.getName()).log(Level.SEVERE, null, ex);
         }
-
+        
         user.setNome(Nome);
         user.setEmail(Email);
         user.setSenha(Senha);
         user.setTipo("Diretor");
-
+        user.setDepartamento("ABC");
+        
         UsuarioBO userBO = new UsuarioBO();
+        
         try {
-            userBO.criarUser(user);
+            userBO.criarDiretor(user);
         } catch (SQLException ex) {
             Logger.getLogger(CadastroDiretorForm.class.getName()).log(Level.SEVERE, null, ex);
         }
-
+        
 
     }//GEN-LAST:event_btnCadastrarActionPerformed
-
+    
     public static void main(String args[]) throws SQLException, ClassNotFoundException, InstantiationException, IllegalAccessException, UnsupportedLookAndFeelException {
         for (UIManager.LookAndFeelInfo info : UIManager.getInstalledLookAndFeels()) {
             if ("Nimbus".equals(info.getName())) {
@@ -157,33 +159,33 @@ public class CadastroDiretorForm extends javax.swing.JFrame {
             }
         }
         SegurancaDadosDAO SDD = new SegurancaDadosDAO();
-
+        
         Usuario user = SDD.selectDiretor();
-
+        
         if (user == null) {
             java.awt.EventQueue.invokeLater(new Runnable() {
-
+                
                 @Override
-
+                
                 public void run() {
                     new CadastroDiretorForm().setVisible(true);
-
+                    
                 }
-
+                
             });
         }
-
+        
         if (user != null) {
             java.awt.EventQueue.invokeLater(new Runnable() {
                 @Override
-
+                
                 public void run() {
                     new Login().setVisible(true);
-
+                    
                 }
-
+                
             });
-
+            
         }
     }
 

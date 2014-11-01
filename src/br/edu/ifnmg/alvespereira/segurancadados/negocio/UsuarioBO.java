@@ -7,7 +7,7 @@ import javax.swing.JOptionPane;
 
 public class UsuarioBO {
 
-    public void criarUser(Usuario user) throws SQLException {
+    public void criarDiretor(Usuario user) throws SQLException {
         SegurancaDadosDAO SDD = new SegurancaDadosDAO();
 
         Usuario userExistente = SDD.selectDiretor();
@@ -17,4 +17,5 @@ public class UsuarioBO {
             JOptionPane.showMessageDialog(null, "Diretor Cadastrado com Sucesso !!!", "Cadastro de Diretor", JOptionPane.INFORMATION_MESSAGE);
         }
     }
+
 }

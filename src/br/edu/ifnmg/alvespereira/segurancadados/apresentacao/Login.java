@@ -13,10 +13,12 @@ import javax.swing.JOptionPane;
 public class Login extends javax.swing.JFrame {
 
     private static TelaPrincipal TP;
+    private static Usuario userLogado;
 
     public static TelaPrincipal getInstancia() {
         if (TP == null) {
-            TP = new TelaPrincipal();
+            TP = new TelaPrincipal(userLogado);
+
         }
         return TP;
     }
@@ -24,6 +26,11 @@ public class Login extends javax.swing.JFrame {
     public Login() {
         initComponents();
         this.setLocationRelativeTo(null);
+
+    }
+
+    public Usuario Config(Usuario user) {
+        return user;
 
     }
 
@@ -49,13 +56,16 @@ public class Login extends javax.swing.JFrame {
             Logger.getLogger(CadastroDiretorForm.class.getName()).log(Level.SEVERE, null, ex);
         }
 
-        Usuario user = SDD.selectLogin(login, Senha);
-        if (user == null) {
+        userLogado = SDD.selectLogin(login, Senha);
+        if (userLogado == null) {
             JOptionPane.showMessageDialog(null, "login ou Senha Inválidos", "Erro", JOptionPane.ERROR_MESSAGE);
         } else {
+            Config(userLogado);
             getInstancia().setVisible(true);
+
             this.dispose();
         }
+
     }
 
     @SuppressWarnings("unchecked")
@@ -187,8 +197,10 @@ public class Login extends javax.swing.JFrame {
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         try {
             Logar();
+
         } catch (SQLException ex) {
-            Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(Login.class
+                    .getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_jButton1ActionPerformed
 
