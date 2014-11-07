@@ -12,6 +12,10 @@ import javax.swing.JOptionPane;
 
 public class Login extends javax.swing.JFrame {
 
+    //cria duas variaveis staticas(TP e userLogado)
+    //TP irá receber uma instacia da Tela Principal
+    //userLogado receberar os dados do usuario que realizou o login  e 
+    //sera passado como parametro para a tela principal
     private static TelaPrincipal TP;
     private static Usuario userLogado;
 
@@ -29,16 +33,17 @@ public class Login extends javax.swing.JFrame {
 
     }
 
-    public Usuario Config(Usuario user) {
-        return user;
-
-    }
-
+    //Metodo Logar - Verifica se os dados de login estão corretos
+    //Caso esteja libera o acesso ao sistema
+    //Caso não esteja, informa ao usuario que ou a senha ou email estão incorreto
     public void Logar() throws SQLException {
-        SegurancaDadosDAO SDD = new SegurancaDadosDAO();
+
+        //cria duas variaveis para receber os dados de login do usuario
         String login = txtLogin.getText();
         String Senha = txtSenha.getText();
 
+        //Verifica se a senha digitada estar cadastrada no banco de forma criptografada
+        //hash sha-256
         MessageDigest algorithm;
         try {
             algorithm = MessageDigest.getInstance("SHA-256");
@@ -56,11 +61,18 @@ public class Login extends javax.swing.JFrame {
             Logger.getLogger(CadastroDiretorForm.class.getName()).log(Level.SEVERE, null, ex);
         }
 
+        //A variavel userLogado recebe os dados do usuario que realizou o login
+        SegurancaDadosDAO SDD = new SegurancaDadosDAO();
         userLogado = SDD.selectLogin(login, Senha);
+
+        // se a variavel user logado for null é que não existe cadastro
+        // Para o login e sehna informados
+        // Senão for null a variavel userLogado libera o acesso a tela Principal
+        //O metodo GetInstacia - Instacia uma Tela Principal
         if (userLogado == null) {
             JOptionPane.showMessageDialog(null, "login ou Senha Inválidos", "Erro", JOptionPane.ERROR_MESSAGE);
         } else {
-            Config(userLogado);
+
             getInstancia().setVisible(true);
 
             this.dispose();
@@ -190,10 +202,12 @@ public class Login extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    //Cancela a execução do sistema e fecha a janela login
     private void jButton2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton2MouseClicked
         this.dispose();
     }//GEN-LAST:event_jButton2MouseClicked
 
+    //Chama o metodo logar
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         try {
             Logar();

@@ -7,6 +7,11 @@ import javax.swing.JOptionPane;
 
 public class DepartamentoBO {
 
+    
+    //ABAIXO UM METODO DE INSERT NO BANCO: VERIFICA SE EXISTE ALGUM DEP CADASTRADO COM NOME OU COD IGUAL 
+    // AO DIGITADO PELO USUARIO DO SOFTWARE.
+    
+   
     public void criarDep(Departamento DEP) throws SQLException {
         
         SegurancaDadosDAO SDD = new SegurancaDadosDAO();
