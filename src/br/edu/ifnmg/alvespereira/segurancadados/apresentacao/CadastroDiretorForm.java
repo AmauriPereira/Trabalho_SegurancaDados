@@ -119,7 +119,7 @@ public class CadastroDiretorForm extends javax.swing.JFrame {
         
         MessageDigest cript;
         try {
-            cript = MessageDigest.getInstance("MD5");
+            cript = MessageDigest.getInstance("SHA-256");
             byte messageDigest[] = cript.digest(Senha.getBytes("UTF-8"));
             
             StringBuilder hexString = new StringBuilder();
@@ -138,7 +138,7 @@ public class CadastroDiretorForm extends javax.swing.JFrame {
         user.setEmail(Email);
         user.setSenha(Senha);
         user.setTipo("Diretor");
-        user.setDepartamento("ABC");
+        //user.setDepartamento("ABC");
         
         UsuarioBO userBO = new UsuarioBO();
         

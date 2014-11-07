@@ -1,7 +1,7 @@
 
 CREATE TABLE Dep (
 Nome varchar(100),
-CodDep INTEGER PRIMARY KEY   NOT NULL GENERATED ALWAYS AS IDENTITY 
+CodDep VARCHAR(3) PRIMARY KEY 
 )
 
 
@@ -11,6 +11,6 @@ Email varchar(100),
 Senha varchar(100),
 Tipo varchar(100),
 CodUsuarios INTEGER PRIMARY KEY   NOT NULL GENERATED ALWAYS AS IDENTITY ,
-CodDep int,
+CodDep VARCHAR(3),
 FOREIGN KEY(CodDep) REFERENCES Dep (CodDep)
 )

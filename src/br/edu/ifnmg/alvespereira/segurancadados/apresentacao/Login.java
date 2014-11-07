@@ -41,7 +41,7 @@ public class Login extends javax.swing.JFrame {
 
         MessageDigest algorithm;
         try {
-            algorithm = MessageDigest.getInstance("MD5");
+            algorithm = MessageDigest.getInstance("SHA-256");
             byte messageDigest[] = algorithm.digest(Senha.getBytes("UTF-8"));
 
             StringBuilder hexString = new StringBuilder();
