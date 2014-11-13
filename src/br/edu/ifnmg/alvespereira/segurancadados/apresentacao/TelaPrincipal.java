@@ -1,7 +1,9 @@
 package br.edu.ifnmg.alvespereira.segurancadados.apresentacao;
 
 import static br.edu.ifnmg.alvespereira.segurancadados.apresentacao.Login.getInstancia;
+import br.edu.ifnmg.alvespereira.segurancadados.entidades.Departamento;
 import br.edu.ifnmg.alvespereira.segurancadados.entidades.Usuario;
+import br.edu.ifnmg.alvespereira.segurancadados.negocio.UsuarioBO;
 import java.awt.Dimension;
 import static java.awt.Frame.MAXIMIZED_BOTH;
 import java.awt.event.ActionEvent;
@@ -114,7 +116,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
         JDP1.setLayout(JDP1Layout);
         JDP1Layout.setHorizontalGroup(
             JDP1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
+            .addGap(0, 1082, Short.MAX_VALUE)
         );
         JDP1Layout.setVerticalGroup(
             JDP1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -299,8 +301,8 @@ public class TelaPrincipal extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(JDP1)
             .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(JDP1, javax.swing.GroupLayout.Alignment.TRAILING)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -353,61 +355,89 @@ public class TelaPrincipal extends javax.swing.JFrame {
     }//GEN-LAST:event_jMenuItem1ActionPerformed
 
     private void jMenuItem5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem5ActionPerformed
-        // Menu - Cadastro > ItemMenu - Gerente 
 
-        //Instancia uma tela de cadastro de Gerente se o usuario que esta logado for Um diretor;
-        //caso não seja um diretor é exibida uma mensagem ao usuario do sistema.
-        //Obs: Somente diretor pode cadastrar Gerente
-        String Gerente = "Gerente";
-        if (usuarioLogado.getTipo().equals("Diretor")) {
+// Menu - Cadastro > ItemMenu - Gerente 
+        UsuarioBO UserBO = new UsuarioBO();
+        Departamento DEPexistente = null;
 
-            CadastroUserForm CUF = null;
-
-            try {
-                //passa como parametro o tipo de cadastro que será realizado("Gerente")
-                CUF = new CadastroUserForm(Gerente, usuarioLogado);
-            } catch (SQLException ex) {
-                Logger.getLogger(TelaPrincipal.class.getName()).log(Level.SEVERE, null, ex);
-            }
-            CUF.setVisible(true);
-            centralizaForm(CUF);
-            CUF.toFront();
-            JDP1.add(CUF);
-
-        } else {
-            JOptionPane.showMessageDialog(null, "Você não possui previlégios para acessar \n   "
-                    + "a Tela de Cadastros de Gerente!!!", "Cadastro de Gerente", JOptionPane.ERROR_MESSAGE);
-
+        try {
+            DEPexistente = UserBO.SelectDepartamentos();
+        } catch (SQLException ex) {
+            Logger.getLogger(TelaPrincipal.class.getName()).log(Level.SEVERE, null, ex);
         }
+
+        if (DEPexistente == null) {
+            JOptionPane.showMessageDialog(null, "Não existe departamentos cadastrados\n"
+                    + "É necessário cadastrar no minimo um Departamento !!!", "Cadastro de Usuários", JOptionPane.ERROR_MESSAGE);
+        } else {
+            //Instancia uma tela de cadastro de Gerente se o usuario que esta logado for Um diretor;
+            //caso não seja um diretor é exibida uma mensagem ao usuario do sistema.
+            //Obs: Somente diretor pode cadastrar Gerente
+            String Gerente = "Gerente";
+            if (usuarioLogado.getTipo().equals("Diretor")) {
+
+                CadastroUserForm CUF = null;
+
+                try {
+                    //passa como parametro o tipo de cadastro que será realizado("Gerente")
+                    CUF = new CadastroUserForm(Gerente, usuarioLogado);
+                } catch (SQLException ex) {
+                    Logger.getLogger(TelaPrincipal.class.getName()).log(Level.SEVERE, null, ex);
+                }
+                CUF.setVisible(true);
+                centralizaForm(CUF);
+                CUF.toFront();
+                JDP1.add(CUF);
+
+            } else {
+                JOptionPane.showMessageDialog(null, "Você não possui previlégios para acessar \n   "
+                        + "a Tela de Cadastros de Gerente!!!", "Cadastro de Gerente", JOptionPane.ERROR_MESSAGE);
+
+            }
+        }
+
     }//GEN-LAST:event_jMenuItem5ActionPerformed
 
     private void jMenuItem8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem8ActionPerformed
         // Menu - Cadastro > ItemMenu - Encarregado 
+        UsuarioBO UserBO = new UsuarioBO();
+        Departamento DEPexistente = null;
 
-        //Instancia uma tela de cadastro de Encarregado 
-        //Se o usuario que esta logado for Um diretor ou um Gerente;
-        //caso não seja um diretor nem Gerente é exibida uma mensagem ao usuario do sistema.
-        //Obs: Somente diretor e gerente podem cadastrar Encarregados.
-        String Encarregado = "Encarregado";
-        if ((usuarioLogado.getTipo().equals("Diretor")) || (usuarioLogado.getTipo().equals("Gerente"))) {
+        try {
+            DEPexistente = UserBO.SelectDepartamentos();
+        } catch (SQLException ex) {
+            Logger.getLogger(TelaPrincipal.class.getName()).log(Level.SEVERE, null, ex);
+        }
 
-            CadastroUserForm CUF = null;
-
-            try {
-                //passa como parametro o tipo de cadastro que será realizado("Encarregado")
-                CUF = new CadastroUserForm(Encarregado, usuarioLogado);
-            } catch (SQLException ex) {
-                Logger.getLogger(TelaPrincipal.class.getName()).log(Level.SEVERE, null, ex);
-            }
-            CUF.setVisible(true);
-            centralizaForm(CUF);
-            CUF.toFront();
-            JDP1.add(CUF);
-
+        if (DEPexistente == null) {
+            JOptionPane.showMessageDialog(null, "Não existe departamentos cadastrados\n"
+                    + "É necessário cadastrar no minimo um Departamento !!!", "Cadastro de Usuários", JOptionPane.ERROR_MESSAGE);
         } else {
-            JOptionPane.showMessageDialog(null, "Você não possui previlégios para acessar \n   "
-                    + "a Tela de Cadastros de Encarregado!!!", "Cadastro de Encarregado", JOptionPane.ERROR_MESSAGE);
+            //Instancia uma tela de cadastro de Encarregado 
+            //Se o usuario que esta logado for Um diretor ou um Gerente;
+            //caso não seja um diretor nem Gerente é exibida uma mensagem ao usuario do sistema.
+            //Obs: Somente diretor e gerente podem cadastrar Encarregados.
+            String Encarregado = "Encarregado";
+            if ((usuarioLogado.getTipo().equals("Diretor")) || (usuarioLogado.getTipo().equals("Gerente"))) {
 
+                CadastroUserForm CUF = null;
+
+                try {
+                    //passa como parametro o tipo de cadastro que será realizado("Encarregado")
+                    CUF = new CadastroUserForm(Encarregado, usuarioLogado);
+                } catch (SQLException ex) {
+                    Logger.getLogger(TelaPrincipal.class.getName()).log(Level.SEVERE, null, ex);
+                }
+                CUF.setVisible(true);
+                centralizaForm(CUF);
+                CUF.toFront();
+                JDP1.add(CUF);
+
+            } else {
+                JOptionPane.showMessageDialog(null, "Você não possui previlégios para acessar \n   "
+                        + "a Tela de Cadastros de Encarregado!!!", "Cadastro de Encarregado", JOptionPane.ERROR_MESSAGE);
+
+            }
         }
     }//GEN-LAST:event_jMenuItem8ActionPerformed
 

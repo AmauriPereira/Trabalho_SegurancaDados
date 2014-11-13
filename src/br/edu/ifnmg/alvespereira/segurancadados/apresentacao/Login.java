@@ -32,8 +32,7 @@ public class Login extends javax.swing.JFrame {
     public Login() {
         initComponents();
         this.setLocationRelativeTo(null);
-        Image im = Toolkit.getDefaultToolkit().getImage("11295_128x128.png");
-        this.setIconImage(im);
+   
 
     }
 

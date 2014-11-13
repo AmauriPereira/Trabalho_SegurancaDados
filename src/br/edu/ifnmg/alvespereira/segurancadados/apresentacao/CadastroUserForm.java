@@ -11,6 +11,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 
 public final class CadastroUserForm extends javax.swing.JInternalFrame {
 
@@ -188,66 +189,71 @@ public final class CadastroUserForm extends javax.swing.JInternalFrame {
 
     // BOTÃO DE CADASTRO DE usuarios(GERENTE E ENCARREGADO)
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        String TipoUser = txtTipoUser.getText();
-        String Email = txtEmail.getText();
-        String Nome = txtNome.getText();
-        String Senha = txtSenha.getText();
+        if (cbDepartamentos.getSelectedItem().equals("Selecione")) {
+            JOptionPane.showMessageDialog(null, "Não foi possivel realizar o cadastrar \n Selecione um Departamento",
+                    "Cadastro de Gerente", JOptionPane.ERROR_MESSAGE);
+        } else {
+            String TipoUser = txtTipoUser.getText();
+            String Email = txtEmail.getText();
+            String Nome = txtNome.getText();
+            String Senha = txtSenha.getText();
 
-        String Departamento = null;
+            String Departamento = null;
 
-        SegurancaDadosDAO SDD = new SegurancaDadosDAO();
-        Departamento DEP = new Departamento();
-        try {
-
-            DEP = SDD.selectCODdepartamento(cbDepartamentos.getSelectedItem() + "");
-            Departamento = DEP.getCodigo();
-
-        } catch (SQLException ex) {
-            Logger.getLogger(CadastroUserForm.class.getName()).log(Level.SEVERE, null, ex);
-        }
-
-        //codigo abaixo realiza a criptografia da senha
-        MessageDigest cript;
-        try {
-            cript = MessageDigest.getInstance("SHA-256");
-            byte messageDigest[] = cript.digest(Senha.getBytes("UTF-8"));
-
-            StringBuilder hexString = new StringBuilder();
-            for (byte b : messageDigest) {
-                hexString.append(String.format("%02X", 0xFF & b));
-            }
-            Senha = hexString.toString();
-
-        } catch (NoSuchAlgorithmException ex) {
-            Logger.getLogger(CadastroDiretorForm.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (UnsupportedEncodingException ex) {
-            Logger.getLogger(CadastroDiretorForm.class.getName()).log(Level.SEVERE, null, ex);
-        }
-
-        Usuario userCadastro = new Usuario();
-        //seta o usuario que sera cadastrado, 
-        //Com os dados armazenados nas variaveis criadas acima
-        userCadastro.setNome(Nome);
-        userCadastro.setEmail(Email);
-        userCadastro.setSenha(Senha);
-        userCadastro.setTipo(TipoUser);
-        userCadastro.setDepartamento(Departamento);
-
-        UsuarioBO UsuarioBO = new UsuarioBO();
-
-        if (txtTipoUser.getText().equals("Gerente")) {
+            SegurancaDadosDAO SDD = new SegurancaDadosDAO();
+            Departamento DEP = new Departamento();
             try {
-                UsuarioBO.criarGerente(userCadastro);
+
+                DEP = SDD.selectCODdepartamento(cbDepartamentos.getSelectedItem() + "");
+                Departamento = DEP.getCodigo();
+
             } catch (SQLException ex) {
                 Logger.getLogger(CadastroUserForm.class.getName()).log(Level.SEVERE, null, ex);
             }
-        }
 
-        if (txtTipoUser.getText().equals("Encarregado")) {
+            //codigo abaixo realiza a criptografia da senha
+            MessageDigest cript;
             try {
-                UsuarioBO.criarEncarregado(userCadastro, usuarioLogado);
-            } catch (SQLException ex) {
-                Logger.getLogger(CadastroUserForm.class.getName()).log(Level.SEVERE, null, ex);
+                cript = MessageDigest.getInstance("SHA-256");
+                byte messageDigest[] = cript.digest(Senha.getBytes("UTF-8"));
+
+                StringBuilder hexString = new StringBuilder();
+                for (byte b : messageDigest) {
+                    hexString.append(String.format("%02X", 0xFF & b));
+                }
+                Senha = hexString.toString();
+
+            } catch (NoSuchAlgorithmException ex) {
+                Logger.getLogger(CadastroDiretorForm.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (UnsupportedEncodingException ex) {
+                Logger.getLogger(CadastroDiretorForm.class.getName()).log(Level.SEVERE, null, ex);
+            }
+
+            Usuario userCadastro = new Usuario();
+            //seta o usuario que sera cadastrado, 
+            //Com os dados armazenados nas variaveis criadas acima
+            userCadastro.setNome(Nome);
+            userCadastro.setEmail(Email);
+            userCadastro.setSenha(Senha);
+            userCadastro.setTipo(TipoUser);
+            userCadastro.setDepartamento(Departamento);
+
+            UsuarioBO UsuarioBO = new UsuarioBO();
+
+            if (txtTipoUser.getText().equals("Gerente")) {
+                try {
+                    UsuarioBO.criarGerente(userCadastro);
+                } catch (SQLException ex) {
+                    Logger.getLogger(CadastroUserForm.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+
+            if (txtTipoUser.getText().equals("Encarregado")) {
+                try {
+                    UsuarioBO.criarEncarregado(userCadastro, usuarioLogado);
+                } catch (SQLException ex) {
+                    Logger.getLogger(CadastroUserForm.class.getName()).log(Level.SEVERE, null, ex);
+                }
             }
         }
 

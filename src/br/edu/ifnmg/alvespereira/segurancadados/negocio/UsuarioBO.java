@@ -1,6 +1,7 @@
 package br.edu.ifnmg.alvespereira.segurancadados.negocio;
 
 import br.edu.ifnmg.alvespereira.segurancadados.dados.SegurancaDadosDAO;
+import br.edu.ifnmg.alvespereira.segurancadados.entidades.Departamento;
 import br.edu.ifnmg.alvespereira.segurancadados.entidades.Usuario;
 import java.sql.SQLException;
 import javax.swing.JOptionPane;
@@ -48,6 +49,7 @@ public class UsuarioBO {
                     + " Ja existe um gerente cadastrado com este Nome",
                     "Cadastro de Gerente", JOptionPane.ERROR_MESSAGE);
         }
+
     }
 
     //INSERT ENCARREGADO: VERIFICA SE HA ALGUM ENCARREGADO CADASTRADO COM O MESMO NOME, CASO HAJA 
@@ -56,6 +58,7 @@ public class UsuarioBO {
     public void criarEncarregado(Usuario Encarregado, Usuario userLogado) throws SQLException {
         SegurancaDadosDAO SDD = new SegurancaDadosDAO();
         Usuario EncarregadoExistente = SDD.selectEncarregado(Encarregado.getNome(), Encarregado.getTipo());
+        Departamento DEPexistente = SDD.selectTodosDepartamentos();
 
         //VERIFICA SE HA ALGUM ENCARREGADO CADASTRADO COM O MESMO NOME
         if (EncarregadoExistente == null) {
@@ -72,6 +75,15 @@ public class UsuarioBO {
             JOptionPane.showMessageDialog(null, "Não foi possivel cadastrar Encarregado, \n "
                     + "Ja existe um Encarregado cadastrado com este Nome", "Cadastro de Encarregado", JOptionPane.ERROR_MESSAGE);
         }
+
+    }
+
+    public Departamento SelectDepartamentos() throws SQLException {
+
+        SegurancaDadosDAO SDD = new SegurancaDadosDAO();
+        Departamento DEPexistente = SDD.selectTodosDepartamentos();
+
+        return DEPexistente;
     }
 
 }

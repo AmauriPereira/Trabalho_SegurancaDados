@@ -24,7 +24,7 @@ public class SegurancaDadosDAO {
 
     private static final String SQL_SELECT_LOGIN = "SELECT NOME, TIPO, SENHA, EMAIL, CODDEP FROM USER WHERE EMAIL LIKE ? AND SENHA LIKE ?";
     private static final String SQL_SELECT_DEPARTAMENTO = "SELECT NOME, CODDEP FROM DEP WHERE NOME = ? OR CODDEP = ?";
-    private static final String SQL_SELECT_DEPARTAMENTOs = "SELECT NOME FROM DEP";
+    private static final String SQL_SELECT_TODOS_DEPARTAMENTOs = "SELECT CODDEP, NOME FROM DEP";
     private static final String SQL_SELECT_CODDEPARTAMENTO = "SELECT CODDEP, NOME FROM DEP WHERE DEP.NOME = ?";
 
     // ABAIXO METODOS DE INSERÇÃO(INSERT), REMOÇÃO(DELETE), ATUALIZAÇÃO(UPDATE), RECUPERAÇÃO(SELECT)
@@ -316,6 +316,48 @@ public class SegurancaDadosDAO {
         return DEP;
     }
 
+    //SELECIONA todos os DEPARTAMENTO
+    public Departamento selectTodosDepartamentos() throws SQLException {
+        Connection conexao = null;
+        PreparedStatement comando = null;
+        ResultSet resultado = null;
+        Departamento DEP = null;
+
+        try {
+
+            conexao = BancoDadosUtil.getConnection();
+
+            comando = conexao.prepareStatement(SQL_SELECT_TODOS_DEPARTAMENTOs);
+
+            resultado = comando.executeQuery();
+
+            if (resultado.next()) {
+                DEP = new Departamento();
+
+                DEP.setNome(resultado.getString("NOME"));
+                DEP.setCodigo(resultado.getString("CODDEP"));
+
+            }
+
+            conexao.commit();
+
+        } catch (Exception e) {
+            if (conexao != null) {
+                conexao.rollback();
+            }
+            throw new RuntimeException(e);
+
+        } finally {
+            if (comando != null && !comando.isClosed()) {
+                comando.close();
+            }
+            if (conexao != null && !conexao.isClosed()) {
+                conexao.close();
+            }
+        }
+        return DEP;
+    }
+
     //SELECIONA UM COD DE UM DEPARTAMENTO, DE ACORDO OS PARAMETRO(NOME)
     public Departamento selectCODdepartamento(String NOME) throws SQLException {
         Connection conexao = null;
@@ -418,7 +460,7 @@ public class SegurancaDadosDAO {
         try {
 
             conexao = BancoDadosUtil.getConnection();
-            comando = conexao.prepareStatement(SQL_SELECT_DEPARTAMENTOs);
+            comando = conexao.prepareStatement(SQL_SELECT_TODOS_DEPARTAMENTOs);
 
             resultado = comando.executeQuery();
             Departamentos.removeAll(Departamentos);
