@@ -31,10 +31,10 @@ public final class CadastroUserForm extends javax.swing.JInternalFrame {
 
     //Metodo que add todos os departamentos cadastrados na ComboBox
     public void popularCB() throws SQLException {
-        SegurancaDadosDAO SDD = new SegurancaDadosDAO();
+        SegurancaDadosDAO segurancaDadosDAO = new SegurancaDadosDAO();
         ArrayList<String> Departamentos = new ArrayList<>();
 
-        Departamentos = SDD.cbDepartamentos();
+        Departamentos = segurancaDadosDAO.cbDepartamentos();
         cbDepartamentos.removeAllItems();
         cbDepartamentos.addItem("Selecione");
         for (String item : Departamentos) {
@@ -179,7 +179,7 @@ public final class CadastroUserForm extends javax.swing.JInternalFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void cbDepartamentosFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_cbDepartamentosFocusGained
-        //Chama o método responsavel por popular a ComboBox com os DEP
+        //Chama o método responsavel por popular a ComboBox com os departamento
         try {
             this.popularCB();
         } catch (SQLException ex) {
@@ -200,12 +200,12 @@ public final class CadastroUserForm extends javax.swing.JInternalFrame {
 
             String Departamento = null;
 
-            SegurancaDadosDAO SDD = new SegurancaDadosDAO();
-            Departamento DEP = new Departamento();
+            SegurancaDadosDAO segurancaDadosDAO = new SegurancaDadosDAO();
+            Departamento departamento = new Departamento();
             try {
 
-                DEP = SDD.selectCODdepartamento(cbDepartamentos.getSelectedItem() + "");
-                Departamento = DEP.getCodigo();
+                departamento = segurancaDadosDAO.selectCODdepartamento(cbDepartamentos.getSelectedItem() + "");
+                Departamento = departamento.getCodigo();
 
             } catch (SQLException ex) {
                 Logger.getLogger(CadastroUserForm.class.getName()).log(Level.SEVERE, null, ex);

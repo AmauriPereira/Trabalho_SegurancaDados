@@ -11,21 +11,21 @@ import java.util.ArrayList;
 public class SegurancaDadosDAO {
 
     //CONSULTAS DE INSERT NO BANCO
-    private static final String SQL_INSERT_DEP = "INSERT INTO DEP(NOME, CODDEP)VALUES (?,?)";
-    private static final String SQL_INSERT_USER = "INSERT INTO USER( NOME, TIPO, SENHA, EMAIL, CODDEP )VALUES (?,?,?,?,?)";
+    private static final String SQL_INSERT_DEPARTAMENTO = "INSERT INTO DEPARTAMENTO(NOME, COD_DEPARTAMENTO)VALUES (?,?)";
+    private static final String SQL_INSERT_USUARIO = "INSERT INTO USUARIO( NOME, TIPO, SENHA, EMAIL, COD_DEPARTAMENTO)VALUES (?,?,?,?,?)";
 
     //CONSULTAS DE SELECT NO BANCO
-    private static final String SQL_SELECT_DIRETOR = "SELECT  NOME, TIPO, SENHA, EMAIL FROM USER WHERE TIPO LIKE ?";
-    private static final String SQL_SELECT_GERENTE = "SELECT  NOME, TIPO, SENHA, EMAIL, CODDEP FROM USER WHERE NOME = ? AND TIPO = ?";
-    private static final String SQL_SELECT_ENCARREGADO = "SELECT  NOME, TIPO, SENHA, EMAIL, CODDEP FROM USER WHERE NOME = ? AND TIPO = ?";
+    private static final String SQL_SELECT_DIRETOR = "SELECT  NOME, TIPO, SENHA, EMAIL FROM USUARIO WHERE TIPO LIKE ?";
+    private static final String SQL_SELECT_GERENTE = "SELECT  NOME, TIPO, SENHA, EMAIL, COD_DEPARTAMENTO FROM USUARIO WHERE NOME = ? AND TIPO = ?";
+    private static final String SQL_SELECT_ENCARREGADO = "SELECT  NOME, TIPO, SENHA, EMAIL, COD_DEPARTAMENTO FROM USUARIO WHERE NOME = ? AND TIPO = ?";
 
-    private static final String SQL_SELECT_GERENTE_POR_DEPARTAMENTO = "select  NOME, EMAIL, SENHA, TIPO, USER.CODDEP from USER "
-            + "WHERE USER.TIPO =  ?  AND  USER.CODDEP = ?";
+    private static final String SQL_SELECT_GERENTE_POR_DEPARTAMENTO = "SELECT  NOME, EMAIL, SENHA, TIPO, USUARIO.COD_DEPARTAMENTO FROM USUARIO "
+            + "WHERE USUARIO.TIPO =  ?  AND  USUARIO.COD_DEPARTAMENTO = ?";
 
-    private static final String SQL_SELECT_LOGIN = "SELECT NOME, TIPO, SENHA, EMAIL, CODDEP FROM USER WHERE EMAIL LIKE ? AND SENHA LIKE ?";
-    private static final String SQL_SELECT_DEPARTAMENTO = "SELECT NOME, CODDEP FROM DEP WHERE NOME = ? OR CODDEP = ?";
-    private static final String SQL_SELECT_TODOS_DEPARTAMENTOs = "SELECT CODDEP, NOME FROM DEP";
-    private static final String SQL_SELECT_CODDEPARTAMENTO = "SELECT CODDEP, NOME FROM DEP WHERE DEP.NOME = ?";
+    private static final String SQL_SELECT_LOGIN = "SELECT NOME, TIPO, SENHA, EMAIL, COD_DEPARTAMENTO FROM USUARIO WHERE EMAIL LIKE ? AND SENHA LIKE ?";
+    private static final String SQL_SELECT_DEPARTAMENTO = "SELECT NOME, COD_DEPARTAMENTO FROM DEPARTAMENTO WHERE NOME = ? OR COD_DEPARTAMENTO = ?";
+    private static final String SQL_SELECT_TODOS_DEPARTAMENTOs = "SELECT COD_DEPARTAMENTO, NOME FROM DEPARTAMENTO";
+    private static final String SQL_SELECT_CODDEPARTAMENTO = "SELECT COD_DEPARTAMENTO, NOME FROM DEPARTAMENTO WHERE DEPARTAMENTO.NOME = ?";
 
     // ABAIXO METODOS DE INSERÇÃO(INSERT), REMOÇÃO(DELETE), ATUALIZAÇÃO(UPDATE), RECUPERAÇÃO(SELECT)
     //INSERT DEPARTAMENTO
@@ -36,7 +36,7 @@ public class SegurancaDadosDAO {
         try {
 
             conexao = BancoDadosUtil.getConnection();
-            comando = conexao.prepareStatement(SQL_INSERT_DEP);
+            comando = conexao.prepareStatement(SQL_INSERT_DEPARTAMENTO);
             comando.setString(1, Dep.getNome());
             comando.setString(2, Dep.getCodigo());
 
@@ -67,7 +67,7 @@ public class SegurancaDadosDAO {
         try {
 
             conexao = BancoDadosUtil.getConnection();
-            comando = conexao.prepareStatement(SQL_INSERT_USER);
+            comando = conexao.prepareStatement(SQL_INSERT_USUARIO);
 
             comando.setString(1, user.getNome());
             comando.setString(2, user.getTipo());
@@ -106,7 +106,7 @@ public class SegurancaDadosDAO {
             conexao = BancoDadosUtil.getConnection();
 
             comando = conexao.prepareStatement(SQL_SELECT_DIRETOR);
-            comando.setString(1, "Diretor");
+            comando.setString(1,"Diretor");
             resultado = comando.executeQuery();
 
             if (resultado.next()) {
@@ -159,7 +159,7 @@ public class SegurancaDadosDAO {
                 user.setTipo(resultado.getString("TIPO"));
                 user.setSenha(resultado.getString("SENHA"));
                 user.setEmail(resultado.getString("EMAIL"));
-                user.setDepartamento(resultado.getString("CODDEP"));
+                user.setDepartamento(resultado.getString("COD_DEPARTAMENTO"));
 
             }
 
@@ -204,7 +204,7 @@ public class SegurancaDadosDAO {
                 user.setTipo(resultado.getString("TIPO"));
                 user.setSenha(resultado.getString("SENHA"));
                 user.setEmail(resultado.getString("EMAIL"));
-                user.setDepartamento(resultado.getString("CODDEP"));
+                user.setDepartamento(resultado.getString("COD_DEPARTAMENTO"));
 
             }
 
@@ -249,7 +249,7 @@ public class SegurancaDadosDAO {
                 user.setTipo(resultado.getString("TIPO"));
                 user.setSenha(resultado.getString("SENHA"));
                 user.setEmail(resultado.getString("EMAIL"));
-                user.setDepartamento(resultado.getString("CODDEP"));
+                user.setDepartamento(resultado.getString("COD_DEPARTAMENTO"));
 
             }
 
@@ -293,7 +293,7 @@ public class SegurancaDadosDAO {
                 DEP = new Departamento();
 
                 DEP.setNome(resultado.getString("NOME"));
-                DEP.setCodigo(resultado.getString("CODDEP"));
+                DEP.setCodigo(resultado.getString("COD_DEPARTAMENTO"));
 
             }
 
@@ -335,7 +335,7 @@ public class SegurancaDadosDAO {
                 DEP = new Departamento();
 
                 DEP.setNome(resultado.getString("NOME"));
-                DEP.setCodigo(resultado.getString("CODDEP"));
+                DEP.setCodigo(resultado.getString("COD_DEPARTAMENTO"));
 
             }
 
@@ -378,7 +378,7 @@ public class SegurancaDadosDAO {
                 DEP = new Departamento();
 
                 DEP.setNome(resultado.getString("NOME"));
-                DEP.setCodigo(resultado.getString("CODDEP"));
+                DEP.setCodigo(resultado.getString("COD_DEPARTAMENTO"));
 
             }
 
@@ -425,7 +425,7 @@ public class SegurancaDadosDAO {
                 user.setTipo(resultado.getString("TIPO"));
                 user.setSenha(resultado.getString("SENHA"));
                 user.setEmail(resultado.getString("EMAIL"));
-                user.setDepartamento(resultado.getString("CODDEP"));
+                user.setDepartamento(resultado.getString("COD_DEPARTAMENTO"));
 
             }
 

@@ -12,12 +12,12 @@ public class UsuarioBO {
     //INSERT DIRETOR: VERIFICA SE HÁ ALGUM DIRETOR CADASTRADO, CASO NÃO HAJA REALIZA O CADASTRO
     // obs:(SÓ PODE HAVER UM DIRETOR CADASTRADO).
     public void criarDiretor(Usuario Diretor) throws SQLException {
-        SegurancaDadosDAO SDD = new SegurancaDadosDAO();
+        SegurancaDadosDAO segurancaDadosDAO = new SegurancaDadosDAO();
 
-        Usuario userExistente = SDD.selectDiretor();
+        Usuario userExistente = segurancaDadosDAO.selectDiretor();
 
         if (userExistente == null) {
-            SDD.criaUSER(Diretor);
+            segurancaDadosDAO.criaUSER(Diretor);
             JOptionPane.showMessageDialog(null, "Diretor Cadastrado com Sucesso !!!",
                     "Cadastro de Diretor", JOptionPane.INFORMATION_MESSAGE);
         }
@@ -58,7 +58,7 @@ public class UsuarioBO {
     public void criarEncarregado(Usuario Encarregado, Usuario userLogado) throws SQLException {
         SegurancaDadosDAO SDD = new SegurancaDadosDAO();
         Usuario EncarregadoExistente = SDD.selectEncarregado(Encarregado.getNome(), Encarregado.getTipo());
-        Departamento DEPexistente = SDD.selectTodosDepartamentos();
+        Departamento DEPexistente = SDD.selectTodosDepartamentos(); // variavel não está sendo usada..
 
         //VERIFICA SE HA ALGUM ENCARREGADO CADASTRADO COM O MESMO NOME
         if (EncarregadoExistente == null) {

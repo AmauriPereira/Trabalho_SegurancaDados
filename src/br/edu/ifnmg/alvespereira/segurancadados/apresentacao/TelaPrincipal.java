@@ -55,9 +55,9 @@ public class TelaPrincipal extends javax.swing.JFrame {
 
         if (usuarioLogado.getTipo().equals("Diretor")) {
             //Esse teste e feito pois diretor nao possui departamento
-            this.txtDEP.setText("   -   ");
+            this.txtDepartamento.setText("   -   ");
         } else {
-            this.txtDEP.setText(usuarioLogado.getDepartamento());
+            this.txtDepartamento.setText(usuarioLogado.getDepartamento());
         }
 
     }
@@ -82,25 +82,25 @@ public class TelaPrincipal extends javax.swing.JFrame {
         txtNomeLogado = new javax.swing.JLabel();
         Data = new javax.swing.JLabel();
         Hora = new javax.swing.JLabel();
-        jLabel1 = new javax.swing.JLabel();
-        jLabel2 = new javax.swing.JLabel();
-        jLabel3 = new javax.swing.JLabel();
-        jLabel4 = new javax.swing.JLabel();
-        jLabel5 = new javax.swing.JLabel();
-        txtDEP = new javax.swing.JLabel();
+        lblData = new javax.swing.JLabel();
+        lblHora = new javax.swing.JLabel();
+        lblUsuarioLogado = new javax.swing.JLabel();
+        lblFuncao = new javax.swing.JLabel();
+        lblDepartamento = new javax.swing.JLabel();
+        txtDepartamento = new javax.swing.JLabel();
         jMenuBar1 = new javax.swing.JMenuBar();
-        jMenu1 = new javax.swing.JMenu();
-        jMenuItem1 = new javax.swing.JMenuItem();
-        jMenuItem5 = new javax.swing.JMenuItem();
-        jMenuItem8 = new javax.swing.JMenuItem();
-        jMenu3 = new javax.swing.JMenu();
-        jMenuItem2 = new javax.swing.JMenuItem();
-        jMenuItem6 = new javax.swing.JMenuItem();
-        jMenu2 = new javax.swing.JMenu();
-        jMenuItem3 = new javax.swing.JMenuItem();
-        jMenuItem7 = new javax.swing.JMenuItem();
-        jMenu4 = new javax.swing.JMenu();
-        jMenuItem4 = new javax.swing.JMenuItem();
+        mnuCadastros = new javax.swing.JMenu();
+        itmMnuDepartamento = new javax.swing.JMenuItem();
+        itmMnuGerente = new javax.swing.JMenuItem();
+        itmMnuEncarregado = new javax.swing.JMenuItem();
+        mnuAtualizar = new javax.swing.JMenu();
+        itmMnu_Departamento = new javax.swing.JMenuItem();
+        itmMnu_Usuarios = new javax.swing.JMenuItem();
+        mnuExcluir = new javax.swing.JMenu();
+        itmMnu_Ex_Departamento = new javax.swing.JMenuItem();
+        itmMnu_Ex_Usuarios = new javax.swing.JMenuItem();
+        mnuOpcoes = new javax.swing.JMenu();
+        itmMnuSair = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Gestão de Usuários");
@@ -134,25 +134,25 @@ public class TelaPrincipal extends javax.swing.JFrame {
 
         Hora.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
 
-        jLabel1.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
-        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/edu/ifnmg/alvespereira/segurancadados/icones/date.png"))); // NOI18N
-        jLabel1.setText("Data:");
+        lblData.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        lblData.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/edu/ifnmg/alvespereira/segurancadados/icones/date.png"))); // NOI18N
+        lblData.setText("Data:");
 
-        jLabel2.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
-        jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/edu/ifnmg/alvespereira/segurancadados/icones/time.png"))); // NOI18N
-        jLabel2.setText("Hora:");
+        lblHora.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        lblHora.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/edu/ifnmg/alvespereira/segurancadados/icones/time.png"))); // NOI18N
+        lblHora.setText("Hora:");
 
-        jLabel3.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
-        jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/edu/ifnmg/alvespereira/segurancadados/icones/user.png"))); // NOI18N
-        jLabel3.setText("Usuário Logado:");
+        lblUsuarioLogado.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        lblUsuarioLogado.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/edu/ifnmg/alvespereira/segurancadados/icones/user.png"))); // NOI18N
+        lblUsuarioLogado.setText("Usuário Logado:");
 
-        jLabel4.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
-        jLabel4.setText("Função:");
+        lblFuncao.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        lblFuncao.setText("Função:");
 
-        jLabel5.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
-        jLabel5.setText("Departamento :");
+        lblDepartamento.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        lblDepartamento.setText("Departamento :");
 
-        txtDEP.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        txtDepartamento.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -160,23 +160,23 @@ public class TelaPrincipal extends javax.swing.JFrame {
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jLabel3)
+                .addComponent(lblUsuarioLogado)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(txtNomeLogado, javax.swing.GroupLayout.PREFERRED_SIZE, 142, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addComponent(jLabel5)
+                .addComponent(lblDepartamento)
                 .addGap(18, 18, 18)
-                .addComponent(txtDEP, javax.swing.GroupLayout.PREFERRED_SIZE, 62, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(txtDepartamento, javax.swing.GroupLayout.PREFERRED_SIZE, 62, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addComponent(jLabel4)
+                .addComponent(lblFuncao)
                 .addGap(18, 18, 18)
                 .addComponent(txtFuncao, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 51, Short.MAX_VALUE)
-                .addComponent(jLabel1)
+                .addComponent(lblData)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(Data, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addComponent(jLabel2)
+                .addComponent(lblHora)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(Hora, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(28, 28, 28))
@@ -187,113 +187,118 @@ public class TelaPrincipal extends javax.swing.JFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                         .addComponent(txtNomeLogado, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jLabel3)
+                        .addComponent(lblUsuarioLogado)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(Data, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(Hora, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel1)
-                            .addComponent(jLabel2)))
-                    .addComponent(jLabel4)
+                            .addComponent(lblData)
+                            .addComponent(lblHora)))
+                    .addComponent(lblFuncao)
                     .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addComponent(jLabel5, javax.swing.GroupLayout.Alignment.TRAILING)
-                        .addComponent(txtDEP, javax.swing.GroupLayout.Alignment.TRAILING))
+                        .addComponent(lblDepartamento, javax.swing.GroupLayout.Alignment.TRAILING)
+                        .addComponent(txtDepartamento, javax.swing.GroupLayout.Alignment.TRAILING))
                     .addComponent(txtFuncao, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        jPanel1Layout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {Data, Hora, jLabel1, jLabel2, jLabel3, jLabel4, jLabel5, txtDEP, txtFuncao, txtNomeLogado});
+        jPanel1Layout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {Data, Hora, lblData, lblDepartamento, lblFuncao, lblHora, lblUsuarioLogado, txtDepartamento, txtFuncao, txtNomeLogado});
 
         jMenuBar1.setPreferredSize(new java.awt.Dimension(56, 30));
 
-        jMenu1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/edu/ifnmg/alvespereira/segurancadados/icones/dossier-orange-icone-9020-32.png"))); // NOI18N
-        jMenu1.setText("   Cadastros      ");
+        mnuCadastros.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/edu/ifnmg/alvespereira/segurancadados/icones/dossier-orange-icone-9020-32.png"))); // NOI18N
+        mnuCadastros.setText("   Cadastros      ");
 
-        jMenuItem1.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_F1, 0));
-        jMenuItem1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/edu/ifnmg/alvespereira/segurancadados/icones/add-chart-icone-4678-32.png"))); // NOI18N
-        jMenuItem1.setText("       Departamento");
-        jMenuItem1.addActionListener(new java.awt.event.ActionListener() {
+        itmMnuDepartamento.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_F1, 0));
+        itmMnuDepartamento.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/edu/ifnmg/alvespereira/segurancadados/icones/add-chart-icone-4678-32.png"))); // NOI18N
+        itmMnuDepartamento.setText("       Departamento");
+        itmMnuDepartamento.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem1ActionPerformed(evt);
+                itmMnuDepartamentoActionPerformed(evt);
             }
         });
-        jMenu1.add(jMenuItem1);
+        mnuCadastros.add(itmMnuDepartamento);
 
-        jMenuItem5.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_F2, 0));
-        jMenuItem5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/edu/ifnmg/alvespereira/segurancadados/icones/bill-homme-personne-utilisateur-icone-6596-32.png"))); // NOI18N
-        jMenuItem5.setText("       Gerente");
-        jMenuItem5.addActionListener(new java.awt.event.ActionListener() {
+        itmMnuGerente.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_F2, 0));
+        itmMnuGerente.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/edu/ifnmg/alvespereira/segurancadados/icones/bill-homme-personne-utilisateur-icone-6596-32.png"))); // NOI18N
+        itmMnuGerente.setText("       Gerente");
+        itmMnuGerente.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem5ActionPerformed(evt);
+                itmMnuGerenteActionPerformed(evt);
             }
         });
-        jMenu1.add(jMenuItem5);
+        mnuCadastros.add(itmMnuGerente);
 
-        jMenuItem8.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_F3, 0));
-        jMenuItem8.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/edu/ifnmg/alvespereira/segurancadados/icones/garcon-utilisateur-icone-7572-32.png"))); // NOI18N
-        jMenuItem8.setText("       Encarregado");
-        jMenuItem8.addActionListener(new java.awt.event.ActionListener() {
+        itmMnuEncarregado.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_F3, 0));
+        itmMnuEncarregado.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/edu/ifnmg/alvespereira/segurancadados/icones/garcon-utilisateur-icone-7572-32.png"))); // NOI18N
+        itmMnuEncarregado.setText("       Encarregado");
+        itmMnuEncarregado.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem8ActionPerformed(evt);
+                itmMnuEncarregadoActionPerformed(evt);
             }
         });
-        jMenu1.add(jMenuItem8);
+        mnuCadastros.add(itmMnuEncarregado);
 
-        jMenuBar1.add(jMenu1);
+        jMenuBar1.add(mnuCadastros);
 
-        jMenu3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/edu/ifnmg/alvespereira/segurancadados/icones/tous-refresh-reload-onglets-icone-7131-32.png"))); // NOI18N
-        jMenu3.setText("    Atualizar     ");
+        mnuAtualizar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/edu/ifnmg/alvespereira/segurancadados/icones/tous-refresh-reload-onglets-icone-7131-32.png"))); // NOI18N
+        mnuAtualizar.setText("    Atualizar     ");
 
-        jMenuItem2.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_F4, 0));
-        jMenuItem2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/edu/ifnmg/alvespereira/segurancadados/icones/0258.png"))); // NOI18N
-        jMenuItem2.setText("     Departamento");
-        jMenu3.add(jMenuItem2);
-
-        jMenuItem6.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_F5, 0));
-        jMenuItem6.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/edu/ifnmg/alvespereira/segurancadados/icones/users.png"))); // NOI18N
-        jMenuItem6.setText("     Usuários");
-        jMenu3.add(jMenuItem6);
-
-        jMenuBar1.add(jMenu3);
-
-        jMenu2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/edu/ifnmg/alvespereira/segurancadados/icones/gtk-ltr-undelete-icone-3875-32.png"))); // NOI18N
-        jMenu2.setText("    Excluir    ");
-
-        jMenuItem3.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_F6, 0));
-        jMenuItem3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/edu/ifnmg/alvespereira/segurancadados/icones/35.png"))); // NOI18N
-        jMenuItem3.setText("    Departamento");
-        jMenuItem3.addActionListener(new java.awt.event.ActionListener() {
+        itmMnu_Departamento.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_F4, 0));
+        itmMnu_Departamento.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/edu/ifnmg/alvespereira/segurancadados/icones/0258.png"))); // NOI18N
+        itmMnu_Departamento.setText("     Departamento");
+        itmMnu_Departamento.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem3ActionPerformed(evt);
+                itmMnu_DepartamentoActionPerformed(evt);
             }
         });
-        jMenu2.add(jMenuItem3);
+        mnuAtualizar.add(itmMnu_Departamento);
 
-        jMenuItem7.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_F7, 0));
-        jMenuItem7.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/edu/ifnmg/alvespereira/segurancadados/icones/users.png"))); // NOI18N
-        jMenuItem7.setText("    Usuários");
-        jMenuItem7.addActionListener(new java.awt.event.ActionListener() {
+        itmMnu_Usuarios.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_F5, 0));
+        itmMnu_Usuarios.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/edu/ifnmg/alvespereira/segurancadados/icones/users.png"))); // NOI18N
+        itmMnu_Usuarios.setText("     Usuários");
+        mnuAtualizar.add(itmMnu_Usuarios);
+
+        jMenuBar1.add(mnuAtualizar);
+
+        mnuExcluir.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/edu/ifnmg/alvespereira/segurancadados/icones/gtk-ltr-undelete-icone-3875-32.png"))); // NOI18N
+        mnuExcluir.setText("    Excluir    ");
+
+        itmMnu_Ex_Departamento.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_F6, 0));
+        itmMnu_Ex_Departamento.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/edu/ifnmg/alvespereira/segurancadados/icones/35.png"))); // NOI18N
+        itmMnu_Ex_Departamento.setText("    Departamento");
+        itmMnu_Ex_Departamento.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem7ActionPerformed(evt);
+                itmMnu_Ex_DepartamentoActionPerformed(evt);
             }
         });
-        jMenu2.add(jMenuItem7);
+        mnuExcluir.add(itmMnu_Ex_Departamento);
 
-        jMenuBar1.add(jMenu2);
-
-        jMenu4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/edu/ifnmg/alvespereira/segurancadados/icones/engrenages-package-systeme-roues-icone-8982-32.png"))); // NOI18N
-        jMenu4.setText("      Opções    ");
-
-        jMenuItem4.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_F8, 0));
-        jMenuItem4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/edu/ifnmg/alvespereira/segurancadados/icones/halte-session-icone-4911-32.png"))); // NOI18N
-        jMenuItem4.setText("     Sair           ");
-        jMenuItem4.addActionListener(new java.awt.event.ActionListener() {
+        itmMnu_Ex_Usuarios.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_F7, 0));
+        itmMnu_Ex_Usuarios.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/edu/ifnmg/alvespereira/segurancadados/icones/users.png"))); // NOI18N
+        itmMnu_Ex_Usuarios.setText("    Usuários");
+        itmMnu_Ex_Usuarios.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem4ActionPerformed(evt);
+                itmMnu_Ex_UsuariosActionPerformed(evt);
             }
         });
-        jMenu4.add(jMenuItem4);
+        mnuExcluir.add(itmMnu_Ex_Usuarios);
 
-        jMenuBar1.add(jMenu4);
+        jMenuBar1.add(mnuExcluir);
+
+        mnuOpcoes.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/edu/ifnmg/alvespereira/segurancadados/icones/engrenages-package-systeme-roues-icone-8982-32.png"))); // NOI18N
+        mnuOpcoes.setText("      Opções    ");
+
+        itmMnuSair.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_F8, 0));
+        itmMnuSair.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/edu/ifnmg/alvespereira/segurancadados/icones/halte-session-icone-4911-32.png"))); // NOI18N
+        itmMnuSair.setText("     Sair           ");
+        itmMnuSair.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                itmMnuSairActionPerformed(evt);
+            }
+        });
+        mnuOpcoes.add(itmMnuSair);
+
+        jMenuBar1.add(mnuOpcoes);
 
         setJMenuBar(jMenuBar1);
 
@@ -315,9 +320,9 @@ public class TelaPrincipal extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jMenuItem3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem3ActionPerformed
+    private void itmMnu_Ex_DepartamentoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itmMnu_Ex_DepartamentoActionPerformed
 
-    }//GEN-LAST:event_jMenuItem3ActionPerformed
+    }//GEN-LAST:event_itmMnu_Ex_DepartamentoActionPerformed
 
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
         //metodo que seta a hora e data atual no sistema(Na barra de status)
@@ -333,7 +338,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
 
     }//GEN-LAST:event_formWindowOpened
 
-    private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
+    private void itmMnuDepartamentoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itmMnuDepartamentoActionPerformed
         // Menu - Cadastro > ItemMenu - Departamento 
 
         //Instancia uma tela de cadastro de Departamento se o usuario que esta logado for Um diretor;
@@ -341,20 +346,20 @@ public class TelaPrincipal extends javax.swing.JFrame {
         //Obs: Somente diretor pode cadastrar departamento
         if (usuarioLogado.getTipo().equals("Diretor")) {
 
-            CadastroDepInTform CDIT = null;
+            CadastroDepInTform cadastroDepInTform = null;
 
-            CDIT = new CadastroDepInTform();
-            CDIT.setVisible(true);
-            centralizaForm(CDIT);
-            CDIT.toFront();
-            JDP1.add(CDIT);
+            cadastroDepInTform = new CadastroDepInTform();
+            cadastroDepInTform.setVisible(true);
+            centralizaForm(cadastroDepInTform);
+            cadastroDepInTform.toFront();
+            JDP1.add(cadastroDepInTform);
         } else {
             JOptionPane.showMessageDialog(null, "Você não possui previlégios para acessar \n"
                     + "a Tela de Cadastros de Departamentos!!!", "Cadastro de Departamentos", JOptionPane.ERROR_MESSAGE);
         }
-    }//GEN-LAST:event_jMenuItem1ActionPerformed
+    }//GEN-LAST:event_itmMnuDepartamentoActionPerformed
 
-    private void jMenuItem5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem5ActionPerformed
+    private void itmMnuGerenteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itmMnuGerenteActionPerformed
 
 // Menu - Cadastro > ItemMenu - Gerente 
         UsuarioBO UserBO = new UsuarioBO();
@@ -376,18 +381,18 @@ public class TelaPrincipal extends javax.swing.JFrame {
             String Gerente = "Gerente";
             if (usuarioLogado.getTipo().equals("Diretor")) {
 
-                CadastroUserForm CUF = null;
+                CadastroUserForm cadastroUserForm = null;
 
                 try {
                     //passa como parametro o tipo de cadastro que será realizado("Gerente")
-                    CUF = new CadastroUserForm(Gerente, usuarioLogado);
+                    cadastroUserForm = new CadastroUserForm(Gerente, usuarioLogado);
                 } catch (SQLException ex) {
                     Logger.getLogger(TelaPrincipal.class.getName()).log(Level.SEVERE, null, ex);
                 }
-                CUF.setVisible(true);
-                centralizaForm(CUF);
-                CUF.toFront();
-                JDP1.add(CUF);
+                cadastroUserForm.setVisible(true);
+                centralizaForm(cadastroUserForm);
+                cadastroUserForm.toFront();
+                JDP1.add(cadastroUserForm);
 
             } else {
                 JOptionPane.showMessageDialog(null, "Você não possui previlégios para acessar \n   "
@@ -396,9 +401,9 @@ public class TelaPrincipal extends javax.swing.JFrame {
             }
         }
 
-    }//GEN-LAST:event_jMenuItem5ActionPerformed
+    }//GEN-LAST:event_itmMnuGerenteActionPerformed
 
-    private void jMenuItem8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem8ActionPerformed
+    private void itmMnuEncarregadoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itmMnuEncarregadoActionPerformed
         // Menu - Cadastro > ItemMenu - Encarregado 
         UsuarioBO UserBO = new UsuarioBO();
         Departamento DEPexistente = null;
@@ -420,18 +425,18 @@ public class TelaPrincipal extends javax.swing.JFrame {
             String Encarregado = "Encarregado";
             if ((usuarioLogado.getTipo().equals("Diretor")) || (usuarioLogado.getTipo().equals("Gerente"))) {
 
-                CadastroUserForm CUF = null;
+                CadastroUserForm cadastroUserForm = null;
 
                 try {
                     //passa como parametro o tipo de cadastro que será realizado("Encarregado")
-                    CUF = new CadastroUserForm(Encarregado, usuarioLogado);
+                    cadastroUserForm = new CadastroUserForm(Encarregado, usuarioLogado);
                 } catch (SQLException ex) {
                     Logger.getLogger(TelaPrincipal.class.getName()).log(Level.SEVERE, null, ex);
                 }
-                CUF.setVisible(true);
-                centralizaForm(CUF);
-                CUF.toFront();
-                JDP1.add(CUF);
+                cadastroUserForm.setVisible(true);
+                centralizaForm(cadastroUserForm);
+                cadastroUserForm.toFront();
+                JDP1.add(cadastroUserForm);
 
             } else {
                 JOptionPane.showMessageDialog(null, "Você não possui previlégios para acessar \n   "
@@ -439,40 +444,44 @@ public class TelaPrincipal extends javax.swing.JFrame {
 
             }
         }
-    }//GEN-LAST:event_jMenuItem8ActionPerformed
+    }//GEN-LAST:event_itmMnuEncarregadoActionPerformed
 
-    private void jMenuItem4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem4ActionPerformed
+    private void itmMnuSairActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itmMnuSairActionPerformed
         this.dispose();
-    }//GEN-LAST:event_jMenuItem4ActionPerformed
+    }//GEN-LAST:event_itmMnuSairActionPerformed
 
-    private void jMenuItem7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem7ActionPerformed
+    private void itmMnu_Ex_UsuariosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itmMnu_Ex_UsuariosActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jMenuItem7ActionPerformed
+    }//GEN-LAST:event_itmMnu_Ex_UsuariosActionPerformed
+
+    private void itmMnu_DepartamentoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itmMnu_DepartamentoActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_itmMnu_DepartamentoActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel Data;
     private javax.swing.JLabel Hora;
     private javax.swing.JDesktopPane JDP1;
-    private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
-    private javax.swing.JLabel jLabel5;
-    private javax.swing.JMenu jMenu1;
-    private javax.swing.JMenu jMenu2;
-    private javax.swing.JMenu jMenu3;
-    private javax.swing.JMenu jMenu4;
+    private javax.swing.JMenuItem itmMnuDepartamento;
+    private javax.swing.JMenuItem itmMnuEncarregado;
+    private javax.swing.JMenuItem itmMnuGerente;
+    private javax.swing.JMenuItem itmMnuSair;
+    private javax.swing.JMenuItem itmMnu_Departamento;
+    private javax.swing.JMenuItem itmMnu_Ex_Departamento;
+    private javax.swing.JMenuItem itmMnu_Ex_Usuarios;
+    private javax.swing.JMenuItem itmMnu_Usuarios;
     private javax.swing.JMenuBar jMenuBar1;
-    private javax.swing.JMenuItem jMenuItem1;
-    private javax.swing.JMenuItem jMenuItem2;
-    private javax.swing.JMenuItem jMenuItem3;
-    private javax.swing.JMenuItem jMenuItem4;
-    private javax.swing.JMenuItem jMenuItem5;
-    private javax.swing.JMenuItem jMenuItem6;
-    private javax.swing.JMenuItem jMenuItem7;
-    private javax.swing.JMenuItem jMenuItem8;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JLabel txtDEP;
+    private javax.swing.JLabel lblData;
+    private javax.swing.JLabel lblDepartamento;
+    private javax.swing.JLabel lblFuncao;
+    private javax.swing.JLabel lblHora;
+    private javax.swing.JLabel lblUsuarioLogado;
+    private javax.swing.JMenu mnuAtualizar;
+    private javax.swing.JMenu mnuCadastros;
+    private javax.swing.JMenu mnuExcluir;
+    private javax.swing.JMenu mnuOpcoes;
+    private javax.swing.JLabel txtDepartamento;
     private javax.swing.JLabel txtFuncao;
     private javax.swing.JLabel txtNomeLogado;
     // End of variables declaration//GEN-END:variables
