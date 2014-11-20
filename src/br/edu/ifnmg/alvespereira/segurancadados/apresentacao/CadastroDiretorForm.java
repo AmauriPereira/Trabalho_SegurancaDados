@@ -1,10 +1,7 @@
 package br.edu.ifnmg.alvespereira.segurancadados.apresentacao;
 
-import br.edu.ifnmg.alvespereira.segurancadados.dados.SegurancaDadosDAO;
 import br.edu.ifnmg.alvespereira.segurancadados.entidades.Usuario;
 import br.edu.ifnmg.alvespereira.segurancadados.negocio.UsuarioBO;
-import java.awt.Image;
-import java.awt.Toolkit;
 import java.io.UnsupportedEncodingException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
@@ -22,8 +19,6 @@ public class CadastroDiretorForm extends javax.swing.JFrame {
     public CadastroDiretorForm() {
         initComponents();
         this.setLocationRelativeTo(null);
-        Image im = Toolkit.getDefaultToolkit().getImage("11295_128x128.png");
-        this.setIconImage(im);
 
     }
 
@@ -132,7 +127,6 @@ public class CadastroDiretorForm extends javax.swing.JFrame {
         Nome = (txtNome.getText());
         Email = (txtEmail.getText());
         Senha = (txtSenha.getText());
-        
 
         //codigo abaixo realiza a criptografia da senha
         MessageDigest cript;
@@ -182,8 +176,9 @@ public class CadastroDiretorForm extends javax.swing.JFrame {
         }
 
         //Verifica se ja existe um diretor cadastrado no sistema
-        SegurancaDadosDAO SDD = new SegurancaDadosDAO();
-        Usuario user = SDD.selectDiretor();
+        Usuario user = new Usuario();
+        UsuarioBO UserBO = new UsuarioBO();
+        user = UserBO.selecionarDiretor();
 
         //Caso não exista nenhum diretor cadastrado 
         //Instancia uma tela de cadastro de diretor e seta como visible.

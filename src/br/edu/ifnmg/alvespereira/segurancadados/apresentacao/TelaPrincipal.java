@@ -3,7 +3,7 @@ package br.edu.ifnmg.alvespereira.segurancadados.apresentacao;
 import static br.edu.ifnmg.alvespereira.segurancadados.apresentacao.Login.getInstancia;
 import br.edu.ifnmg.alvespereira.segurancadados.entidades.Departamento;
 import br.edu.ifnmg.alvespereira.segurancadados.entidades.Usuario;
-import br.edu.ifnmg.alvespereira.segurancadados.negocio.UsuarioBO;
+import br.edu.ifnmg.alvespereira.segurancadados.negocio.DepartamentoBO;
 import java.awt.Dimension;
 import static java.awt.Frame.MAXIMIZED_BOTH;
 import java.awt.event.ActionEvent;
@@ -362,14 +362,11 @@ public class TelaPrincipal extends javax.swing.JFrame {
     private void itmMnuGerenteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itmMnuGerenteActionPerformed
 
 // Menu - Cadastro > ItemMenu - Gerente 
-        UsuarioBO UserBO = new UsuarioBO();
+        DepartamentoBO depBO = new DepartamentoBO();
+
         Departamento DEPexistente = null;
 
-        try {
-            DEPexistente = UserBO.SelectDepartamentos();
-        } catch (SQLException ex) {
-            Logger.getLogger(TelaPrincipal.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        DEPexistente = depBO.SelectDepartamentos();
 
         if (DEPexistente == null) {
             JOptionPane.showMessageDialog(null, "Não existe departamentos cadastrados\n"
@@ -382,13 +379,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
             if (usuarioLogado.getTipo().equals("Diretor")) {
 
                 CadastroUserForm cadastroUserForm = null;
-
-                try {
-                    //passa como parametro o tipo de cadastro que será realizado("Gerente")
-                    cadastroUserForm = new CadastroUserForm(Gerente, usuarioLogado);
-                } catch (SQLException ex) {
-                    Logger.getLogger(TelaPrincipal.class.getName()).log(Level.SEVERE, null, ex);
-                }
+                cadastroUserForm = new CadastroUserForm(Gerente, usuarioLogado);
                 cadastroUserForm.setVisible(true);
                 centralizaForm(cadastroUserForm);
                 cadastroUserForm.toFront();
@@ -405,14 +396,11 @@ public class TelaPrincipal extends javax.swing.JFrame {
 
     private void itmMnuEncarregadoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itmMnuEncarregadoActionPerformed
         // Menu - Cadastro > ItemMenu - Encarregado 
-        UsuarioBO UserBO = new UsuarioBO();
+        DepartamentoBO depBO = new DepartamentoBO();
+
         Departamento DEPexistente = null;
 
-        try {
-            DEPexistente = UserBO.SelectDepartamentos();
-        } catch (SQLException ex) {
-            Logger.getLogger(TelaPrincipal.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        DEPexistente = depBO.SelectDepartamentos();
 
         if (DEPexistente == null) {
             JOptionPane.showMessageDialog(null, "Não existe departamentos cadastrados\n"
@@ -426,13 +414,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
             if ((usuarioLogado.getTipo().equals("Diretor")) || (usuarioLogado.getTipo().equals("Gerente"))) {
 
                 CadastroUserForm cadastroUserForm = null;
-
-                try {
-                    //passa como parametro o tipo de cadastro que será realizado("Encarregado")
-                    cadastroUserForm = new CadastroUserForm(Encarregado, usuarioLogado);
-                } catch (SQLException ex) {
-                    Logger.getLogger(TelaPrincipal.class.getName()).log(Level.SEVERE, null, ex);
-                }
+                cadastroUserForm = new CadastroUserForm(Encarregado, usuarioLogado);
                 cadastroUserForm.setVisible(true);
                 centralizaForm(cadastroUserForm);
                 cadastroUserForm.toFront();

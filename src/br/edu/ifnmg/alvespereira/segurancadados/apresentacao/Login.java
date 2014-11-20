@@ -1,13 +1,11 @@
 package br.edu.ifnmg.alvespereira.segurancadados.apresentacao;
 
-import br.edu.ifnmg.alvespereira.segurancadados.dados.SegurancaDadosDAO;
 import br.edu.ifnmg.alvespereira.segurancadados.entidades.Usuario;
-import java.awt.Image;
+import br.edu.ifnmg.alvespereira.segurancadados.negocio.LoginBO;
 import java.awt.Toolkit;
 import java.io.UnsupportedEncodingException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
-import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
@@ -32,14 +30,13 @@ public class Login extends javax.swing.JFrame {
     public Login() {
         initComponents();
         this.setLocationRelativeTo(null);
-   
 
     }
 
     //Metodo Logar - Verifica se os dados de login estão corretos
     //Caso esteja libera o acesso ao sistema
     //Caso não esteja, informa ao usuario que ou a senha ou email estão incorreto
-    public void Logar() throws SQLException {
+    public void Logar() {
 
         //cria duas variaveis para receber os dados de login do usuario
         String login = txtLogin.getText();
@@ -65,8 +62,8 @@ public class Login extends javax.swing.JFrame {
         }
 
         //A variavel userLogado recebe os dados do usuario que realizou o login
-        SegurancaDadosDAO SDD = new SegurancaDadosDAO();
-        userLogado = SDD.selectLogin(login, Senha);
+        LoginBO logarBO = new LoginBO();
+        userLogado = logarBO.Logar(login, Senha);
 
         // se a variavel user logado for null é que não existe cadastro
         // Para o login e senha informados
@@ -214,13 +211,7 @@ public class Login extends javax.swing.JFrame {
 
     //Chama o metodo logar
     private void btnAcessarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAcessarActionPerformed
-        try {
-            Logar();
-
-        } catch (SQLException ex) {
-            Logger.getLogger(Login.class
-                    .getName()).log(Level.SEVERE, null, ex);
-        }
+        Logar();
     }//GEN-LAST:event_btnAcessarActionPerformed
 
 

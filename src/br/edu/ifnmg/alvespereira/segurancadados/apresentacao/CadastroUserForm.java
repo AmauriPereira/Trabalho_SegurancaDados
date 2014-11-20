@@ -3,6 +3,7 @@ package br.edu.ifnmg.alvespereira.segurancadados.apresentacao;
 import br.edu.ifnmg.alvespereira.segurancadados.dados.SegurancaDadosDAO;
 import br.edu.ifnmg.alvespereira.segurancadados.entidades.Departamento;
 import br.edu.ifnmg.alvespereira.segurancadados.entidades.Usuario;
+import br.edu.ifnmg.alvespereira.segurancadados.negocio.DepartamentoBO;
 import br.edu.ifnmg.alvespereira.segurancadados.negocio.UsuarioBO;
 import java.io.UnsupportedEncodingException;
 import java.security.MessageDigest;
@@ -18,7 +19,7 @@ public final class CadastroUserForm extends javax.swing.JInternalFrame {
     private static Usuario usuarioLogado = new Usuario();
 
     //Tela de Cadastro de usuários(Encarregado e Gerente)
-    public CadastroUserForm(String TipoUser, Usuario usurioLogado) throws SQLException {
+    public CadastroUserForm(String TipoUser, Usuario usurioLogado) {
         initComponents();
         //O usuario logado é quem estar cadastrando o Gerente ou Encarregado
         this.usuarioLogado = usurioLogado;
@@ -30,11 +31,11 @@ public final class CadastroUserForm extends javax.swing.JInternalFrame {
     }
 
     //Metodo que add todos os departamentos cadastrados na ComboBox
-    public void popularCB() throws SQLException {
-        SegurancaDadosDAO segurancaDadosDAO = new SegurancaDadosDAO();
+    public void popularCB() {
         ArrayList<String> Departamentos = new ArrayList<>();
+        DepartamentoBO depBO = new DepartamentoBO();
+        Departamentos = depBO.ComboBoxDepartamentos();
 
-        Departamentos = segurancaDadosDAO.cbDepartamentos();
         cbDepartamentos.removeAllItems();
         cbDepartamentos.addItem("Selecione");
         for (String item : Departamentos) {
@@ -179,12 +180,7 @@ public final class CadastroUserForm extends javax.swing.JInternalFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void cbDepartamentosFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_cbDepartamentosFocusGained
-        //Chama o método responsavel por popular a ComboBox com os departamento
-        try {
-            this.popularCB();
-        } catch (SQLException ex) {
-            Logger.getLogger(CadastroUserForm.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        this.popularCB();
     }//GEN-LAST:event_cbDepartamentosFocusGained
 
     // BOTÃO DE CADASTRO DE usuarios(GERENTE E ENCARREGADO)
@@ -198,18 +194,9 @@ public final class CadastroUserForm extends javax.swing.JInternalFrame {
             String Nome = txtNome.getText();
             String Senha = txtSenha.getText();
 
-            String Departamento = null;
-
-            SegurancaDadosDAO segurancaDadosDAO = new SegurancaDadosDAO();
             Departamento departamento = new Departamento();
-            try {
-
-                departamento = segurancaDadosDAO.selectCODdepartamento(cbDepartamentos.getSelectedItem() + "");
-                Departamento = departamento.getCodigo();
-
-            } catch (SQLException ex) {
-                Logger.getLogger(CadastroUserForm.class.getName()).log(Level.SEVERE, null, ex);
-            }
+            DepartamentoBO depBO = new DepartamentoBO();
+            departamento = depBO.selectCodDepartamento(cbDepartamentos.getSelectedItem() + "");
 
             //codigo abaixo realiza a criptografia da senha
             MessageDigest cript;
@@ -236,7 +223,7 @@ public final class CadastroUserForm extends javax.swing.JInternalFrame {
             userCadastro.setEmail(Email);
             userCadastro.setSenha(Senha);
             userCadastro.setTipo(TipoUser);
-            userCadastro.setDepartamento(Departamento);
+            userCadastro.setDepartamento(departamento.getCodigo());
 
             UsuarioBO UsuarioBO = new UsuarioBO();
 

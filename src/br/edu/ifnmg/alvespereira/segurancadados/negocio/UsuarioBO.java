@@ -8,6 +8,16 @@ import javax.swing.JOptionPane;
 
 public class UsuarioBO {
 
+    //SELECT DIRETOR
+    public Usuario selecionarDiretor() throws SQLException {
+
+        SegurancaDadosDAO SDD = new SegurancaDadosDAO();
+        Usuario user = SDD.selectDiretor();
+
+        return user;
+
+    }
+
     // ABAIXO METODOS DE INSERT NO BANCO DE USUÁRIOS
     //INSERT DIRETOR: VERIFICA SE HÁ ALGUM DIRETOR CADASTRADO, CASO NÃO HAJA REALIZA O CADASTRO
     // obs:(SÓ PODE HAVER UM DIRETOR CADASTRADO).
@@ -76,14 +86,6 @@ public class UsuarioBO {
                     + "Ja existe um Encarregado cadastrado com este Nome", "Cadastro de Encarregado", JOptionPane.ERROR_MESSAGE);
         }
 
-    }
-
-    public Departamento SelectDepartamentos() throws SQLException {
-
-        SegurancaDadosDAO SDD = new SegurancaDadosDAO();
-        Departamento DEPexistente = SDD.selectTodosDepartamentos();
-
-        return DEPexistente;
     }
 
 }

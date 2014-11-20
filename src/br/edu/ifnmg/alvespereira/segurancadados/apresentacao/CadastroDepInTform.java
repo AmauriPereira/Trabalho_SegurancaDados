@@ -2,9 +2,6 @@ package br.edu.ifnmg.alvespereira.segurancadados.apresentacao;
 
 import br.edu.ifnmg.alvespereira.segurancadados.entidades.Departamento;
 import br.edu.ifnmg.alvespereira.segurancadados.negocio.DepartamentoBO;
-import java.sql.SQLException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 public class CadastroDepInTform extends javax.swing.JInternalFrame {
 
@@ -95,12 +92,7 @@ public class CadastroDepInTform extends javax.swing.JInternalFrame {
         DEP.setCodigo(CodDep);
 
         DepartamentoBO depBO = new DepartamentoBO();
-
-        try {
-            depBO.criarDep(DEP);
-        } catch (SQLException ex) {
-            Logger.getLogger(CadastroDepInTform.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        depBO.criarDep(DEP);
     }//GEN-LAST:event_jButton1ActionPerformed
 
 
