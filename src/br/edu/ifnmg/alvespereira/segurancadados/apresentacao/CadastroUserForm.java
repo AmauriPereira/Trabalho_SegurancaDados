@@ -1,6 +1,5 @@
 package br.edu.ifnmg.alvespereira.segurancadados.apresentacao;
 
-import br.edu.ifnmg.alvespereira.segurancadados.dados.SegurancaDadosDAO;
 import br.edu.ifnmg.alvespereira.segurancadados.entidades.Departamento;
 import br.edu.ifnmg.alvespereira.segurancadados.entidades.Usuario;
 import br.edu.ifnmg.alvespereira.segurancadados.negocio.DepartamentoBO;

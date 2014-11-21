@@ -1,6 +1,6 @@
 package br.edu.ifnmg.alvespereira.segurancadados.negocio;
 
-import br.edu.ifnmg.alvespereira.segurancadados.dados.SegurancaDadosDAO;
+import br.edu.ifnmg.alvespereira.segurancadados.dados.DepartamentoDAO;
 import br.edu.ifnmg.alvespereira.segurancadados.entidades.Departamento;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -14,18 +14,18 @@ public class DepartamentoBO {
     // AO DIGITADO PELO USUARIO DO SOFTWARE.
     public void criarDep(Departamento DEP) {
 
-        SegurancaDadosDAO SDD = new SegurancaDadosDAO();
-
+        DepartamentoDAO depDAO = new DepartamentoDAO();
         Departamento DepExistente = null;
+
         try {
-            DepExistente = SDD.selecDepartamento(DEP.getNome(), DEP.getCodigo());
+            DepExistente = depDAO.selecDepartamento(DEP.getNome(), DEP.getCodigo());
         } catch (SQLException ex) {
             Logger.getLogger(DepartamentoBO.class.getName()).log(Level.SEVERE, null, ex);
         }
 
         if (DepExistente == null) {
             try {
-                SDD.criaDEP(DEP);
+                depDAO.criaDEP(DEP);
             } catch (SQLException ex) {
                 Logger.getLogger(DepartamentoBO.class.getName()).log(Level.SEVERE, null, ex);
             }
@@ -38,11 +38,11 @@ public class DepartamentoBO {
 
     public Departamento SelectDepartamentos() {
 
-        SegurancaDadosDAO SDD = new SegurancaDadosDAO();
+        DepartamentoDAO depDAO = new DepartamentoDAO();
         Departamento DEPexistente = null;
 
         try {
-            DEPexistente = SDD.selectTodosDepartamentos();
+            DEPexistente = depDAO.selectTodosDepartamentos();
         } catch (SQLException ex) {
             Logger.getLogger(DepartamentoBO.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -52,11 +52,11 @@ public class DepartamentoBO {
 
     public ArrayList<String> ComboBoxDepartamentos() {
 
-        SegurancaDadosDAO segurancaDadosDAO = new SegurancaDadosDAO();
+        DepartamentoDAO depDAO = new DepartamentoDAO();
         ArrayList<String> Departamentos = new ArrayList<>();
 
         try {
-            Departamentos = segurancaDadosDAO.cbDepartamentos();
+            Departamentos = depDAO.cbDepartamentos();
         } catch (SQLException ex) {
             Logger.getLogger(DepartamentoBO.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -67,11 +67,11 @@ public class DepartamentoBO {
 
     public Departamento selectCodDepartamento(String NomeDepartamento) {
 
-        SegurancaDadosDAO segurancaDadosDAO = new SegurancaDadosDAO();
+        DepartamentoDAO depDAO = new DepartamentoDAO();
         Departamento departamento = new Departamento();
 
         try {
-            departamento = segurancaDadosDAO.selectCODdepartamento(NomeDepartamento);
+            departamento = depDAO.selectCODdepartamento(NomeDepartamento);
         } catch (SQLException ex) {
             Logger.getLogger(DepartamentoBO.class.getName()).log(Level.SEVERE, null, ex);
         }
