@@ -48,6 +48,7 @@ public class CadastroProjetoForm extends javax.swing.JInternalFrame {
 
         lblDescriscao.setText("Descrição:");
 
+        btnCadastrar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/edu/ifnmg/alvespereira/segurancadados/icones/8441_32x32.png"))); // NOI18N
         btnCadastrar.setText("Cadastrar");
 
         txtNome.addActionListener(new java.awt.event.ActionListener() {
@@ -81,34 +82,30 @@ public class CadastroProjetoForm extends javax.swing.JInternalFrame {
         jPanelProjetoLayout.setHorizontalGroup(
             jPanelProjetoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanelProjetoLayout.createSequentialGroup()
+                .addContainerGap()
                 .addGroup(jPanelProjetoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanelProjetoLayout.createSequentialGroup()
+                        .addComponent(lblNome)
+                        .addGap(18, 18, 18)
+                        .addComponent(txtNome))
+                    .addComponent(jScrollPane1)
+                    .addGroup(jPanelProjetoLayout.createSequentialGroup()
                         .addGroup(jPanelProjetoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(lblDescriscao)
                             .addGroup(jPanelProjetoLayout.createSequentialGroup()
-                                .addContainerGap()
                                 .addComponent(lblDataInicio)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addComponent(txtDataInicio, javax.swing.GroupLayout.PREFERRED_SIZE, 97, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(12, 12, 12)
                                 .addComponent(lblDataTermino)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(txtDataFim, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(jPanelProjetoLayout.createSequentialGroup()
-                                .addGap(147, 147, 147)
-                                .addComponent(btnCadastrar, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addGap(0, 0, Short.MAX_VALUE))
-                    .addGroup(jPanelProjetoLayout.createSequentialGroup()
-                        .addContainerGap()
-                        .addGroup(jPanelProjetoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanelProjetoLayout.createSequentialGroup()
-                                .addComponent(lblNome)
-                                .addGap(18, 18, 18)
-                                .addComponent(txtNome))
-                            .addGroup(jPanelProjetoLayout.createSequentialGroup()
-                                .addComponent(lblDescriscao)
-                                .addGap(0, 0, Short.MAX_VALUE))
-                            .addComponent(jScrollPane1))))
+                                .addComponent(txtDataFim, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
+            .addGroup(jPanelProjetoLayout.createSequentialGroup()
+                .addGap(124, 124, 124)
+                .addComponent(btnCadastrar)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanelProjetoLayout.setVerticalGroup(
             jPanelProjetoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -146,7 +143,7 @@ public class CadastroProjetoForm extends javax.swing.JInternalFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jPanelProjeto, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addContainerGap())
+                .addGap(14, 14, 14))
         );
 
         pack();

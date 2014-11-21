@@ -93,6 +93,8 @@ public class TelaPrincipal extends javax.swing.JFrame {
         itmMnuDepartamento = new javax.swing.JMenuItem();
         itmMnuGerente = new javax.swing.JMenuItem();
         itmMnuEncarregado = new javax.swing.JMenuItem();
+        jMenuItem1 = new javax.swing.JMenuItem();
+        jMenuItem2 = new javax.swing.JMenuItem();
         mnuAtualizar = new javax.swing.JMenu();
         itmMnu_Departamento = new javax.swing.JMenuItem();
         itmMnu_Usuarios = new javax.swing.JMenuItem();
@@ -210,7 +212,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
 
         itmMnuDepartamento.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_F1, 0));
         itmMnuDepartamento.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/edu/ifnmg/alvespereira/segurancadados/icones/add-chart-icone-4678-32.png"))); // NOI18N
-        itmMnuDepartamento.setText("       Departamento");
+        itmMnuDepartamento.setText("       Departamento      ");
         itmMnuDepartamento.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 itmMnuDepartamentoActionPerformed(evt);
@@ -220,7 +222,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
 
         itmMnuGerente.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_F2, 0));
         itmMnuGerente.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/edu/ifnmg/alvespereira/segurancadados/icones/bill-homme-personne-utilisateur-icone-6596-32.png"))); // NOI18N
-        itmMnuGerente.setText("       Gerente");
+        itmMnuGerente.setText("       Gerente   ");
         itmMnuGerente.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 itmMnuGerenteActionPerformed(evt);
@@ -230,7 +232,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
 
         itmMnuEncarregado.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_F3, 0));
         itmMnuEncarregado.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/edu/ifnmg/alvespereira/segurancadados/icones/garcon-utilisateur-icone-7572-32.png"))); // NOI18N
-        itmMnuEncarregado.setText("       Encarregado");
+        itmMnuEncarregado.setText("       Encarregado   ");
         itmMnuEncarregado.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 itmMnuEncarregadoActionPerformed(evt);
@@ -238,12 +240,22 @@ public class TelaPrincipal extends javax.swing.JFrame {
         });
         mnuCadastros.add(itmMnuEncarregado);
 
+        jMenuItem1.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_F4, 0));
+        jMenuItem1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/edu/ifnmg/alvespereira/segurancadados/icones/liste-texte-vue-icone-4177-32.png"))); // NOI18N
+        jMenuItem1.setText("       Projeto");
+        mnuCadastros.add(jMenuItem1);
+
+        jMenuItem2.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_F5, 0));
+        jMenuItem2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/edu/ifnmg/alvespereira/segurancadados/icones/cabinet-dossiers-icone-8056-32.png"))); // NOI18N
+        jMenuItem2.setText("       Atividade");
+        mnuCadastros.add(jMenuItem2);
+
         jMenuBar1.add(mnuCadastros);
 
         mnuAtualizar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/edu/ifnmg/alvespereira/segurancadados/icones/tous-refresh-reload-onglets-icone-7131-32.png"))); // NOI18N
         mnuAtualizar.setText("    Atualizar     ");
 
-        itmMnu_Departamento.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_F4, 0));
+        itmMnu_Departamento.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_F6, 0));
         itmMnu_Departamento.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/edu/ifnmg/alvespereira/segurancadados/icones/0258.png"))); // NOI18N
         itmMnu_Departamento.setText("     Departamento");
         itmMnu_Departamento.addActionListener(new java.awt.event.ActionListener() {
@@ -253,7 +265,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
         });
         mnuAtualizar.add(itmMnu_Departamento);
 
-        itmMnu_Usuarios.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_F5, 0));
+        itmMnu_Usuarios.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_F7, 0));
         itmMnu_Usuarios.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/edu/ifnmg/alvespereira/segurancadados/icones/users.png"))); // NOI18N
         itmMnu_Usuarios.setText("     Usuários");
         mnuAtualizar.add(itmMnu_Usuarios);
@@ -263,7 +275,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
         mnuExcluir.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/edu/ifnmg/alvespereira/segurancadados/icones/gtk-ltr-undelete-icone-3875-32.png"))); // NOI18N
         mnuExcluir.setText("    Excluir    ");
 
-        itmMnu_Ex_Departamento.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_F6, 0));
+        itmMnu_Ex_Departamento.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_0, 0));
         itmMnu_Ex_Departamento.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/edu/ifnmg/alvespereira/segurancadados/icones/35.png"))); // NOI18N
         itmMnu_Ex_Departamento.setText("    Departamento");
         itmMnu_Ex_Departamento.addActionListener(new java.awt.event.ActionListener() {
@@ -273,7 +285,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
         });
         mnuExcluir.add(itmMnu_Ex_Departamento);
 
-        itmMnu_Ex_Usuarios.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_F7, 0));
+        itmMnu_Ex_Usuarios.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_F11, 0));
         itmMnu_Ex_Usuarios.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/edu/ifnmg/alvespereira/segurancadados/icones/users.png"))); // NOI18N
         itmMnu_Ex_Usuarios.setText("    Usuários");
         itmMnu_Ex_Usuarios.addActionListener(new java.awt.event.ActionListener() {
@@ -453,6 +465,8 @@ public class TelaPrincipal extends javax.swing.JFrame {
     private javax.swing.JMenuItem itmMnu_Ex_Usuarios;
     private javax.swing.JMenuItem itmMnu_Usuarios;
     private javax.swing.JMenuBar jMenuBar1;
+    private javax.swing.JMenuItem jMenuItem1;
+    private javax.swing.JMenuItem jMenuItem2;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JLabel lblData;
     private javax.swing.JLabel lblDepartamento;
