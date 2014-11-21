@@ -36,10 +36,13 @@ public class CadastroProjetoForm extends javax.swing.JInternalFrame {
         txtDescricao = new javax.swing.JTextArea();
         lblDataInicio = new javax.swing.JLabel();
         lblDataTermino = new javax.swing.JLabel();
-        txtDataInicio = new javax.swing.JTextField();
-        txtDataTermino = new javax.swing.JTextField();
+        txtDataInicio = new javax.swing.JFormattedTextField();
+        txtDataFim = new javax.swing.JFormattedTextField();
 
         setTitle("Cadastro de Projeto");
+        setFrameIcon(new javax.swing.ImageIcon(getClass().getResource("/br/edu/ifnmg/alvespereira/segurancadados/icones/11295_128x128.png"))); // NOI18N
+
+        jPanelProjeto.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Dados do Projeto", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.BELOW_TOP, new java.awt.Font("Tahoma", 1, 12), new java.awt.Color(0, 102, 102))); // NOI18N
 
         lblNome.setText("Nome:");
 
@@ -61,11 +64,17 @@ public class CadastroProjetoForm extends javax.swing.JInternalFrame {
 
         lblDataTermino.setText("Data Término: ");
 
-        txtDataTermino.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtDataTerminoActionPerformed(evt);
-            }
-        });
+        try {
+            txtDataInicio.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("## / ## / ####")));
+        } catch (java.text.ParseException ex) {
+            ex.printStackTrace();
+        }
+
+        try {
+            txtDataFim.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("## / ## / ####")));
+        } catch (java.text.ParseException ex) {
+            ex.printStackTrace();
+        }
 
         javax.swing.GroupLayout jPanelProjetoLayout = new javax.swing.GroupLayout(jPanelProjeto);
         jPanelProjeto.setLayout(jPanelProjetoLayout);
@@ -73,6 +82,21 @@ public class CadastroProjetoForm extends javax.swing.JInternalFrame {
             jPanelProjetoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanelProjetoLayout.createSequentialGroup()
                 .addGroup(jPanelProjetoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanelProjetoLayout.createSequentialGroup()
+                        .addGroup(jPanelProjetoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanelProjetoLayout.createSequentialGroup()
+                                .addContainerGap()
+                                .addComponent(lblDataInicio)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(txtDataInicio, javax.swing.GroupLayout.PREFERRED_SIZE, 97, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(12, 12, 12)
+                                .addComponent(lblDataTermino)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(txtDataFim, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(jPanelProjetoLayout.createSequentialGroup()
+                                .addGap(147, 147, 147)
+                                .addComponent(btnCadastrar, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(0, 0, Short.MAX_VALUE))
                     .addGroup(jPanelProjetoLayout.createSequentialGroup()
                         .addContainerGap()
                         .addGroup(jPanelProjetoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -82,28 +106,14 @@ public class CadastroProjetoForm extends javax.swing.JInternalFrame {
                                 .addComponent(txtNome))
                             .addGroup(jPanelProjetoLayout.createSequentialGroup()
                                 .addComponent(lblDescriscao)
-                                .addGap(0, 0, Short.MAX_VALUE))))
-                    .addGroup(jPanelProjetoLayout.createSequentialGroup()
-                        .addGap(147, 147, 147)
-                        .addComponent(btnCadastrar))
-                    .addGroup(jPanelProjetoLayout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(jScrollPane1))
-                    .addGroup(jPanelProjetoLayout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(lblDataInicio)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(txtDataInicio, javax.swing.GroupLayout.DEFAULT_SIZE, 107, Short.MAX_VALUE)
-                        .addGap(12, 12, 12)
-                        .addComponent(lblDataTermino)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(txtDataTermino, javax.swing.GroupLayout.PREFERRED_SIZE, 101, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addGap(0, 0, Short.MAX_VALUE))
+                            .addComponent(jScrollPane1))))
                 .addContainerGap())
         );
         jPanelProjetoLayout.setVerticalGroup(
             jPanelProjetoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanelProjetoLayout.createSequentialGroup()
-                .addContainerGap()
+                .addGap(17, 17, 17)
                 .addGroup(jPanelProjetoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblNome)
                     .addComponent(txtNome, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -111,14 +121,14 @@ public class CadastroProjetoForm extends javax.swing.JInternalFrame {
                 .addComponent(lblDescriscao)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanelProjetoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblDataInicio)
                     .addComponent(lblDataTermino)
                     .addComponent(txtDataInicio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txtDataTermino, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 26, Short.MAX_VALUE)
-                .addComponent(btnCadastrar)
+                    .addComponent(txtDataFim, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addComponent(btnCadastrar, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
 
@@ -129,7 +139,7 @@ public class CadastroProjetoForm extends javax.swing.JInternalFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jPanelProjeto, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addContainerGap())
+                .addGap(13, 13, 13))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -146,10 +156,6 @@ public class CadastroProjetoForm extends javax.swing.JInternalFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_txtNomeActionPerformed
 
-    private void txtDataTerminoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtDataTerminoActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtDataTerminoActionPerformed
-
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnCadastrar;
@@ -159,8 +165,8 @@ public class CadastroProjetoForm extends javax.swing.JInternalFrame {
     private javax.swing.JLabel lblDataTermino;
     private javax.swing.JLabel lblDescriscao;
     private javax.swing.JLabel lblNome;
-    private javax.swing.JTextField txtDataInicio;
-    private javax.swing.JTextField txtDataTermino;
+    private javax.swing.JFormattedTextField txtDataFim;
+    private javax.swing.JFormattedTextField txtDataInicio;
     private javax.swing.JTextArea txtDescricao;
     private javax.swing.JTextField txtNome;
     // End of variables declaration//GEN-END:variables
