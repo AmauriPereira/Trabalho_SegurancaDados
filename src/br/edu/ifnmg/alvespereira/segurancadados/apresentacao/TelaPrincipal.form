@@ -20,7 +20,7 @@
             <MenuItem class="javax.swing.JMenuItem" name="itmMnuDepartamento">
               <Properties>
                 <Property name="accelerator" type="javax.swing.KeyStroke" editor="org.netbeans.modules.form.editors.KeyStrokeEditor">
-                  <KeyStroke key="F1"/>
+                  <KeyStroke key="Ctrl+Alt+F1"/>
                 </Property>
                 <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
                   <Image iconType="3" name="/br/edu/ifnmg/alvespereira/segurancadados/icones/add-chart-icone-4678-32.png"/>
@@ -34,7 +34,7 @@
             <MenuItem class="javax.swing.JMenuItem" name="itmMnuGerente">
               <Properties>
                 <Property name="accelerator" type="javax.swing.KeyStroke" editor="org.netbeans.modules.form.editors.KeyStrokeEditor">
-                  <KeyStroke key="F2"/>
+                  <KeyStroke key="Ctrl+Alt+F2"/>
                 </Property>
                 <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
                   <Image iconType="3" name="/br/edu/ifnmg/alvespereira/segurancadados/icones/bill-homme-personne-utilisateur-icone-6596-32.png"/>
@@ -48,7 +48,7 @@
             <MenuItem class="javax.swing.JMenuItem" name="itmMnuEncarregado">
               <Properties>
                 <Property name="accelerator" type="javax.swing.KeyStroke" editor="org.netbeans.modules.form.editors.KeyStrokeEditor">
-                  <KeyStroke key="F3"/>
+                  <KeyStroke key="Ctrl+Alt+F3"/>
                 </Property>
                 <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
                   <Image iconType="3" name="/br/edu/ifnmg/alvespereira/segurancadados/icones/garcon-utilisateur-icone-7572-32.png"/>
@@ -62,7 +62,7 @@
             <MenuItem class="javax.swing.JMenuItem" name="jMenuItem1">
               <Properties>
                 <Property name="accelerator" type="javax.swing.KeyStroke" editor="org.netbeans.modules.form.editors.KeyStrokeEditor">
-                  <KeyStroke key="F4"/>
+                  <KeyStroke key="Ctrl+Alt+F4"/>
                 </Property>
                 <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
                   <Image iconType="3" name="/br/edu/ifnmg/alvespereira/segurancadados/icones/liste-texte-vue-icone-4177-32.png"/>
@@ -73,7 +73,7 @@
             <MenuItem class="javax.swing.JMenuItem" name="jMenuItem2">
               <Properties>
                 <Property name="accelerator" type="javax.swing.KeyStroke" editor="org.netbeans.modules.form.editors.KeyStrokeEditor">
-                  <KeyStroke key="F5"/>
+                  <KeyStroke key="Ctrl+Alt+F5"/>
                 </Property>
                 <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
                   <Image iconType="3" name="/br/edu/ifnmg/alvespereira/segurancadados/icones/cabinet-dossiers-icone-8056-32.png"/>
@@ -94,12 +94,12 @@
             <MenuItem class="javax.swing.JMenuItem" name="itmMnu_Departamento">
               <Properties>
                 <Property name="accelerator" type="javax.swing.KeyStroke" editor="org.netbeans.modules.form.editors.KeyStrokeEditor">
-                  <KeyStroke key="F6"/>
+                  <KeyStroke key="Alt+F1"/>
                 </Property>
                 <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
                   <Image iconType="3" name="/br/edu/ifnmg/alvespereira/segurancadados/icones/0258.png"/>
                 </Property>
-                <Property name="text" type="java.lang.String" value="     Departamento"/>
+                <Property name="text" type="java.lang.String" value="     Departamento        "/>
               </Properties>
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="itmMnu_DepartamentoActionPerformed"/>
@@ -108,12 +108,48 @@
             <MenuItem class="javax.swing.JMenuItem" name="itmMnu_Usuarios">
               <Properties>
                 <Property name="accelerator" type="javax.swing.KeyStroke" editor="org.netbeans.modules.form.editors.KeyStrokeEditor">
-                  <KeyStroke key="F7"/>
+                  <KeyStroke key="Alt+F2"/>
                 </Property>
                 <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                  <Image iconType="3" name="/br/edu/ifnmg/alvespereira/segurancadados/icones/users.png"/>
+                  <Image iconType="3" name="/br/edu/ifnmg/alvespereira/segurancadados/icones/bill-homme-personne-utilisateur-icone-6596-32.png"/>
                 </Property>
-                <Property name="text" type="java.lang.String" value="     Usu&#xe1;rios"/>
+                <Property name="text" type="java.lang.String" value="     Gerente   "/>
+              </Properties>
+            </MenuItem>
+            <MenuItem class="javax.swing.JMenuItem" name="jMenuItem3">
+              <Properties>
+                <Property name="accelerator" type="javax.swing.KeyStroke" editor="org.netbeans.modules.form.editors.KeyStrokeEditor">
+                  <KeyStroke key="Alt+F3"/>
+                </Property>
+                <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+                  <Image iconType="3" name="/br/edu/ifnmg/alvespereira/segurancadados/icones/garcon-utilisateur-icone-7572-32.png"/>
+                </Property>
+                <Property name="text" type="java.lang.String" value="     Encarregado"/>
+              </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jMenuItem3ActionPerformed"/>
+              </Events>
+            </MenuItem>
+            <MenuItem class="javax.swing.JMenuItem" name="jMenuItem4">
+              <Properties>
+                <Property name="accelerator" type="javax.swing.KeyStroke" editor="org.netbeans.modules.form.editors.KeyStrokeEditor">
+                  <KeyStroke key="Alt+F4"/>
+                </Property>
+                <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+                  <Image iconType="3" name="/br/edu/ifnmg/alvespereira/segurancadados/icones/liste-texte-vue-icone-4177-32.png"/>
+                </Property>
+                <Property name="text" type="java.lang.String" value="     Projeto"/>
+              </Properties>
+            </MenuItem>
+            <MenuItem class="javax.swing.JMenuItem" name="jMenuItem5">
+              <Properties>
+                <Property name="accelerator" type="javax.swing.KeyStroke" editor="org.netbeans.modules.form.editors.KeyStrokeEditor">
+                  <KeyStroke key="Alt+F5"/>
+                </Property>
+                <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+                  <Image iconType="3" name="/br/edu/ifnmg/alvespereira/segurancadados/icones/cabinet-dossiers-icone-8056-32.png"/>
+                </Property>
+                <Property name="text" type="java.lang.String" value="     Atividade"/>
               </Properties>
             </MenuItem>
           </SubComponents>
@@ -129,12 +165,12 @@
             <MenuItem class="javax.swing.JMenuItem" name="itmMnu_Ex_Departamento">
               <Properties>
                 <Property name="accelerator" type="javax.swing.KeyStroke" editor="org.netbeans.modules.form.editors.KeyStrokeEditor">
-                  <KeyStroke key="0"/>
+                  <KeyStroke key="F1"/>
                 </Property>
                 <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
                   <Image iconType="3" name="/br/edu/ifnmg/alvespereira/segurancadados/icones/35.png"/>
                 </Property>
-                <Property name="text" type="java.lang.String" value="    Departamento"/>
+                <Property name="text" type="java.lang.String" value="     Departamento"/>
               </Properties>
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="itmMnu_Ex_DepartamentoActionPerformed"/>
@@ -143,16 +179,49 @@
             <MenuItem class="javax.swing.JMenuItem" name="itmMnu_Ex_Usuarios">
               <Properties>
                 <Property name="accelerator" type="javax.swing.KeyStroke" editor="org.netbeans.modules.form.editors.KeyStrokeEditor">
-                  <KeyStroke key="F11"/>
+                  <KeyStroke key="F2"/>
                 </Property>
                 <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                  <Image iconType="3" name="/br/edu/ifnmg/alvespereira/segurancadados/icones/users.png"/>
+                  <Image iconType="3" name="/br/edu/ifnmg/alvespereira/segurancadados/icones/bill-homme-personne-utilisateur-icone-6596-32.png"/>
                 </Property>
-                <Property name="text" type="java.lang.String" value="    Usu&#xe1;rios"/>
+                <Property name="text" type="java.lang.String" value="     Gerente"/>
               </Properties>
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="itmMnu_Ex_UsuariosActionPerformed"/>
               </Events>
+            </MenuItem>
+            <MenuItem class="javax.swing.JMenuItem" name="jMenuItem6">
+              <Properties>
+                <Property name="accelerator" type="javax.swing.KeyStroke" editor="org.netbeans.modules.form.editors.KeyStrokeEditor">
+                  <KeyStroke key="F3"/>
+                </Property>
+                <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+                  <Image iconType="3" name="/br/edu/ifnmg/alvespereira/segurancadados/icones/garcon-utilisateur-icone-7572-32.png"/>
+                </Property>
+                <Property name="text" type="java.lang.String" value="     Encarregado"/>
+              </Properties>
+            </MenuItem>
+            <MenuItem class="javax.swing.JMenuItem" name="jMenuItem7">
+              <Properties>
+                <Property name="accelerator" type="javax.swing.KeyStroke" editor="org.netbeans.modules.form.editors.KeyStrokeEditor">
+                  <KeyStroke key="F4"/>
+                </Property>
+                <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+                  <Image iconType="3" name="/br/edu/ifnmg/alvespereira/segurancadados/icones/liste-texte-vue-icone-4177-32.png"/>
+                </Property>
+                <Property name="text" type="java.lang.String" value="     Projeto"/>
+              </Properties>
+            </MenuItem>
+            <MenuItem class="javax.swing.JMenuItem" name="jMenuItem8">
+              <Properties>
+                <Property name="accelerator" type="javax.swing.KeyStroke" editor="org.netbeans.modules.form.editors.KeyStrokeEditor">
+                  <KeyStroke key="F5"/>
+                </Property>
+                <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+                  <Image iconType="3" name="/br/edu/ifnmg/alvespereira/segurancadados/icones/cabinet-dossiers-icone-8056-32.png"/>
+                </Property>
+                <Property name="text" type="java.lang.String" value="     Atividade"/>
+              </Properties>
             </MenuItem>
           </SubComponents>
         </Menu>
@@ -176,6 +245,14 @@
               </Properties>
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="itmMnuSairActionPerformed"/>
+              </Events>
+            </MenuItem>
+            <MenuItem class="javax.swing.JMenuItem" name="jMenuItem9">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="     Alterar Dados Pessoais"/>
+              </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jMenuItem9ActionPerformed"/>
               </Events>
             </MenuItem>
           </SubComponents>
