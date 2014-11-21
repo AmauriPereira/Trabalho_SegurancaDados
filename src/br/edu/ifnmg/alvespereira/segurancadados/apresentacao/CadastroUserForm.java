@@ -33,7 +33,13 @@ public final class CadastroUserForm extends javax.swing.JInternalFrame {
     public void popularCB() {
         ArrayList<String> Departamentos = new ArrayList<>();
         DepartamentoBO depBO = new DepartamentoBO();
-        Departamentos = depBO.ComboBoxDepartamentos();
+
+        try {
+            Departamentos = depBO.ComboBoxDepartamentos();
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Erro ao popular o departamento",
+                    "Departamento", JOptionPane.ERROR_MESSAGE);
+        }
 
         cbDepartamentos.removeAllItems();
         cbDepartamentos.addItem("Selecione");
@@ -195,7 +201,13 @@ public final class CadastroUserForm extends javax.swing.JInternalFrame {
 
             Departamento departamento = new Departamento();
             DepartamentoBO depBO = new DepartamentoBO();
-            departamento = depBO.selectDepartamento(cbDepartamentos.getSelectedItem() + "");
+
+            try {
+                departamento = depBO.selectDepartamento(cbDepartamentos.getSelectedItem() + "");
+            } catch (SQLException ex) {
+                JOptionPane.showMessageDialog(null, "Erro ao selecionar o departamento",
+                        "Cadastro de usuários", JOptionPane.ERROR_MESSAGE);
+            }
 
             //codigo abaixo realiza a criptografia da senha
             MessageDigest cript;

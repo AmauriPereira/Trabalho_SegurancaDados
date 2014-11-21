@@ -6,6 +6,7 @@ import java.awt.Toolkit;
 import java.io.UnsupportedEncodingException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
@@ -63,7 +64,12 @@ public class Login extends javax.swing.JFrame {
 
         //A variavel userLogado recebe os dados do usuario que realizou o login
         LoginBO logarBO = new LoginBO();
-        userLogado = logarBO.Logar(login, Senha);
+        try {
+            userLogado = logarBO.Logar(login, Senha);
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Erro ao Logar no Sistema !!!",
+                    "Erro", JOptionPane.ERROR_MESSAGE);
+        }
 
         // se a variavel user logado for null é que não existe cadastro
         // Para o login e senha informados

@@ -8,9 +8,12 @@ import java.awt.Dimension;
 import static java.awt.Frame.MAXIMIZED_BOTH;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JDesktopPane;
 import javax.swing.JInternalFrame;
 import javax.swing.JOptionPane;
@@ -425,7 +428,12 @@ public class TelaPrincipal extends javax.swing.JFrame {
 
         Departamento DEPexistente = null;
 
-        DEPexistente = depBO.SelectDepartamentos();
+        try {
+            DEPexistente = depBO.SelectDepartamentos();
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Erro ao selecionar o departamento",
+                    "Cadastro de Gerente", JOptionPane.ERROR_MESSAGE);
+        }
 
         if (DEPexistente == null) {
             JOptionPane.showMessageDialog(null, "Não existe departamentos cadastrados\n"
@@ -459,7 +467,12 @@ public class TelaPrincipal extends javax.swing.JFrame {
 
         Departamento DEPexistente = null;
 
-        DEPexistente = depBO.SelectDepartamentos();
+        try {
+            DEPexistente = depBO.SelectDepartamentos();
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Erro ao selecionar o departamento",
+                    "Cadastro de Gerente", JOptionPane.ERROR_MESSAGE);
+        }
 
         if (DEPexistente == null) {
             JOptionPane.showMessageDialog(null, "Não existe departamentos cadastrados\n"

@@ -29,8 +29,7 @@ public class UsuarioBO {
 
         if (userExistente == null) {
             userDAO.criaUSER(Diretor);
-            JOptionPane.showMessageDialog(null, "Diretor Cadastrado com Sucesso !!!",
-                    "Cadastro de Diretor", JOptionPane.INFORMATION_MESSAGE);
+
         }
     }
 
