@@ -35,7 +35,7 @@ public class UsuarioDAO {
             comando.setString(2, user.getTipo());
             comando.setString(3, user.getSenha());
             comando.setString(4, user.getEmail());
-            comando.setString(5, user.getDepartamento());
+            comando.setString(5, user.getDepartamento().getCodigo());
 
             comando.execute();
             conexao.commit();
@@ -121,7 +121,9 @@ public class UsuarioDAO {
                 user.setTipo(resultado.getString("TIPO"));
                 user.setSenha(resultado.getString("SENHA"));
                 user.setEmail(resultado.getString("EMAIL"));
-                user.setDepartamento(resultado.getString("COD_DEPARTAMENTO"));
+
+                DepartamentoDAO depDAO = new DepartamentoDAO();
+                user.setDepartamento(depDAO.selectDepartamentoPorCodigo(resultado.getString("COD_DEPARTAMENTO")));
 
             }
 
@@ -166,7 +168,9 @@ public class UsuarioDAO {
                 user.setTipo(resultado.getString("TIPO"));
                 user.setSenha(resultado.getString("SENHA"));
                 user.setEmail(resultado.getString("EMAIL"));
-                user.setDepartamento(resultado.getString("COD_DEPARTAMENTO"));
+
+                DepartamentoDAO depDAO = new DepartamentoDAO();
+                user.setDepartamento(depDAO.selectDepartamentoPorCodigo(resultado.getString("COD_DEPARTAMENTO")));
 
             }
 
@@ -211,7 +215,9 @@ public class UsuarioDAO {
                 user.setTipo(resultado.getString("TIPO"));
                 user.setSenha(resultado.getString("SENHA"));
                 user.setEmail(resultado.getString("EMAIL"));
-                user.setDepartamento(resultado.getString("COD_DEPARTAMENTO"));
+
+                DepartamentoDAO depDAO = new DepartamentoDAO();
+                user.setDepartamento(depDAO.selectDepartamentoPorCodigo(resultado.getString("COD_DEPARTAMENTO")));
 
             }
 

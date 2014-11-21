@@ -65,13 +65,13 @@ public class DepartamentoBO {
 
     }
 
-    public Departamento selectCodDepartamento(String NomeDepartamento) {
+    public Departamento selectDepartamento(String NomeDepartamento) {
 
         DepartamentoDAO depDAO = new DepartamentoDAO();
         Departamento departamento = new Departamento();
 
         try {
-            departamento = depDAO.selectCODdepartamento(NomeDepartamento);
+            departamento = depDAO.selectDepartamentoPorNome(NomeDepartamento);
         } catch (SQLException ex) {
             Logger.getLogger(DepartamentoBO.class.getName()).log(Level.SEVERE, null, ex);
         }

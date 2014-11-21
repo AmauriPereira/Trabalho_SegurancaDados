@@ -54,7 +54,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
             //Esse teste e feito pois diretor nao possui departamento
             this.txtDepartamento.setText("   -   ");
         } else {
-            this.txtDepartamento.setText(usuarioLogado.getDepartamento());
+            this.txtDepartamento.setText(usuarioLogado.getDepartamento().getCodigo());
         }
 
     }

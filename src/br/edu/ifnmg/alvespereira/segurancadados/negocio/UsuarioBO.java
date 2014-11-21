@@ -43,7 +43,7 @@ public class UsuarioBO {
 
         //VERIFICA SE HA ALGUM GERENTE CADASTRADO COM O MESMO NOME
         if (GerenteExistente == null) {
-            Usuario gerentePorDepartmento = userDAO.selectGerentePorDepartamento(Gerente.getDepartamento(), Gerente.getTipo());
+            Usuario gerentePorDepartmento = userDAO.selectGerentePorDepartamento(Gerente.getDepartamento().getCodigo(), Gerente.getTipo());
             //VERIFICA SE JA EXISTE UM GERENTE CADASTRADO PARA O DEPARTAMENTO SELECIONADO
             if (gerentePorDepartmento == null) {
                 userDAO.criaUSER(Gerente);

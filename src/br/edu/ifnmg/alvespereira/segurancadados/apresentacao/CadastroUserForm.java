@@ -195,7 +195,7 @@ public final class CadastroUserForm extends javax.swing.JInternalFrame {
 
             Departamento departamento = new Departamento();
             DepartamentoBO depBO = new DepartamentoBO();
-            departamento = depBO.selectCodDepartamento(cbDepartamentos.getSelectedItem() + "");
+            departamento = depBO.selectDepartamento(cbDepartamentos.getSelectedItem() + "");
 
             //codigo abaixo realiza a criptografia da senha
             MessageDigest cript;
@@ -222,7 +222,7 @@ public final class CadastroUserForm extends javax.swing.JInternalFrame {
             userCadastro.setEmail(Email);
             userCadastro.setSenha(Senha);
             userCadastro.setTipo(TipoUser);
-            userCadastro.setDepartamento(departamento.getCodigo());
+            userCadastro.setDepartamento(departamento);
 
             UsuarioBO UsuarioBO = new UsuarioBO();
 

@@ -6,7 +6,7 @@ public class Usuario {
     private String email;
     private String senha;
     private String tipo;
-    private String Coddepartamento;
+    private Departamento Coddepartamento;
 
     public String getNome() {
         return nome;
@@ -40,11 +40,11 @@ public class Usuario {
         this.tipo = tipo;
     }
 
-    public String getDepartamento() {
+    public Departamento getDepartamento() {
         return Coddepartamento;
     }
 
-    public void setDepartamento(String Coddepartamento) {
+    public void setDepartamento(Departamento Coddepartamento) {
         this.Coddepartamento = Coddepartamento;
     }
 
