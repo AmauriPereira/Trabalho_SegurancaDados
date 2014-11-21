@@ -250,6 +250,11 @@ public class TelaPrincipal extends javax.swing.JFrame {
         jMenuItem1.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_F4, java.awt.event.InputEvent.ALT_MASK | java.awt.event.InputEvent.CTRL_MASK));
         jMenuItem1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/edu/ifnmg/alvespereira/segurancadados/icones/liste-texte-vue-icone-4177-32.png"))); // NOI18N
         jMenuItem1.setText("       Projeto");
+        jMenuItem1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem1ActionPerformed(evt);
+            }
+        });
         mnuCadastros.add(jMenuItem1);
 
         jMenuItem2.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_F5, java.awt.event.InputEvent.ALT_MASK | java.awt.event.InputEvent.CTRL_MASK));
@@ -519,6 +524,44 @@ public class TelaPrincipal extends javax.swing.JFrame {
     private void jMenuItem9ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem9ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jMenuItem9ActionPerformed
+
+    private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
+// Menu - Cadastro > ItemMenu - pROJETO 
+        DepartamentoBO depBO = new DepartamentoBO();
+
+        Departamento DEPexistente = null;
+
+        try {
+            DEPexistente = depBO.SelectDepartamentos();
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Erro ao selecionar o departamento",
+                    "Cadastro de Projetos", JOptionPane.ERROR_MESSAGE);
+        }
+
+        if (DEPexistente == null) {
+            JOptionPane.showMessageDialog(null, "Não existe departamentos cadastrados\n"
+                    + "É necessário cadastrar no minimo um Departamento !!!", "Cadastro de Projetos", JOptionPane.ERROR_MESSAGE);
+        } else {
+            //Instancia uma tela de cadastro de Projeto se o usuario que esta logado for Um Gerente;
+            //caso não seja um Gerente é exibida uma mensagem ao usuario do sistema.
+            //Obs: Somente Gerente pode cadastrar Projeto
+
+            if (usuarioLogado.getTipo().equals("Gerente")) {
+
+                CadastroProjetoForm cadastroProjetoForm = new CadastroProjetoForm();
+
+                cadastroProjetoForm.setVisible(true);
+                centralizaForm(cadastroProjetoForm);
+
+                JDP1.add(cadastroProjetoForm);
+
+            } else {
+                JOptionPane.showMessageDialog(null, "Você não possui previlégios para acessar \n   "
+                        + "a Tela de Cadastros de projeto!!!", "Cadastro de Projeto", JOptionPane.ERROR_MESSAGE);
+
+            }
+        }
+    }//GEN-LAST:event_jMenuItem1ActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel Data;
