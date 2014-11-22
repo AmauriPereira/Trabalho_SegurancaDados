@@ -19,7 +19,7 @@ import javax.swing.JOptionPane;
  *
  * @author Amauri
  */
-public class CadastroAtividadeForm extends javax.swing.JInternalFrame {
+public final class CadastroAtividadeForm extends javax.swing.JInternalFrame {
 
     /**
      * Creates new form CadastroAtividadeForm
@@ -50,7 +50,7 @@ public class CadastroAtividadeForm extends javax.swing.JInternalFrame {
 
     }
     
-    //Metodo que add todos os projetos cadastrados na ComboBox
+    //Metodo que add todos os encarregados cadastrados de determinado departamento na ComboBox
     public void popularCbEncarregado() {
         ArrayList<String> Encarregado = new ArrayList<>();
          UsuarioBO EncarregadoBO = new UsuarioBO();
@@ -220,18 +220,18 @@ public class CadastroAtividadeForm extends javax.swing.JInternalFrame {
         AtividadeBO AtividadeBO = new AtividadeBO();
         try {
             AtividadeBO.criarAtividade(atividade);
-            JOptionPane.showMessageDialog(null, "Departamento Cadastrado com Sucesso !!!",
-                    "Cadastro de Departamento", JOptionPane.INFORMATION_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Projeto Cadastrado com Sucesso !!!",
+                    "Cadastro de Projeto", JOptionPane.INFORMATION_MESSAGE);
         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(null, "Erro ao Cadastrar o departamento",
-                    "Cadastro de Departamento", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Erro ao Cadastrar o projeto",
+                    "Cadastro de Projeto", JOptionPane.ERROR_MESSAGE);
         }
 
 
     }//GEN-LAST:event_btnCadastrarActionPerformed
 
     private void cmbProjetoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbProjetoActionPerformed
-        //this.popularCbProjeto();
+        
     }//GEN-LAST:event_cmbProjetoActionPerformed
 
 
@@ -253,7 +253,7 @@ public class CadastroAtividadeForm extends javax.swing.JInternalFrame {
             return null;
         }
 
-        SimpleDateFormat formatador = new SimpleDateFormat("HH:mm");
+        SimpleDateFormat formatador = new SimpleDateFormat("HH:MI:SS");
         Time hora = (Time) formatador.parse(horaString);
         Time time = new Time(hora.getTime());
 
