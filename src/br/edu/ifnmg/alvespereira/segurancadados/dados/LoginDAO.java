@@ -36,7 +36,7 @@ public class LoginDAO {
                 user.setEmail(resultado.getString("EMAIL"));
 
                 DepartamentoDAO depDAO = new DepartamentoDAO();
-                user.setDepartamento(depDAO.selectDepartamentoPorCodigo(resultado.getString("COD_DEPARTAMENTO")));
+                user.setCodDepartamento(depDAO.selectDepartamentoPorCodigo(resultado.getString("COD_DEPARTAMENTO")));
 
             }
 
