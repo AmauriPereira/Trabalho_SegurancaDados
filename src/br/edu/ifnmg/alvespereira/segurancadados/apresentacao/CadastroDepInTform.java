@@ -18,7 +18,7 @@ public class CadastroDepInTform extends javax.swing.JInternalFrame {
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
-        jButton1 = new javax.swing.JButton();
+        btnCadastrar = new javax.swing.JButton();
         txtNomeDep = new javax.swing.JTextField();
         txtCodDep = new javax.swing.JTextField();
 
@@ -36,11 +36,11 @@ public class CadastroDepInTform extends javax.swing.JInternalFrame {
         jLabel2.setForeground(new java.awt.Color(0, 102, 102));
         jLabel2.setText("Nome:");
 
-        jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/edu/ifnmg/alvespereira/segurancadados/icones/8441_32x32.png"))); // NOI18N
-        jButton1.setText("Cadastrar");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        btnCadastrar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/edu/ifnmg/alvespereira/segurancadados/icones/8441_32x32.png"))); // NOI18N
+        btnCadastrar.setText("Cadastrar");
+        btnCadastrar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                btnCadastrarActionPerformed(evt);
             }
         });
 
@@ -59,7 +59,7 @@ public class CadastroDepInTform extends javax.swing.JInternalFrame {
                     .addComponent(txtNomeDep, javax.swing.GroupLayout.PREFERRED_SIZE, 231, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(55, 55, 55)
-                        .addComponent(jButton1)))
+                        .addComponent(btnCadastrar)))
                 .addContainerGap(70, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
@@ -74,7 +74,7 @@ public class CadastroDepInTform extends javax.swing.JInternalFrame {
                     .addComponent(txtNomeDep, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel2))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 38, Short.MAX_VALUE)
-                .addComponent(jButton1)
+                .addComponent(btnCadastrar)
                 .addContainerGap())
         );
 
@@ -83,7 +83,7 @@ public class CadastroDepInTform extends javax.swing.JInternalFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    private void btnCadastrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCadastrarActionPerformed
         //Tela de Cadastro de Departamento
 
         Departamento DEP = new Departamento();
@@ -102,11 +102,11 @@ public class CadastroDepInTform extends javax.swing.JInternalFrame {
             JOptionPane.showMessageDialog(null, "Erro ao Cadastrar o departamento",
                     "Cadastro de Departamento", JOptionPane.ERROR_MESSAGE);
         }
-    }//GEN-LAST:event_jButton1ActionPerformed
+    }//GEN-LAST:event_btnCadastrarActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
+    private javax.swing.JButton btnCadastrar;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JPanel jPanel1;

@@ -5,6 +5,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 
 public class UsuarioDAO {
 
@@ -16,6 +17,9 @@ public class UsuarioDAO {
     private static final String SQL_SELECT_GERENTE = "SELECT  NOME, TIPO, SENHA, EMAIL, COD_DEPARTAMENTO FROM USUARIO WHERE NOME = ? AND TIPO = ?";
     private static final String SQL_SELECT_ENCARREGADO = "SELECT  NOME, TIPO, SENHA, EMAIL, COD_DEPARTAMENTO FROM USUARIO WHERE NOME = ? AND TIPO = ?";
 
+    private static final String SQL_SELECT_TODOS_ENCARREGADO = "SELECT NOME FROM USUARIO";
+    
+    
     private static final String SQL_SELECT_GERENTE_POR_DEPARTAMENTO = "SELECT  NOME, EMAIL, SENHA, TIPO, USUARIO.COD_DEPARTAMENTO FROM USUARIO "
             + "WHERE USUARIO.TIPO =  ?  AND  USUARIO.COD_DEPARTAMENTO = ?";
 
@@ -123,7 +127,7 @@ public class UsuarioDAO {
                 user.setEmail(resultado.getString("EMAIL"));
 
                 DepartamentoDAO depDAO = new DepartamentoDAO();
-                user.setDepartamento(depDAO.selectDepartamentoPorCodigo(resultado.getString("COD_DEPARTAMENTO")));
+                user.setCodDepartamento(depDAO.selectDepartamentoPorCodigo(resultado.getString("COD_DEPARTAMENTO")));
 
             }
 
@@ -170,7 +174,7 @@ public class UsuarioDAO {
                 user.setEmail(resultado.getString("EMAIL"));
 
                 DepartamentoDAO depDAO = new DepartamentoDAO();
-                user.setDepartamento(depDAO.selectDepartamentoPorCodigo(resultado.getString("COD_DEPARTAMENTO")));
+                user.setCodDepartamento(depDAO.selectDepartamentoPorCodigo(resultado.getString("COD_DEPARTAMENTO")));
 
             }
 
@@ -217,7 +221,7 @@ public class UsuarioDAO {
                 user.setEmail(resultado.getString("EMAIL"));
 
                 DepartamentoDAO depDAO = new DepartamentoDAO();
-                user.setDepartamento(depDAO.selectDepartamentoPorCodigo(resultado.getString("COD_DEPARTAMENTO")));
+                user.setCodDepartamento(depDAO.selectDepartamentoPorCodigo(resultado.getString("COD_DEPARTAMENTO")));
 
             }
 
@@ -240,4 +244,43 @@ public class UsuarioDAO {
         return user;
     }
 
+    
+    //SELECIONA TODOS OS DEPARTAMENTO, E ARMAZENA EM UMA LISTA
+    public ArrayList<String> cbEncarregado() throws SQLException {
+        ArrayList<String> Encaregado = new ArrayList<>();
+        Connection conexao = null;
+        PreparedStatement comando = null;
+        ResultSet resultado = null;
+
+        try {
+
+            conexao = BancoDadosUtil.getConnection();
+            comando = conexao.prepareStatement(SQL_SELECT_TODOS_ENCARREGADO);
+
+            resultado = comando.executeQuery();
+            Encaregado.removeAll(Encaregado);
+
+            while (resultado.next()) {
+                Encaregado.add(resultado.getString("NOME"));
+            }
+
+            conexao.commit();
+
+        } catch (Exception e) {
+            if (conexao != null) {
+                conexao.rollback();
+            }
+            throw new RuntimeException(e);
+
+        } finally {
+            if (comando != null && !comando.isClosed()) {
+                comando.close();
+            }
+            if (conexao != null && !conexao.isClosed()) {
+                conexao.close();
+            }
+        }
+        return Encaregado;
+    }
+    
 }

@@ -4,6 +4,7 @@ import java.util.Date;
 
 public class Projeto {
 
+    private int idProjeto;
     private String nome;
     private String descricao;
     private Date dataInicio;
@@ -11,6 +12,14 @@ public class Projeto {
     private Usuario gerente;
     private Departamento departamento;
 
+    public int getIdProjeto() {
+        return idProjeto;
+    }
+
+    public void setIdProjeto(int idProjeto) {
+        this.idProjeto = idProjeto;
+    }
+       
     public String getNome() {
         return nome;
     }

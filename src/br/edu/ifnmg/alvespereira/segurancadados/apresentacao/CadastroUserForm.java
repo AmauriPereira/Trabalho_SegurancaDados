@@ -234,7 +234,7 @@ public final class CadastroUserForm extends javax.swing.JInternalFrame {
             userCadastro.setEmail(Email);
             userCadastro.setSenha(Senha);
             userCadastro.setTipo(TipoUser);
-            userCadastro.setDepartamento(departamento);
+            userCadastro.setCodDepartamento(departamento);
 
             UsuarioBO UsuarioBO = new UsuarioBO();
 
