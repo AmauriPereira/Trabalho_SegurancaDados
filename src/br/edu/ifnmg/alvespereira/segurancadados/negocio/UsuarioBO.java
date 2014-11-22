@@ -5,6 +5,7 @@ import br.edu.ifnmg.alvespereira.segurancadados.dados.UsuarioDAO;
 import br.edu.ifnmg.alvespereira.segurancadados.entidades.Departamento;
 import br.edu.ifnmg.alvespereira.segurancadados.entidades.Usuario;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import javax.swing.JOptionPane;
 
 public class UsuarioBO {
@@ -90,4 +91,15 @@ public class UsuarioBO {
 
     }
 
+    public ArrayList<String> ComboBoxEncarregado() throws SQLException {
+
+        UsuarioDAO usuarioDAO = new UsuarioDAO();
+        ArrayList<String> Encarregado = new ArrayList<>();
+
+        Encarregado = usuarioDAO.cbEncarregado();
+
+        return Encarregado;
+
+    }
+    
 }
