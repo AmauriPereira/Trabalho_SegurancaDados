@@ -12,9 +12,6 @@ import javax.swing.JOptionPane;
 
 public class CadastroAtividadeForm extends javax.swing.JInternalFrame {
 
-    /**
-     * Creates new form CadastroAtividadeForm
-     */
     public CadastroAtividadeForm() {
         initComponents();
         this.popularCbProjeto();
@@ -41,7 +38,7 @@ public class CadastroAtividadeForm extends javax.swing.JInternalFrame {
 
     }
 
-    //Metodo que add todos os projetos cadastrados na ComboBox
+    //Metodo que add todos os encarregados cadastrados de determinado departamento na ComboBox
     public void popularCbEncarregado() {
         ArrayList<String> Encarregado = new ArrayList<>();
         UsuarioBO EncarregadoBO = new UsuarioBO();
@@ -234,18 +231,22 @@ public class CadastroAtividadeForm extends javax.swing.JInternalFrame {
         try {
             AtividadeBO AtividadeBO = new AtividadeBO();
             AtividadeBO.criarAtividade(atividade);
+
             JOptionPane.showMessageDialog(null, "Atividade Cadastrada com Sucesso !!!",
                     "Cadastro de Atividade", JOptionPane.INFORMATION_MESSAGE);
+
         } catch (SQLException ex) {
+
             JOptionPane.showMessageDialog(null, "Erro ao Cadastrar a Atividade",
                     "Cadastro de Atividade", JOptionPane.ERROR_MESSAGE);
+
         }
 
 
     }//GEN-LAST:event_btnCadastrarActionPerformed
 
     private void cmbProjetoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbProjetoActionPerformed
-        //this.popularCbProjeto();
+
     }//GEN-LAST:event_cmbProjetoActionPerformed
 
 
@@ -261,5 +262,6 @@ public class CadastroAtividadeForm extends javax.swing.JInternalFrame {
     private javax.swing.JTextField txtDuracao;
     private javax.swing.JTextField txtNome;
     // End of variables declaration//GEN-END:variables
+
 
 }
