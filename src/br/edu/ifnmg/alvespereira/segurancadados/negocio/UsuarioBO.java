@@ -91,6 +91,26 @@ public class UsuarioBO {
 
     }
 
+    public Usuario selectUmEncarregado(String Nome, String Tipo) throws SQLException {
+        UsuarioDAO EncarregadoDAO = new UsuarioDAO();
+        Usuario Encarregado = new Usuario();
+
+        Encarregado = EncarregadoDAO.selectEncarregado(Nome, Tipo);
+
+        return Encarregado;
+
+    }
+
+    public Usuario selectTodosEncarregado() throws SQLException {
+        UsuarioDAO EncarregadoDAO = new UsuarioDAO();
+        Usuario Encarregado = new Usuario();
+
+        Encarregado = EncarregadoDAO.selectTodosEncarregado();
+
+        return Encarregado;
+
+    }
+
     public ArrayList<String> ComboBoxEncarregado() throws SQLException {
 
         UsuarioDAO usuarioDAO = new UsuarioDAO();
@@ -101,5 +121,5 @@ public class UsuarioBO {
         return Encarregado;
 
     }
-    
+
 }

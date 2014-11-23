@@ -13,14 +13,13 @@ public class UsuarioDAO {
     private static final String SQL_INSERT_USUARIO = "INSERT INTO USUARIO( NOME, TIPO, SENHA, EMAIL, COD_DEPARTAMENTO)VALUES (?,?,?,?,?)";
 
     //CONSULTAS DE SELECT NO BANCO
-    private static final String SQL_SELECT_DIRETOR = "SELECT  NOME, TIPO, SENHA, EMAIL FROM USUARIO WHERE TIPO LIKE ?";
-    private static final String SQL_SELECT_GERENTE = "SELECT  NOME, TIPO, SENHA, EMAIL, COD_DEPARTAMENTO FROM USUARIO WHERE NOME = ? AND TIPO = ?";
-    private static final String SQL_SELECT_ENCARREGADO = "SELECT  NOME, TIPO, SENHA, EMAIL, COD_DEPARTAMENTO FROM USUARIO WHERE NOME = ? AND TIPO = ?";
+    private static final String SQL_SELECT_DIRETOR = "SELECT  NOME, TIPO, SENHA, EMAIL, ID_USUARIO FROM USUARIO WHERE TIPO LIKE ?";
+    private static final String SQL_SELECT_GERENTE = "SELECT  NOME, TIPO, SENHA, EMAIL, COD_DEPARTAMENTO , ID_USUARIO FROM USUARIO WHERE NOME = ? AND TIPO = ?";
+    private static final String SQL_SELECT_ENCARREGADO = "SELECT  NOME, TIPO, SENHA, EMAIL, COD_DEPARTAMENTO, ID_USUARIO FROM USUARIO WHERE NOME = ? AND TIPO = ?";
 
-    private static final String SQL_SELECT_TODOS_ENCARREGADO = "SELECT NOME FROM USUARIO";
-    
-    
-    private static final String SQL_SELECT_GERENTE_POR_DEPARTAMENTO = "SELECT  NOME, EMAIL, SENHA, TIPO, USUARIO.COD_DEPARTAMENTO FROM USUARIO "
+    private static final String SQL_SELECT_TODOS_ENCARREGADO = "SELECT NOME, TIPO, SENHA, EMAIL, COD_DEPARTAMENTO, ID_USUARIO FROM USUARIO WHERE TIPO = ?";
+
+    private static final String SQL_SELECT_GERENTE_POR_DEPARTAMENTO = "SELECT  NOME, EMAIL, SENHA, TIPO, USUARIO.COD_DEPARTAMENTO, ID_USUARIO FROM USUARIO "
             + "WHERE USUARIO.TIPO =  ?  AND  USUARIO.COD_DEPARTAMENTO = ?";
 
     // ABAIXO METODOS DE INSERÇÃO(INSERT), REMOÇÃO(DELETE), ATUALIZAÇÃO(UPDATE), RECUPERAÇÃO(SELECT)
@@ -81,6 +80,7 @@ public class UsuarioDAO {
                 user.setTipo(resultado.getString("TIPO"));
                 user.setSenha(resultado.getString("SENHA"));
                 user.setEmail(resultado.getString("EMAIL"));
+                user.setIdUsuario(resultado.getInt("ID_USUARIO"));
 
             }
 
@@ -125,6 +125,7 @@ public class UsuarioDAO {
                 user.setTipo(resultado.getString("TIPO"));
                 user.setSenha(resultado.getString("SENHA"));
                 user.setEmail(resultado.getString("EMAIL"));
+                user.setIdUsuario(resultado.getInt("ID_USUARIO"));
 
                 DepartamentoDAO depDAO = new DepartamentoDAO();
                 user.setCodDepartamento(depDAO.selectDepartamentoPorCodigo(resultado.getString("COD_DEPARTAMENTO")));
@@ -172,6 +173,55 @@ public class UsuarioDAO {
                 user.setTipo(resultado.getString("TIPO"));
                 user.setSenha(resultado.getString("SENHA"));
                 user.setEmail(resultado.getString("EMAIL"));
+                user.setIdUsuario(resultado.getInt("ID_USUARIO"));
+
+                DepartamentoDAO depDAO = new DepartamentoDAO();
+                user.setCodDepartamento(depDAO.selectDepartamentoPorCodigo(resultado.getString("COD_DEPARTAMENTO")));
+
+            }
+
+            conexao.commit();
+
+        } catch (Exception e) {
+            if (conexao != null) {
+                conexao.rollback();
+            }
+            throw new RuntimeException(e);
+
+        } finally {
+            if (comando != null && !comando.isClosed()) {
+                comando.close();
+            }
+            if (conexao != null && !conexao.isClosed()) {
+                conexao.close();
+            }
+        }
+        return user;
+    }
+
+    //SELECIONA O ENCARREGADO CADASTRADO
+    public Usuario selectTodosEncarregado() throws SQLException {
+        Connection conexao = null;
+        PreparedStatement comando = null;
+        ResultSet resultado = null;
+        Usuario user = null;
+
+        try {
+
+            conexao = BancoDadosUtil.getConnection();
+
+            comando = conexao.prepareStatement(SQL_SELECT_TODOS_ENCARREGADO);
+            comando.setString(1, "Encarregado");
+
+            resultado = comando.executeQuery();
+
+            if (resultado.next()) {
+                user = new Usuario();
+                user.setNome(resultado.getString("NOME"));
+                user.setTipo(resultado.getString("TIPO"));
+                user.setSenha(resultado.getString("SENHA"));
+                user.setEmail(resultado.getString("EMAIL"));
+                user.setIdUsuario(resultado.getInt("ID_USUARIO"));
 
                 DepartamentoDAO depDAO = new DepartamentoDAO();
                 user.setCodDepartamento(depDAO.selectDepartamentoPorCodigo(resultado.getString("COD_DEPARTAMENTO")));
@@ -219,6 +269,7 @@ public class UsuarioDAO {
                 user.setTipo(resultado.getString("TIPO"));
                 user.setSenha(resultado.getString("SENHA"));
                 user.setEmail(resultado.getString("EMAIL"));
+                user.setIdUsuario(resultado.getInt("ID_USUARIO"));
 
                 DepartamentoDAO depDAO = new DepartamentoDAO();
                 user.setCodDepartamento(depDAO.selectDepartamentoPorCodigo(resultado.getString("COD_DEPARTAMENTO")));
@@ -244,7 +295,6 @@ public class UsuarioDAO {
         return user;
     }
 
-    
     //SELECIONA TODOS OS DEPARTAMENTO, E ARMAZENA EM UMA LISTA
     public ArrayList<String> cbEncarregado() throws SQLException {
         ArrayList<String> Encaregado = new ArrayList<>();
@@ -256,6 +306,7 @@ public class UsuarioDAO {
 
             conexao = BancoDadosUtil.getConnection();
             comando = conexao.prepareStatement(SQL_SELECT_TODOS_ENCARREGADO);
+            comando.setString(1, "Encarregado");
 
             resultado = comando.executeQuery();
             Encaregado.removeAll(Encaregado);
@@ -282,5 +333,5 @@ public class UsuarioDAO {
         }
         return Encaregado;
     }
-    
+
 }

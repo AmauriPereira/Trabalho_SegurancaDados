@@ -1,9 +1,13 @@
 package br.edu.ifnmg.alvespereira.segurancadados.apresentacao;
 
 import static br.edu.ifnmg.alvespereira.segurancadados.apresentacao.Login.getInstancia;
+import br.edu.ifnmg.alvespereira.segurancadados.dados.ProjetoDAO;
 import br.edu.ifnmg.alvespereira.segurancadados.entidades.Departamento;
+import br.edu.ifnmg.alvespereira.segurancadados.entidades.Projeto;
 import br.edu.ifnmg.alvespereira.segurancadados.entidades.Usuario;
 import br.edu.ifnmg.alvespereira.segurancadados.negocio.DepartamentoBO;
+import br.edu.ifnmg.alvespereira.segurancadados.negocio.ProjetoBO;
+import br.edu.ifnmg.alvespereira.segurancadados.negocio.UsuarioBO;
 import java.awt.Dimension;
 import static java.awt.Frame.MAXIMIZED_BOTH;
 import java.awt.event.ActionEvent;
@@ -12,6 +16,8 @@ import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JDesktopPane;
 import javax.swing.JInternalFrame;
 import javax.swing.JOptionPane;
@@ -567,39 +573,55 @@ public class TelaPrincipal extends javax.swing.JFrame {
     }//GEN-LAST:event_itmMnuProjetoActionPerformed
 
     private void itmMnuAtividadeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itmMnuAtividadeActionPerformed
-        // Menu - Cadastro > ItemMenu - Encarregado 
-        DepartamentoBO depBO = new DepartamentoBO();
+        // Menu - Cadastro > ItemMenu - Atividade 
+        UsuarioBO userBO = new UsuarioBO();
 
-        Departamento DEPexistente = null;
+        Usuario Encarregadoexistente = null;
 
         try {
-            DEPexistente = depBO.SelectDepartamentos();
+            Encarregadoexistente = userBO.selectTodosEncarregado();
         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(null, "Erro ao selecionar o departamento",
-                    "Cadastro de Gerente", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Erro ao selecionar o Encarregado",
+                    "Cadastro de Atividade", JOptionPane.ERROR_MESSAGE);
         }
 
-        if (DEPexistente == null) {
-            JOptionPane.showMessageDialog(null, "Não existe departamentos cadastrados\n"
-                    + "É necessário cadastrar no minimo um Departamento !!!", "Cadastro de Usuários", JOptionPane.ERROR_MESSAGE);
+        if (Encarregadoexistente == null) {
+            JOptionPane.showMessageDialog(null, "Não existe Encarregados cadastrados\n"
+                    + "É necessário cadastrar no minimo um Encarregado !!!", "Cadastro de Atividade", JOptionPane.ERROR_MESSAGE);
         } else {
-            //Instancia uma tela de cadastro de Encarregado 
-            //Se o usuario que esta logado for Um diretor ou um Gerente;
-            //caso não seja um diretor nem Gerente é exibida uma mensagem ao usuario do sistema.
-            //Obs: Somente diretor e gerente podem cadastrar Encarregados.
-            if ((usuarioLogado.getTipo().equals("Diretor")) || (usuarioLogado.getTipo().equals("Gerente"))) {
 
-                CadastroAtividadeForm cadastroAtividadeForm = new CadastroAtividadeForm();
+            Projeto projetExistente = null;
 
-                cadastroAtividadeForm.setVisible(true);
-                centralizaForm(cadastroAtividadeForm);
+            ProjetoBO projetBO = new ProjetoBO();
 
-                JDP1.add(cadastroAtividadeForm);
-
+            try {
+                projetExistente = projetBO.selectTodosProjeto();
+            } catch (SQLException ex) {
+                JOptionPane.showMessageDialog(null, "Erro ao selecionar o Projeto",
+                        "Cadastro de Atividade", JOptionPane.ERROR_MESSAGE);
+            }
+            if (projetExistente == null) {
+                JOptionPane.showMessageDialog(null, "Não existe Projetos cadastrados\n"
+                        + "É necessário cadastrar no minimo um Projeto !!!", "Cadastro de Atividade", JOptionPane.ERROR_MESSAGE);
             } else {
-                JOptionPane.showMessageDialog(null, "Você não possui previlégios para acessar \n   "
-                        + "a Tela de Cadastros de Atividades!!!", "Cadastro de Encarregado", JOptionPane.ERROR_MESSAGE);
+                //Instancia uma tela de cadastro de Encarregado 
+                //Se o usuario que esta logado for Um diretor ou um Gerente;
+                //caso não seja um diretor nem Gerente é exibida uma mensagem ao usuario do sistema.
+                //Obs: Somente diretor e gerente podem cadastrar Encarregados.
+                if ((usuarioLogado.getTipo().equals("Diretor")) || (usuarioLogado.getTipo().equals("Gerente"))) {
 
+                    CadastroAtividadeForm cadastroAtividadeForm = new CadastroAtividadeForm();
+
+                    cadastroAtividadeForm.setVisible(true);
+                    centralizaForm(cadastroAtividadeForm);
+
+                    JDP1.add(cadastroAtividadeForm);
+
+                } else {
+                    JOptionPane.showMessageDialog(null, "Você não possui previlégios para acessar \n   "
+                            + "a Tela de Cadastros de Atividades!!!", "Cadastro de Encarregado", JOptionPane.ERROR_MESSAGE);
+
+                }
             }
         }
 

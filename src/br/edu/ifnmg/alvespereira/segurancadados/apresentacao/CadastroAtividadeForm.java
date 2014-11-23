@@ -1,24 +1,15 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package br.edu.ifnmg.alvespereira.segurancadados.apresentacao;
 
 import br.edu.ifnmg.alvespereira.segurancadados.entidades.Atividade;
+import br.edu.ifnmg.alvespereira.segurancadados.entidades.Projeto;
+import br.edu.ifnmg.alvespereira.segurancadados.entidades.Usuario;
 import br.edu.ifnmg.alvespereira.segurancadados.negocio.AtividadeBO;
 import br.edu.ifnmg.alvespereira.segurancadados.negocio.ProjetoBO;
 import br.edu.ifnmg.alvespereira.segurancadados.negocio.UsuarioBO;
 import java.sql.SQLException;
-import java.sql.Time;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
 
-/**
- *
- * @author Amauri
- */
 public class CadastroAtividadeForm extends javax.swing.JInternalFrame {
 
     /**
@@ -49,11 +40,11 @@ public class CadastroAtividadeForm extends javax.swing.JInternalFrame {
         }
 
     }
-    
+
     //Metodo que add todos os projetos cadastrados na ComboBox
     public void popularCbEncarregado() {
         ArrayList<String> Encarregado = new ArrayList<>();
-         UsuarioBO EncarregadoBO = new UsuarioBO();
+        UsuarioBO EncarregadoBO = new UsuarioBO();
 
         try {
             Encarregado = EncarregadoBO.ComboBoxEncarregado();
@@ -78,13 +69,15 @@ public class CadastroAtividadeForm extends javax.swing.JInternalFrame {
         lblNome = new javax.swing.JLabel();
         lblDuracao = new javax.swing.JLabel();
         txtNome = new javax.swing.JTextField();
-        txtDuracao = new javax.swing.JTextField();
         lblEncarregado = new javax.swing.JLabel();
         cmbEncarregado = new javax.swing.JComboBox();
         lblProjeto = new javax.swing.JLabel();
         cmbProjeto = new javax.swing.JComboBox();
         btnCadastrar = new javax.swing.JButton();
+        txtDuracao = new javax.swing.JTextField();
 
+        setClosable(true);
+        setIconifiable(true);
         setTitle("Castrado de Atividade");
         setToolTipText("");
         setFrameIcon(new javax.swing.ImageIcon(getClass().getResource("/br/edu/ifnmg/alvespereira/segurancadados/icones/11295_128x128.png"))); // NOI18N
@@ -129,10 +122,10 @@ public class CadastroAtividadeForm extends javax.swing.JInternalFrame {
                             .addComponent(lblNome))
                         .addGap(18, 18, 18)
                         .addGroup(jPanelDadosAtividadeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(txtNome)
                             .addGroup(jPanelDadosAtividadeLayout.createSequentialGroup()
-                                .addComponent(txtDuracao, javax.swing.GroupLayout.PREFERRED_SIZE, 76, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(0, 0, Short.MAX_VALUE))
-                            .addComponent(txtNome)))
+                                .addComponent(txtDuracao, javax.swing.GroupLayout.PREFERRED_SIZE, 69, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(0, 0, Short.MAX_VALUE))))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelDadosAtividadeLayout.createSequentialGroup()
                         .addGroup(jPanelDadosAtividadeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanelDadosAtividadeLayout.createSequentialGroup()
@@ -174,10 +167,10 @@ public class CadastroAtividadeForm extends javax.swing.JInternalFrame {
                     .addComponent(lblEncarregado)
                     .addComponent(cmbEncarregado, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
-                .addComponent(btnCadastrar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addComponent(btnCadastrar, javax.swing.GroupLayout.DEFAULT_SIZE, 49, Short.MAX_VALUE))
         );
 
-        jPanelDadosAtividadeLayout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {cmbProjeto, txtDuracao, txtNome});
+        jPanelDadosAtividadeLayout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {cmbProjeto, txtNome});
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -201,30 +194,51 @@ public class CadastroAtividadeForm extends javax.swing.JInternalFrame {
 
     private void btnCadastrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCadastrarActionPerformed
 
-        //Tela de Cadastro de Departamento
-        Atividade atividade = new Atividade();
-
+        //Tela de Cadastro de Atividades
         String Nome = txtNome.getText();
-        Time Duracao = null;
+        float Horas = Float.parseFloat(txtDuracao.getText());
+
+        Float Duracao = Horas;
+
+///Busca o Encarregado referente ao nome selecionado na combobox encarregado
+        //e armazena os dados na variavel encarregado
+        Usuario encarregado = null;
 
         try {
-            Duracao = formataHora(txtDuracao.getText());
-        } catch (Exception ex) {
-            JOptionPane.showMessageDialog(null, "Hora Inválida!",
-                    "Cadastro de Projeto", JOptionPane.ERROR_MESSAGE);
+            UsuarioBO EncarregadoBO = new UsuarioBO();
+            encarregado = EncarregadoBO.selectUmEncarregado(cmbEncarregado.getSelectedItem() + "", "Encarregado");
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Erro ao selecionar o Encarregado",
+                    "Cadastro de Atividade", JOptionPane.ERROR_MESSAGE);
         }
 
+        //Busca o projeto referente ao nome selecionado na combobox projeto
+        //e armazena os dados na variavel projet
+        Projeto projet = null;
+
+        try {
+            ProjetoBO projetBO = new ProjetoBO();
+            projet = projetBO.selectUmProjeto(cmbProjeto.getSelectedItem() + "");
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Erro ao selecionar o Projeto",
+                    "Cadastro de Atividade", JOptionPane.ERROR_MESSAGE);
+        }
+
+        //Cria a variavel do tipo atividade e seta os dados na mesma
+        Atividade atividade = new Atividade();
         atividade.setNome(Nome);
         atividade.setDuracao(Duracao);
+        atividade.setEncarregado(encarregado);
+        atividade.setProjeto(projet);
 
-        AtividadeBO AtividadeBO = new AtividadeBO();
         try {
+            AtividadeBO AtividadeBO = new AtividadeBO();
             AtividadeBO.criarAtividade(atividade);
-            JOptionPane.showMessageDialog(null, "Departamento Cadastrado com Sucesso !!!",
-                    "Cadastro de Departamento", JOptionPane.INFORMATION_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Atividade Cadastrada com Sucesso !!!",
+                    "Cadastro de Atividade", JOptionPane.INFORMATION_MESSAGE);
         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(null, "Erro ao Cadastrar o departamento",
-                    "Cadastro de Departamento", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Erro ao Cadastrar a Atividade",
+                    "Cadastro de Atividade", JOptionPane.ERROR_MESSAGE);
         }
 
 
@@ -247,17 +261,5 @@ public class CadastroAtividadeForm extends javax.swing.JInternalFrame {
     private javax.swing.JTextField txtDuracao;
     private javax.swing.JTextField txtNome;
     // End of variables declaration//GEN-END:variables
-
-    public static Time formataHora(String horaString) throws Exception {
-        if (horaString == null || horaString.equals("")) {
-            return null;
-        }
-
-        SimpleDateFormat formatador = new SimpleDateFormat("HH:mm");
-        Time hora = (Time) formatador.parse(horaString);
-        Time time = new Time(hora.getTime());
-
-        return time;
-    }
 
 }

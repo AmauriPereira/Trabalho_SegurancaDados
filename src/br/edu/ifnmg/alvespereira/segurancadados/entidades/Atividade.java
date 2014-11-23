@@ -1,11 +1,9 @@
 package br.edu.ifnmg.alvespereira.segurancadados.entidades;
 
-import java.sql.Time;
-
 public class Atividade {
 
     private String nome;
-    private Time duracao;
+    private Float duracao;
     private Usuario encarregado;
     private Projeto projeto;
 
@@ -17,11 +15,11 @@ public class Atividade {
         this.nome = nome;
     }
 
-    public Time getDuracao() {
+    public Float getDuracao() {
         return duracao;
     }
 
-    public void setDuracao(Time duracao) {
+    public void setDuracao(Float duracao) {
         this.duracao = duracao;
     }
 

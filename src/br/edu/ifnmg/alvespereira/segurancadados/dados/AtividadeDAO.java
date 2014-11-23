@@ -8,7 +8,7 @@ import java.sql.SQLException;
 public class AtividadeDAO {
 
     private static final String SQL_INSERT_ATIVIDADE
-            = "INSERT INTO ATIVIDADE (NOME, DURACAO, ID_PROJETO, ID_ENCARREGADO) "
+            = "INSERT INTO ATIVIDADE (NOME,DURACAO, ID_PROJETO, ID_USUARIO) "
             + "VALUES (?,?,?,?)";
 
     public void criarAtividade(Atividade atividade) throws SQLException {
@@ -21,9 +21,9 @@ public class AtividadeDAO {
             comando = conexao.prepareStatement(SQL_INSERT_ATIVIDADE);
 
             comando.setString(1, atividade.getNome());
-            comando.setTime(2, atividade.getDuracao());
+            comando.setFloat(2, atividade.getDuracao());
             comando.setInt(3, atividade.getProjeto().getIdProjeto());
-            comando.setInt(4, atividade.getEncarregado().getIdUsuario());           
+            comando.setInt(4, atividade.getEncarregado().getIdUsuario());
 
             comando.execute();
             conexao.commit();
