@@ -13,12 +13,12 @@ public class ProjetoBO {
         projetDAO.criarProjeto(projeto);
 
     }
- public ArrayList<String> ComboBoxProjeto() throws SQLException {
+ public ArrayList<String> ComboBoxProjeto(String departamento) throws SQLException {
 
         ProjetoDAO projetoDAO = new ProjetoDAO();
         ArrayList<String> Projeto = new ArrayList<>();
 
-        Projeto = projetoDAO.cbProjetos();
+        Projeto = projetoDAO.cbProjetos(departamento);
 
         return Projeto;
 
