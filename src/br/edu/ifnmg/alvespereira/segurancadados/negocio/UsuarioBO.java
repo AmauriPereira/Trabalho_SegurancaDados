@@ -71,8 +71,7 @@ public class UsuarioBO {
         DepartamentoDAO DepDAO = new DepartamentoDAO();
 
         Usuario EncarregadoExistente = userDAO.selectEncarregado(Encarregado.getNome(), Encarregado.getTipo());
-        Departamento DEPexistente = DepDAO.selectTodosDepartamentos(); // variavel não está sendo usada..
-
+        
         //VERIFICA SE HA ALGUM ENCARREGADO CADASTRADO COM O MESMO NOME
         if (EncarregadoExistente == null) {
             //VERIFICA SE O GERENTE ESTAR CADASTRANDO ENCARREGADOS SOMENTE EM SE DEPARTAMENTO
