@@ -10,7 +10,7 @@ import java.util.ArrayList;
 public class UsuarioDAO {
 
     //CONSULTAS DE INSERT NO BANCO
-    private static final String SQL_INSERT_USUARIO = "INSERT INTO USUARIO( NOME, TIPO, SENHA, EMAIL, COD_DEPARTAMENTO)VALUES (?,?,?,?,?)";
+    private static final String SQL_INSERT_USUARIO = "INSERT INTO USUARIO( NOME, TIPO, SENHA, EMAIL)VALUES (?,?,?,?)";
 
     //CONSULTAS DE SELECT NO BANCO
     private static final String SQL_SELECT_DIRETOR = "SELECT  NOME, TIPO, SENHA, EMAIL, ID_USUARIO FROM USUARIO WHERE TIPO LIKE ?";
@@ -38,7 +38,6 @@ public class UsuarioDAO {
             comando.setString(2, user.getTipo());
             comando.setString(3, user.getSenha());
             comando.setString(4, user.getEmail());
-            comando.setString(5, user.getDepartamento().getCodigo());
 
             comando.execute();
             conexao.commit();
