@@ -18,13 +18,13 @@ public class CadastroAtividadeForm extends javax.swing.JInternalFrame {
         initComponents();
         this.popularCbProjeto();
         this.popularCbEncarregado();
-        //usuario = usuarioLogado;        
     }
 
     //Metodo que add todos os projetos cadastrados na ComboBox
     public void popularCbProjeto() {
         ArrayList<String> Projetos = new ArrayList<>();
         ProjetoBO projetoBO = new ProjetoBO();
+
         try {
             Projetos = projetoBO.ComboBoxProjeto();
         } catch (SQLException ex) {
@@ -90,11 +90,6 @@ public class CadastroAtividadeForm extends javax.swing.JInternalFrame {
         lblEncarregado.setText("Encarregado:");
 
         cmbEncarregado.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-        cmbEncarregado.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                cmbEncarregadoActionPerformed(evt);
-            }
-        });
 
         lblProjeto.setText("Projeto:");
 
@@ -259,10 +254,6 @@ public class CadastroAtividadeForm extends javax.swing.JInternalFrame {
 
     private void cmbProjetoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbProjetoActionPerformed
     }//GEN-LAST:event_cmbProjetoActionPerformed
-
-    private void cmbEncarregadoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbEncarregadoActionPerformed
-       
-    }//GEN-LAST:event_cmbEncarregadoActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
