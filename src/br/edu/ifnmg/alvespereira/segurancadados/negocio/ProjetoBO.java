@@ -8,20 +8,41 @@ import java.util.ArrayList;
 public class ProjetoBO {
 
     public void criarProjeto(Projeto projeto) throws SQLException {
-        
+
         ProjetoDAO projetDAO = new ProjetoDAO();
         projetDAO.criarProjeto(projeto);
 
     }
- public ArrayList<String> ComboBoxProjeto(String departamento) throws SQLException {
+
+    public Projeto selectUmProjeto(String NomeProjeto) throws SQLException {
+
+        ProjetoDAO projetDAO = new ProjetoDAO();
+        Projeto projet = new Projeto();
+        projet = projetDAO.selectUmProjeto(NomeProjeto);
+
+        return projet;
+
+    }
+
+    public Projeto selectTodosProjeto() throws SQLException {
+
+        ProjetoDAO projetDAO = new ProjetoDAO();
+        Projeto projet = new Projeto();
+        projet = projetDAO.selectTodosProjetos();
+
+        return projet;
+
+    }
+
+    public ArrayList<String> ComboBoxProjeto() throws SQLException {
 
         ProjetoDAO projetoDAO = new ProjetoDAO();
         ArrayList<String> Projeto = new ArrayList<>();
 
-        Projeto = projetoDAO.cbProjetos(departamento);
+        Projeto = projetoDAO.cbProjetos();
 
         return Projeto;
 
     }
-    
+
 }

@@ -9,7 +9,7 @@ public class Projeto {
     private String descricao;
     private Date dataInicio;
     private Date dataTermino;
-    private Usuario gerente;
+
     private Departamento departamento;
 
     public int getIdProjeto() {
@@ -19,7 +19,7 @@ public class Projeto {
     public void setIdProjeto(int idProjeto) {
         this.idProjeto = idProjeto;
     }
-       
+
     public String getNome() {
         return nome;
     }
@@ -50,14 +50,6 @@ public class Projeto {
 
     public void setDataTermino(Date dataTermino) {
         this.dataTermino = dataTermino;
-    }
-
-    public Usuario getGerente() {
-        return gerente;
-    }
-
-    public void setGerente(Usuario gerente) {
-        this.gerente = gerente;
     }
 
     public Departamento getDepartamento() {
