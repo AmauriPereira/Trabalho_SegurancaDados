@@ -6,6 +6,7 @@
 package br.edu.ifnmg.alvespereira.segurancadados.apresentacao;
 
 import br.edu.ifnmg.alvespereira.segurancadados.entidades.Atividade;
+import br.edu.ifnmg.alvespereira.segurancadados.entidades.Usuario;
 import br.edu.ifnmg.alvespereira.segurancadados.negocio.AtividadeBO;
 import br.edu.ifnmg.alvespereira.segurancadados.negocio.ProjetoBO;
 import br.edu.ifnmg.alvespereira.segurancadados.negocio.UsuarioBO;
@@ -24,19 +25,21 @@ public final class CadastroAtividadeForm extends javax.swing.JInternalFrame {
     /**
      * Creates new form CadastroAtividadeForm
      */
-    public CadastroAtividadeForm() {
+    Usuario usuario = null;
+            
+    public CadastroAtividadeForm(Usuario usuarioLogado) {
         initComponents();
         this.popularCbProjeto();
         this.popularCbEncarregado();
+        usuario = usuarioLogado;        
     }
 
     //Metodo que add todos os projetos cadastrados na ComboBox
     public void popularCbProjeto() {
         ArrayList<String> Projetos = new ArrayList<>();
         ProjetoBO projetoBO = new ProjetoBO();
-
         try {
-            Projetos = projetoBO.ComboBoxProjeto();
+            Projetos = projetoBO.ComboBoxProjeto(usuario.getDepartamento().getCodigo());
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null, "Erro ao popular o projetos",
                     "Projetos", JOptionPane.ERROR_MESSAGE);
@@ -98,6 +101,11 @@ public final class CadastroAtividadeForm extends javax.swing.JInternalFrame {
         lblEncarregado.setText("Encarregado:");
 
         cmbEncarregado.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        cmbEncarregado.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cmbEncarregadoActionPerformed(evt);
+            }
+        });
 
         lblProjeto.setText("Projeto:");
 
@@ -233,6 +241,10 @@ public final class CadastroAtividadeForm extends javax.swing.JInternalFrame {
     private void cmbProjetoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbProjetoActionPerformed
         
     }//GEN-LAST:event_cmbProjetoActionPerformed
+
+    private void cmbEncarregadoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbEncarregadoActionPerformed
+       
+    }//GEN-LAST:event_cmbEncarregadoActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
