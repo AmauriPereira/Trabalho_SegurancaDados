@@ -490,7 +490,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
 
         if (DEPexistente == null) {
             JOptionPane.showMessageDialog(null, "Não existe departamentos cadastrados\n"
-                    + "É necessário cadastrar no minimo um Departamento !!!", "Cadastro de Usuários", JOptionPane.ERROR_MESSAGE);
+                    + "É necessário cadastrar no minimo um Departamento !!!", "Cadastro de Encarregado", JOptionPane.ERROR_MESSAGE);
         } else {
             //Instancia uma tela de cadastro de Encarregado 
             //Se o usuario que esta logado for Um diretor ou um Gerente;
