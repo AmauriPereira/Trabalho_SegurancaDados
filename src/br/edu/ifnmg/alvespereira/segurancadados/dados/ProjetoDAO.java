@@ -14,7 +14,7 @@ public class ProjetoDAO {
             = "INSERT INTO PROJETO(NOME, DESCRICAO, DATA_INCIO, DATA_TERMINO, COD_DEPARTAMENTO) "
             + "VALUES (?,?,?,?,?)";
     
-    private static final String SQL_SELECT_TODOS_PROJETOS = "SELECT NOME FROM PROJETO";
+    private static final String SQL_SELECT_TODOS_PROJETOS = "SELECT NOME FROM PROJETO WHERE PROJETO.COD_DEPARTAMENTO = ?";
     public void criarProjeto(Projeto projeto) throws SQLException {
         Connection conexao = null;
         PreparedStatement comando = null;
@@ -50,7 +50,7 @@ public class ProjetoDAO {
     }
 
     //SELECIONA TODOS OS DEPARTAMENTO, E ARMAZENA EM UMA LISTA
-    public ArrayList<String> cbProjetos() throws SQLException {
+    public ArrayList<String> cbProjetos(String codDepartamento) throws SQLException {
         ArrayList<String> Projeto = new ArrayList<>();
         Connection conexao = null;
         PreparedStatement comando = null;
@@ -61,6 +61,8 @@ public class ProjetoDAO {
             conexao = BancoDadosUtil.getConnection();
             comando = conexao.prepareStatement(SQL_SELECT_TODOS_PROJETOS);
 
+            comando.setString(1, codDepartamento);
+            
             resultado = comando.executeQuery();
             Projeto.removeAll(Projeto);
 
