@@ -6,7 +6,7 @@ import java.sql.DriverManager;
 public class BancoDadosUtil {
 
     private static final String DRIVER = "org.hsqldb.jdbcDriver";
-    private static final String URL = "jdbc:hsqldb:file:bd\\BD_SegurancaDados;shutdown=true";
+    private static final String URL = "jdbc:hsqldb:file:C:\\Users\\Familia\\Documents\\NetBeansProjects\\Trabalho_SegurancaDados\\bd\\BD_SegurancaDados;shutdown=true";
     private static final String USUARIO = "root";
     private static final String SENHA = "root";
 
