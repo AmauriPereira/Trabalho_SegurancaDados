@@ -71,18 +71,35 @@ public class UsuarioBO {
         DepartamentoDAO DepDAO = new DepartamentoDAO();
 
         Usuario EncarregadoExistente = userDAO.selectEncarregado(Encarregado.getNome(), Encarregado.getTipo());
-        
+
         //VERIFICA SE HA ALGUM ENCARREGADO CADASTRADO COM O MESMO NOME
         if (EncarregadoExistente == null) {
             //VERIFICA SE O GERENTE ESTAR CADASTRANDO ENCARREGADOS SOMENTE EM SE DEPARTAMENTO
-            if (Encarregado.getDepartamento().equals(userLogado.getDepartamento()) || userLogado.getTipo().equals("Gerente")) {
-                userDAO.criaUSER(Encarregado);
-                JOptionPane.showMessageDialog(null, "Encarregado Cadastrado com Sucesso !!!",
-                        "Encarregado de Gerente", JOptionPane.INFORMATION_MESSAGE);
+            if (userLogado.getTipo().equals("Gerente") || userLogado.getTipo().equals("Diretor")) {
+
+                if (userLogado.getTipo().equals("Gerente")) {
+
+                    if (Encarregado.getDepartamento().getCodigo().equals(userLogado.getDepartamento().getCodigo())) {
+                        userDAO.criaUSER(Encarregado);
+                        JOptionPane.showMessageDialog(null, "Encarregado Cadastrado com Sucesso !!!",
+                                "Encarregado de Gerente", JOptionPane.INFORMATION_MESSAGE);
+                    } else {
+                        JOptionPane.showMessageDialog(null, "Não foi possivel cadastrar Encarregado, \n "
+                                + "Você não possui previlégios para cadastrar Encarregados nesse Departamento", "Cadastro de Encarregado", JOptionPane.ERROR_MESSAGE);
+                    }
+                }
+
+                if (userLogado.getTipo().equals("Diretor")) {
+                    userDAO.criaUSER(Encarregado);
+                    JOptionPane.showMessageDialog(null, "Encarregado Cadastrado com Sucesso !!!",
+                            "Encarregado de Gerente", JOptionPane.INFORMATION_MESSAGE);
+                }
+
             } else {
                 JOptionPane.showMessageDialog(null, "Não foi possivel cadastrar Encarregado, \n "
-                        + "Você não possui previlégios para cadastrar Encarregados nesse Departamento", "Cadastro de Encarregado", JOptionPane.ERROR_MESSAGE);
+                        + "Você não possui previlégios para cadastrar Encarregados", "Cadastro de Encarregado", JOptionPane.ERROR_MESSAGE);
             }
+
         } else {
             JOptionPane.showMessageDialog(null, "Não foi possivel cadastrar Encarregado, \n "
                     + "Ja existe um Encarregado cadastrado com este Nome", "Cadastro de Encarregado", JOptionPane.ERROR_MESSAGE);
