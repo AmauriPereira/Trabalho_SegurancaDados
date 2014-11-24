@@ -75,7 +75,7 @@ public class UsuarioBO {
         //VERIFICA SE HA ALGUM ENCARREGADO CADASTRADO COM O MESMO NOME
         if (EncarregadoExistente == null) {
             //VERIFICA SE O GERENTE ESTAR CADASTRANDO ENCARREGADOS SOMENTE EM SE DEPARTAMENTO
-            if (Encarregado.getDepartamento().equals(userLogado.getDepartamento()) || userLogado.getTipo().equals("Diretor")) {
+            if (Encarregado.getDepartamento().equals(userLogado.getDepartamento()) || userLogado.getTipo().equals("Gerente")) {
                 userDAO.criaUSER(Encarregado);
                 JOptionPane.showMessageDialog(null, "Encarregado Cadastrado com Sucesso !!!",
                         "Encarregado de Gerente", JOptionPane.INFORMATION_MESSAGE);
