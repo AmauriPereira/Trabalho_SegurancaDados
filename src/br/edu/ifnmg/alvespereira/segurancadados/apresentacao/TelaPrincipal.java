@@ -106,8 +106,8 @@ public class TelaPrincipal extends javax.swing.JFrame {
         jMenuItem4 = new javax.swing.JMenuItem();
         jMenuItem5 = new javax.swing.JMenuItem();
         mnuOpcoes = new javax.swing.JMenu();
-        itmMnuSair = new javax.swing.JMenuItem();
         jMenuItem9 = new javax.swing.JMenuItem();
+        itmMnuSair = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Gestão de Usuários");
@@ -310,6 +310,14 @@ public class TelaPrincipal extends javax.swing.JFrame {
         mnuOpcoes.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/edu/ifnmg/alvespereira/segurancadados/icones/engrenages-package-systeme-roues-icone-8982-32.png"))); // NOI18N
         mnuOpcoes.setText("      Opções    ");
 
+        jMenuItem9.setText("     Alterar Dados Pessoais");
+        jMenuItem9.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem9ActionPerformed(evt);
+            }
+        });
+        mnuOpcoes.add(jMenuItem9);
+
         itmMnuSair.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_F8, 0));
         itmMnuSair.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/edu/ifnmg/alvespereira/segurancadados/icones/halte-session-icone-4911-32.png"))); // NOI18N
         itmMnuSair.setText("     Sair           ");
@@ -319,14 +327,6 @@ public class TelaPrincipal extends javax.swing.JFrame {
             }
         });
         mnuOpcoes.add(itmMnuSair);
-
-        jMenuItem9.setText("     Alterar Dados Pessoais");
-        jMenuItem9.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem9ActionPerformed(evt);
-            }
-        });
-        mnuOpcoes.add(jMenuItem9);
 
         jMenuBar1.add(mnuOpcoes);
 
