@@ -589,7 +589,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
             //Obs: Somente diretor e gerente podem cadastrar Encarregados.
             if ((usuarioLogado.getTipo().equals("Diretor")) || (usuarioLogado.getTipo().equals("Gerente"))) {
 
-                CadastroAtividadeForm cadastroAtividadeForm = new CadastroAtividadeForm();
+                CadastroAtividadeForm cadastroAtividadeForm = new CadastroAtividadeForm(usuarioLogado);
 
                 cadastroAtividadeForm.setVisible(true);
                 centralizaForm(cadastroAtividadeForm);
