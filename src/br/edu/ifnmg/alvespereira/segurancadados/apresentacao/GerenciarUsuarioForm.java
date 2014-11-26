@@ -5,6 +5,11 @@
  */
 package br.edu.ifnmg.alvespereira.segurancadados.apresentacao;
 
+import br.edu.ifnmg.alvespereira.segurancadados.negocio.DepartamentoBO;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author Amauri
@@ -16,6 +21,8 @@ public class GerenciarUsuarioForm extends javax.swing.JInternalFrame {
      */
     public GerenciarUsuarioForm() {
         initComponents();
+        this.popularCB();
+    
     }
 
     /**
@@ -68,6 +75,11 @@ public class GerenciarUsuarioForm extends javax.swing.JInternalFrame {
         cmbBuscaFuncionario.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
         btnBuscar.setText("Buscar");
+        btnBuscar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnBuscarActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanelBuscarUsuarioLayout = new javax.swing.GroupLayout(jPanelBuscarUsuario);
         jPanelBuscarUsuario.setLayout(jPanelBuscarUsuarioLayout);
@@ -223,6 +235,10 @@ public class GerenciarUsuarioForm extends javax.swing.JInternalFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
+       
+    }//GEN-LAST:event_btnBuscarActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnBuscar;
@@ -246,4 +262,24 @@ public class GerenciarUsuarioForm extends javax.swing.JInternalFrame {
     private javax.swing.JTextField txtSenha;
     private javax.swing.JTextField txtTipo;
     // End of variables declaration//GEN-END:variables
+
+    //Metodo que add todos os departamentos cadastrados na ComboBox
+    public void popularCB() {
+        ArrayList<String> Departamentos = new ArrayList<>();
+        DepartamentoBO depBO = new DepartamentoBO();
+
+        try {
+            Departamentos = depBO.ComboBoxDepartamentos();
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Erro ao popular o departamento",
+                    "Departamento", JOptionPane.ERROR_MESSAGE);
+        }
+
+        cmbBuscaFuncionario.removeAllItems();
+        cmbBuscaFuncionario.addItem("Selecione");
+        for (String item : Departamentos) {
+            cmbBuscaFuncionario.addItem(item);
+        }
+
+    }
 }

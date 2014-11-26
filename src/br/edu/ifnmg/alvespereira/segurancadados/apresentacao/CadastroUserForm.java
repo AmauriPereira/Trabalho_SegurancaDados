@@ -26,6 +26,7 @@ public final class CadastroUserForm extends javax.swing.JInternalFrame {
         this.popularCB();
         //Seta o campo de Tipo de usuário de acordo o parametro recebido(TipoUser)
         this.txtTipoUser.setText(TipoUser);
+       
 
     }
 

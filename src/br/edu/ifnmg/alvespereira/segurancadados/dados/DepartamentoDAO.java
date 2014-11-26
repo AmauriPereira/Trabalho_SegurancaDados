@@ -13,7 +13,7 @@ public class DepartamentoDAO {
     private static final String SQL_INSERT_DEPARTAMENTO = "INSERT INTO DEPARTAMENTO(NOME, COD_DEPARTAMENTO)VALUES (?,?)";
 
     private static final String SQL_SELECT_DEPARTAMENTO = "SELECT NOME, COD_DEPARTAMENTO FROM DEPARTAMENTO WHERE NOME = ? OR COD_DEPARTAMENTO = ?";
-    private static final String SQL_SELECT_TODOS_DEPARTAMENTOs = "SELECT COD_DEPARTAMENTO, NOME FROM DEPARTAMENTO";
+    private static final String SQL_SELECT_TODOS_DEPARTAMENTOS = "SELECT COD_DEPARTAMENTO, NOME FROM DEPARTAMENTO";
     private static final String SQL_SELECT_DEPARTAMENTO_POR_COD = "SELECT COD_DEPARTAMENTO, NOME FROM DEPARTAMENTO WHERE DEPARTAMENTO.COD_DEPARTAMENTO = ?";
     private static final String SQL_SELECT_DEPARTAMENTO_POR_NOME = "SELECT COD_DEPARTAMENTO, NOME FROM DEPARTAMENTO WHERE DEPARTAMENTO.NOME = ?";
 
@@ -104,7 +104,7 @@ public class DepartamentoDAO {
 
             conexao = BancoDadosUtil.getConnection();
 
-            comando = conexao.prepareStatement(SQL_SELECT_TODOS_DEPARTAMENTOs);
+            comando = conexao.prepareStatement(SQL_SELECT_TODOS_DEPARTAMENTOS);
 
             resultado = comando.executeQuery();
 
@@ -232,7 +232,7 @@ public class DepartamentoDAO {
         try {
 
             conexao = BancoDadosUtil.getConnection();
-            comando = conexao.prepareStatement(SQL_SELECT_TODOS_DEPARTAMENTOs);
+            comando = conexao.prepareStatement(SQL_SELECT_TODOS_DEPARTAMENTOS);
 
             resultado = comando.executeQuery();
             Departamentos.removeAll(Departamentos);
