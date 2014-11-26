@@ -1,7 +1,6 @@
 package br.edu.ifnmg.alvespereira.segurancadados.apresentacao;
 
 import static br.edu.ifnmg.alvespereira.segurancadados.apresentacao.Login.getInstancia;
-import br.edu.ifnmg.alvespereira.segurancadados.dados.ProjetoDAO;
 import br.edu.ifnmg.alvespereira.segurancadados.entidades.Departamento;
 import br.edu.ifnmg.alvespereira.segurancadados.entidades.Projeto;
 import br.edu.ifnmg.alvespereira.segurancadados.entidades.Usuario;
@@ -16,8 +15,6 @@ import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.JDesktopPane;
 import javax.swing.JInternalFrame;
 import javax.swing.JOptionPane;
@@ -103,7 +100,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
         itmMnu_Departamento = new javax.swing.JMenuItem();
         itmMnu_Usuarios = new javax.swing.JMenuItem();
         jMenuItem3 = new javax.swing.JMenuItem();
-        jMenuItem4 = new javax.swing.JMenuItem();
+        MenuProjeto = new javax.swing.JMenuItem();
         jMenuItem5 = new javax.swing.JMenuItem();
         mnuOpcoes = new javax.swing.JMenu();
         jMenuItem9 = new javax.swing.JMenuItem();
@@ -295,10 +292,15 @@ public class TelaPrincipal extends javax.swing.JFrame {
         });
         mnuAtualizar.add(jMenuItem3);
 
-        jMenuItem4.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_F4, java.awt.event.InputEvent.ALT_MASK));
-        jMenuItem4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/edu/ifnmg/alvespereira/segurancadados/icones/liste-texte-vue-icone-4177-32.png"))); // NOI18N
-        jMenuItem4.setText("     Projeto");
-        mnuAtualizar.add(jMenuItem4);
+        MenuProjeto.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_F4, java.awt.event.InputEvent.ALT_MASK));
+        MenuProjeto.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/edu/ifnmg/alvespereira/segurancadados/icones/liste-texte-vue-icone-4177-32.png"))); // NOI18N
+        MenuProjeto.setText("     Projeto");
+        MenuProjeto.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                MenuProjetoActionPerformed(evt);
+            }
+        });
+        mnuAtualizar.add(MenuProjeto);
 
         jMenuItem5.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_F5, java.awt.event.InputEvent.ALT_MASK));
         jMenuItem5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/edu/ifnmg/alvespereira/segurancadados/icones/cabinet-dossiers-icone-8056-32.png"))); // NOI18N
@@ -451,6 +453,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
 
                 CadastroUserForm cadastroUserForm = null;
                 cadastroUserForm = new CadastroUserForm(Encarregado, usuarioLogado);
+
                 cadastroUserForm.setVisible(true);
                 centralizaForm(cadastroUserForm);
                 cadastroUserForm.toFront();
@@ -574,10 +577,22 @@ public class TelaPrincipal extends javax.swing.JFrame {
 
     }//GEN-LAST:event_itmMnuAtividadeActionPerformed
 
+    private void MenuProjetoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MenuProjetoActionPerformed
+
+        GerenciaProjetos GP = null;
+        GP = new GerenciaProjetos(usuarioLogado);
+        GP.setVisible(true);
+        centralizaForm(GP);
+        JDP1.add(GP);
+
+
+    }//GEN-LAST:event_MenuProjetoActionPerformed
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel Data;
     private javax.swing.JLabel Hora;
     private javax.swing.JDesktopPane JDP1;
+    private javax.swing.JMenuItem MenuProjeto;
     private javax.swing.JMenuItem itmMnuAtividade;
     private javax.swing.JMenuItem itmMnuDepartamento;
     private javax.swing.JMenuItem itmMnuEncarregado;
@@ -588,7 +603,6 @@ public class TelaPrincipal extends javax.swing.JFrame {
     private javax.swing.JMenuItem itmMnu_Usuarios;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JMenuItem jMenuItem3;
-    private javax.swing.JMenuItem jMenuItem4;
     private javax.swing.JMenuItem jMenuItem5;
     private javax.swing.JMenuItem jMenuItem9;
     private javax.swing.JPanel jPanel1;
