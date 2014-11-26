@@ -283,6 +283,11 @@ public class TelaPrincipal extends javax.swing.JFrame {
         itmMnu_Usuarios.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_F2, java.awt.event.InputEvent.ALT_MASK));
         itmMnu_Usuarios.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/edu/ifnmg/alvespereira/segurancadados/icones/bill-homme-personne-utilisateur-icone-6596-32.png"))); // NOI18N
         itmMnu_Usuarios.setText("     Gerente   ");
+        itmMnu_Usuarios.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                itmMnu_UsuariosActionPerformed(evt);
+            }
+        });
         mnuAtualizar.add(itmMnu_Usuarios);
 
         jMenuItem3.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_F3, java.awt.event.InputEvent.ALT_MASK));
@@ -573,6 +578,14 @@ public class TelaPrincipal extends javax.swing.JFrame {
 
 
     }//GEN-LAST:event_itmMnuAtividadeActionPerformed
+
+    private void itmMnu_UsuariosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itmMnu_UsuariosActionPerformed
+       GerenciarUsuarioForm gerenciarUsuarioForm = new GerenciarUsuarioForm();
+       gerenciarUsuarioForm.setVisible(true);
+       centralizaForm(gerenciarUsuarioForm);
+       JDP1.add(gerenciarUsuarioForm);
+        
+    }//GEN-LAST:event_itmMnu_UsuariosActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel Data;
