@@ -5,6 +5,8 @@
  */
 package br.edu.ifnmg.alvespereira.segurancadados.apresentacao;
 
+import br.edu.ifnmg.alvespereira.segurancadados.entidades.Usuario;
+
 /**
  *
  * @author Amauri
@@ -14,8 +16,12 @@ public class GerenciarAtvidadeFom extends javax.swing.JInternalFrame {
     /**
      * Creates new form EditarAtvidadeFom
      */
-    public GerenciarAtvidadeFom() {
+    private static Usuario UserLogado = null;
+    
+    public GerenciarAtvidadeFom(Usuario usuarioLogado) {
         initComponents();
+        UserLogado = usuarioLogado;
+        System.out.println(usuarioLogado.getDepartamento().getCodigo()+"Cod departamento do usuario logado");
     }
 
     /**
@@ -50,6 +56,8 @@ public class GerenciarAtvidadeFom extends javax.swing.JInternalFrame {
         jTextField3.setText("jTextField3");
 
         setTitle("Gerênciar Atividades");
+
+        jPanelBusca.setBorder(javax.swing.BorderFactory.createTitledBorder("Buscar por projeto"));
 
         cmbBuscarProjeto.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
@@ -88,6 +96,8 @@ public class GerenciarAtvidadeFom extends javax.swing.JInternalFrame {
             }
         ));
         jScrollPane1.setViewportView(tbDadosAtividades);
+
+        jPanelDadosAtividades.setBorder(javax.swing.BorderFactory.createTitledBorder("Dados da atividade selecionada"));
 
         lblNome.setText("Nome:");
 
