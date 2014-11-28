@@ -2,10 +2,19 @@ package br.edu.ifnmg.alvespereira.segurancadados.entidades;
 
 public class Atividade {
 
+    private int idAtividade;
     private String nome;
     private Float duracao;
     private Usuario encarregado;
     private Projeto projeto;
+
+    public int getIdAtividade() {
+        return idAtividade;
+    }
+
+    public void setIdAtividade(int idAtividade) {
+        this.idAtividade = idAtividade;
+    }
 
     public String getNome() {
         return nome;
