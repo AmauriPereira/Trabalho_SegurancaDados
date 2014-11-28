@@ -203,6 +203,7 @@ public class GerenciaProjetos extends javax.swing.JInternalFrame {
 
         lblDataTermino.setText("Data Término:");
 
+        cbDepartamentos.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         cbDepartamentos.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
         cbDepartamentos.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -218,7 +219,7 @@ public class GerenciaProjetos extends javax.swing.JInternalFrame {
         lblDepartamento.setText("Departamento:");
 
         btnSalvarAlteracao.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/edu/ifnmg/alvespereira/segurancadados/icones/filesave-icone-8124-32.png"))); // NOI18N
-        btnSalvarAlteracao.setText("Salvar");
+        btnSalvarAlteracao.setText("Salvar Alterações");
         btnSalvarAlteracao.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnSalvarAlteracaoActionPerformed(evt);
@@ -237,6 +238,7 @@ public class GerenciaProjetos extends javax.swing.JInternalFrame {
 
         txtCod.setEditable(false);
         txtCod.setBackground(new java.awt.Color(204, 204, 204));
+        txtCod.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         txtCod.setForeground(new java.awt.Color(0, 102, 102));
 
         javax.swing.GroupLayout jPanelDadosProjetosLayout = new javax.swing.GroupLayout(jPanelDadosProjetos);
@@ -246,7 +248,7 @@ public class GerenciaProjetos extends javax.swing.JInternalFrame {
             .addGroup(jPanelDadosProjetosLayout.createSequentialGroup()
                 .addGap(155, 155, 155)
                 .addComponent(btnSalvarAlteracao)
-                .addGap(18, 18, 18)
+                .addGap(34, 34, 34)
                 .addComponent(btnExcluir)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelDadosProjetosLayout.createSequentialGroup()
