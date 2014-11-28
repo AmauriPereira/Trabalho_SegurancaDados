@@ -1,12 +1,10 @@
 package br.edu.ifnmg.alvespereira.segurancadados.apresentacao;
 
+import br.edu.ifnmg.alvespereira.segurancadados.apresentacao.utilitarios.criptografiaUtil;
 import br.edu.ifnmg.alvespereira.segurancadados.entidades.Departamento;
 import br.edu.ifnmg.alvespereira.segurancadados.entidades.Usuario;
 import br.edu.ifnmg.alvespereira.segurancadados.negocio.DepartamentoBO;
 import br.edu.ifnmg.alvespereira.segurancadados.negocio.UsuarioBO;
-import java.io.UnsupportedEncodingException;
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.logging.Level;
@@ -26,7 +24,6 @@ public final class CadastroUserForm extends javax.swing.JInternalFrame {
         this.popularCB();
         //Seta o campo de Tipo de usuário de acordo o parametro recebido(TipoUser)
         this.txtTipoUser.setText(TipoUser);
-       
 
     }
 
@@ -211,23 +208,9 @@ public final class CadastroUserForm extends javax.swing.JInternalFrame {
                         "Cadastro de usuários", JOptionPane.ERROR_MESSAGE);
             }
 
-            //codigo abaixo realiza a criptografia da senha
-            MessageDigest cript;
-            try {
-                cript = MessageDigest.getInstance("SHA-256");
-                byte messageDigest[] = cript.digest(Senha.getBytes("UTF-8"));
-
-                StringBuilder hexString = new StringBuilder();
-                for (byte b : messageDigest) {
-                    hexString.append(String.format("%02X", 0xFF & b));
-                }
-                Senha = hexString.toString();
-
-            } catch (NoSuchAlgorithmException ex) {
-                Logger.getLogger(CadastroDiretorForm.class.getName()).log(Level.SEVERE, null, ex);
-            } catch (UnsupportedEncodingException ex) {
-                Logger.getLogger(CadastroDiretorForm.class.getName()).log(Level.SEVERE, null, ex);
-            }
+            //codigo abaixo chama mtodo q realiza a criptografia da senha
+            criptografiaUtil criptografiaSenha = new criptografiaUtil();
+            Senha = criptografiaSenha.criptografiaSenha(Senha);
 
             Usuario userCadastro = new Usuario();
             //seta o usuario que sera cadastrado, 

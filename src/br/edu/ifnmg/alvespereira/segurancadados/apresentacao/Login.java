@@ -1,14 +1,11 @@
 package br.edu.ifnmg.alvespereira.segurancadados.apresentacao;
 
+import br.edu.ifnmg.alvespereira.segurancadados.apresentacao.utilitarios.criptografiaUtil;
 import br.edu.ifnmg.alvespereira.segurancadados.entidades.Usuario;
+import br.edu.ifnmg.alvespereira.segurancadados.excecoes.excecaoLogin;
 import br.edu.ifnmg.alvespereira.segurancadados.negocio.LoginBO;
 import java.awt.Toolkit;
-import java.io.UnsupportedEncodingException;
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
 import java.sql.SQLException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 
 public class Login extends javax.swing.JFrame {
@@ -45,43 +42,21 @@ public class Login extends javax.swing.JFrame {
 
         //Verifica se a senha digitada estar cadastrada no banco de forma criptografada
         //hash sha-256
-        MessageDigest algorithm;
-        try {
-            algorithm = MessageDigest.getInstance("SHA-256");
-            byte messageDigest[] = algorithm.digest(Senha.getBytes("UTF-8"));
-
-            StringBuilder hexString = new StringBuilder();
-            for (byte b : messageDigest) {
-                hexString.append(String.format("%02X", 0xFF & b));
-            }
-            Senha = hexString.toString();
-
-        } catch (NoSuchAlgorithmException ex) {
-            Logger.getLogger(CadastroDiretorForm.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (UnsupportedEncodingException ex) {
-            Logger.getLogger(CadastroDiretorForm.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        criptografiaUtil criptografiaSenha = new criptografiaUtil();
+        Senha = criptografiaSenha.criptografiaSenha(Senha);
 
         //A variavel userLogado recebe os dados do usuario que realizou o login
         LoginBO logarBO = new LoginBO();
         try {
             userLogado = logarBO.Logar(login, Senha);
-        } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(null, "Erro ao Logar no Sistema !!!",
-                    "Erro", JOptionPane.ERROR_MESSAGE);
-        }
-
-        // se a variavel user logado for null é que não existe cadastro
-        // Para o login e senha informados
-        // Senão for null a variavel userLogado libera o acesso a tela Principal
-        //O metodo GetInstacia - Instacia uma Tela Principal
-        if (userLogado == null) {
-            JOptionPane.showMessageDialog(null, "login ou Senha Inválidos", "Erro", JOptionPane.ERROR_MESSAGE);
-        } else {
-
             getInstancia().setVisible(true);
 
             this.dispose();
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Erro ao Logar no Sistema !!!",
+                    "Erro", JOptionPane.ERROR_MESSAGE);
+        } catch (excecaoLogin ex) {
+            JOptionPane.showMessageDialog(null, "login ou Senha Inválidos", "Erro", JOptionPane.ERROR_MESSAGE);
         }
 
     }

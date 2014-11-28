@@ -274,7 +274,6 @@ public class ProjetoDAO {
         Connection conexao = null;
         PreparedStatement comando = null;
         ResultSet resultado = null;
-        Projeto projet = null;
 
         try {
 
