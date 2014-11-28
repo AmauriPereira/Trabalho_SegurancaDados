@@ -1,9 +1,7 @@
 package br.edu.ifnmg.alvespereira.segurancadados.negocio;
 
 import br.edu.ifnmg.alvespereira.segurancadados.dados.DepartamentoDAO;
-import br.edu.ifnmg.alvespereira.segurancadados.dados.ProjetoDAO;
 import br.edu.ifnmg.alvespereira.segurancadados.dados.UsuarioDAO;
-import br.edu.ifnmg.alvespereira.segurancadados.entidades.Departamento;
 import br.edu.ifnmg.alvespereira.segurancadados.entidades.Usuario;
 import java.sql.ResultSet;
 import java.sql.SQLException;
