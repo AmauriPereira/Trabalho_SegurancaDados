@@ -405,7 +405,8 @@ public class UsuarioDAO {
 
             conexao = BancoDadosUtil.getConnection();
             comando = conexao.prepareStatement(SQL_SELECT_TODOS_ENCARREGADO);
-
+            comando.setString(1, "Encarregado");
+            
             resultado = comando.executeQuery();
             Encaregado.removeAll(Encaregado);
 

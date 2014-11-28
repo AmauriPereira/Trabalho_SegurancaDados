@@ -34,8 +34,8 @@
           </Group>
           <Group type="102" alignment="1" attributes="0">
               <EmptySpace max="32767" attributes="0"/>
-              <Component id="btnOK" min="-2" pref="69" max="-2" attributes="0"/>
-              <EmptySpace min="-2" pref="21" max="-2" attributes="0"/>
+              <Component id="btnOK" min="-2" pref="94" max="-2" attributes="0"/>
+              <EmptySpace min="-2" pref="41" max="-2" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -44,9 +44,9 @@
           <Group type="102" alignment="0" attributes="0">
               <EmptySpace max="-2" attributes="0"/>
               <Component id="jPanelGerenciarUsuario" min="-2" max="-2" attributes="0"/>
-              <EmptySpace type="separate" min="-2" max="-2" attributes="0"/>
-              <Component id="btnOK" min="-2" max="-2" attributes="0"/>
-              <EmptySpace max="32767" attributes="0"/>
+              <EmptySpace max="-2" attributes="0"/>
+              <Component id="btnOK" min="-2" pref="30" max="-2" attributes="0"/>
+              <EmptySpace pref="22" max="32767" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -123,7 +123,10 @@
           <Properties>
             <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
               <Border info="org.netbeans.modules.form.compat2.border.TitledBorderInfo">
-                <TitledBorder title=" Buscar usu&#xe1;rio por departamento"/>
+                <TitledBorder title=" Buscar usu&#xe1;rio por departamento">
+                  <Font PropertyName="font" name="Tahoma" size="12" style="1"/>
+                  <Color PropertyName="color" blue="66" green="66" red="0" type="rgb"/>
+                </TitledBorder>
               </Border>
             </Property>
           </Properties>
@@ -133,10 +136,10 @@
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" alignment="0" attributes="0">
                       <EmptySpace min="-2" pref="34" max="-2" attributes="0"/>
-                      <Component id="cmbBuscaFuncionario" max="32767" attributes="0"/>
+                      <Component id="cmbBuscaFuncionario" pref="344" max="32767" attributes="0"/>
                       <EmptySpace type="separate" max="-2" attributes="0"/>
-                      <Component id="btnBuscar" min="-2" pref="86" max="-2" attributes="0"/>
-                      <EmptySpace min="-2" pref="37" max="-2" attributes="0"/>
+                      <Component id="btnBuscar" min="-2" pref="98" max="-2" attributes="0"/>
+                      <EmptySpace min="-2" pref="25" max="-2" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>
@@ -165,6 +168,9 @@
                   </StringArray>
                 </Property>
               </Properties>
+              <Events>
+                <EventHandler event="keyPressed" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="cmbBuscaFuncionarioKeyPressed"/>
+              </Events>
             </Component>
             <Component class="javax.swing.JButton" name="btnBuscar">
               <Properties>
@@ -183,7 +189,10 @@
           <Properties>
             <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
               <Border info="org.netbeans.modules.form.compat2.border.TitledBorderInfo">
-                <TitledBorder title="Dados do usu&#xe1;rio selecionado"/>
+                <TitledBorder title=" Buscar usu&#xe1;rio por departamento">
+                  <Font PropertyName="font" name="Tahoma" size="12" style="1"/>
+                  <Color PropertyName="color" blue="66" green="66" red="0" type="rgb"/>
+                </TitledBorder>
               </Border>
             </Property>
           </Properties>
@@ -303,6 +312,10 @@
                     <StringItem index="3" value="Item 4"/>
                   </StringArray>
                 </Property>
+                <Property name="cursor" type="java.awt.Cursor" editor="org.netbeans.modules.form.editors2.CursorEditor">
+                  <Color id="Cursor Padr&#xe3;o"/>
+                </Property>
+                <Property name="opaque" type="boolean" value="false"/>
               </Properties>
             </Component>
             <Component class="javax.swing.JLabel" name="lblCodigo">
@@ -316,6 +329,9 @@
         </Container>
         <Component class="javax.swing.JButton" name="btnSalvarAltera&#xe7;&#xf5;es">
           <Properties>
+            <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+              <Image iconType="3" name="/br/edu/ifnmg/alvespereira/segurancadados/icones/filesave-icone-8124-32.png"/>
+            </Property>
             <Property name="text" type="java.lang.String" value="Salvar Altera&#xe7;&#xf5;es"/>
           </Properties>
           <Events>
@@ -324,6 +340,9 @@
         </Component>
         <Component class="javax.swing.JButton" name="btnExcluir">
           <Properties>
+            <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+              <Image iconType="3" name="/br/edu/ifnmg/alvespereira/segurancadados/icones/8443_32x32.png"/>
+            </Property>
             <Property name="text" type="java.lang.String" value="Excluir"/>
           </Properties>
           <Events>
@@ -334,6 +353,9 @@
     </Container>
     <Component class="javax.swing.JButton" name="btnOK">
       <Properties>
+        <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+          <Image iconType="3" name="/br/edu/ifnmg/alvespereira/segurancadados/icones/bullet-aller-icone-7275-32.png"/>
+        </Property>
         <Property name="text" type="java.lang.String" value="Ok"/>
       </Properties>
       <Events>

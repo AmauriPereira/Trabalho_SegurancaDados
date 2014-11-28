@@ -3,9 +3,9 @@ package br.edu.ifnmg.alvespereira.segurancadados.negocio;
 import br.edu.ifnmg.alvespereira.segurancadados.dados.DepartamentoDAO;
 import br.edu.ifnmg.alvespereira.segurancadados.entidades.Departamento;
 import br.edu.ifnmg.alvespereira.segurancadados.excecoes.excecaoDepartamento;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import javax.swing.JOptionPane;
 
 public class DepartamentoBO {
 
@@ -57,6 +57,27 @@ public class DepartamentoBO {
         departamento = depDAO.selectDepartamentoPorNome(NomeDepartamento);
 
         return departamento;
+
+    }
+
+    public ResultSet preencheTabela() throws SQLException {
+        DepartamentoDAO departamentoDAO = new DepartamentoDAO();
+        ResultSet resultPreencheTabela = departamentoDAO.PreencheTabelaDepartamentos();
+
+        return resultPreencheTabela;
+    }
+
+    public ResultSet pesquisaNaTabelaDepartamento(String NomeDepartamento) throws SQLException {
+
+        DepartamentoDAO departamentoDAO = new DepartamentoDAO();
+        ResultSet resultPreencheTabela = departamentoDAO.PesquisaNaTabelaDepartamentos(NomeDepartamento);
+
+        return resultPreencheTabela;
+    }
+
+    public void DeleteDepartamento(String Cod_Departamento) throws SQLException {
+        DepartamentoDAO departamentoDAO = new DepartamentoDAO();
+        departamentoDAO.DeleteDepartamento(Cod_Departamento);
 
     }
 

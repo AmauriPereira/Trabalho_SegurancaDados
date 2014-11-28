@@ -265,7 +265,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
         jMenuBar1.add(mnuCadastros);
 
         mnuAtualizar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/edu/ifnmg/alvespereira/segurancadados/icones/tous-refresh-reload-onglets-icone-7131-32.png"))); // NOI18N
-        mnuAtualizar.setText("Gestão de  Cadastros");
+        mnuAtualizar.setText("Gestão de  Cadastros             ");
 
         itmMnu_Departamento.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_F1, java.awt.event.InputEvent.ALT_MASK));
         itmMnu_Departamento.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/edu/ifnmg/alvespereira/segurancadados/icones/0258.png"))); // NOI18N
@@ -482,7 +482,11 @@ public class TelaPrincipal extends javax.swing.JFrame {
     }//GEN-LAST:event_itmMnuSairActionPerformed
 
     private void itmMnu_DepartamentoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itmMnu_DepartamentoActionPerformed
-        // TODO add your handling code here:
+        GestaoDepartamentoForm gestaoDepartamentoForm = null;
+        gestaoDepartamentoForm = new GestaoDepartamentoForm();
+        gestaoDepartamentoForm.setVisible(true);
+        centralizaForm(gestaoDepartamentoForm);
+        JDP1.add(gestaoDepartamentoForm);
     }//GEN-LAST:event_itmMnu_DepartamentoActionPerformed
 
     private void itmMnu_EncarregadoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itmMnu_EncarregadoActionPerformed
