@@ -24,8 +24,7 @@ public class GerenciarGerenteForm extends javax.swing.JInternalFrame {
         this.popularCmbDepartamento();
         this.btnExcluir.setEnabled(false);
         this.btnSalvarAlterações.setEnabled(false);
-        this.txtCodigo.setEnabled(false);
-        this.txtTipo.setEnabled(false);
+        
         this.cmbDepartamento.setEnabled(false);
 
     }
@@ -169,15 +168,19 @@ public class GerenciarGerenteForm extends javax.swing.JInternalFrame {
 
         lblSenha.setText("Senha:");
 
+        cmbDepartamento.setBackground(new java.awt.Color(204, 204, 204));
         cmbDepartamento.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         cmbDepartamento.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
         lblCodigo.setText("Código:");
 
+        txtCodigo.setEditable(false);
         txtCodigo.setBackground(new java.awt.Color(204, 204, 204));
         txtCodigo.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         txtCodigo.setForeground(new java.awt.Color(0, 102, 102));
 
+        txtTipo.setEditable(false);
+        txtTipo.setBackground(new java.awt.Color(204, 204, 204));
         txtTipo.setFont(new java.awt.Font("Arial", 1, 12)); // NOI18N
         txtTipo.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {

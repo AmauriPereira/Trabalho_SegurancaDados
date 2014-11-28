@@ -13,9 +13,10 @@ public class DepartamentoDAO {
     private static final String SQL_INSERT_DEPARTAMENTO = "INSERT INTO DEPARTAMENTO(NOME, COD_DEPARTAMENTO)VALUES (?,?)";
 
     private static final String SQL_SELECT_DEPARTAMENTO = "SELECT NOME, COD_DEPARTAMENTO FROM DEPARTAMENTO WHERE NOME = ? OR COD_DEPARTAMENTO = ?";
-    private static final String SQL_SELECT_TODOS_DEPARTAMENTOS = "SELECT COD_DEPARTAMENTO, NOME FROM DEPARTAMENTO";
+    private static final String SQL_SELECT_TODOS_DEPARTAMENTOS = "SELECT COD_DEPARTAMENTO as Código, NOME as Departamento FROM DEPARTAMENTO";
     private static final String SQL_SELECT_DEPARTAMENTO_POR_COD = "SELECT COD_DEPARTAMENTO, NOME FROM DEPARTAMENTO WHERE DEPARTAMENTO.COD_DEPARTAMENTO = ?";
-    private static final String SQL_SELECT_DEPARTAMENTO_POR_NOME = "SELECT COD_DEPARTAMENTO, NOME FROM DEPARTAMENTO WHERE DEPARTAMENTO.NOME = ?";
+    private static final String SQL_SELECT_DEPARTAMENTO_POR_NOME = "SELECT COD_DEPARTAMENTO, NOME FROM DEPARTAMENTO WHERE DEPARTAMENTO.NOME LIKE ?";
+    private static final String SQL_DELETE_DEPARTAMENTO = "DELETE FROM DEPARTAMENTO WHERE  COD_DEPARTAMENTO = ?";
 
     // ABAIXO METODOS DE INSERÇÃO(INSERT), REMOÇÃO(DELETE), ATUALIZAÇÃO(UPDATE), RECUPERAÇÃO(SELECT)
     //INSERT DEPARTAMENTO
@@ -93,6 +94,36 @@ public class DepartamentoDAO {
         return DEP;
     }
 
+    public void DeleteDepartamento(String Cod_Departamento) throws SQLException {
+        Connection conexao = null;
+        PreparedStatement comando = null;
+
+        try {
+
+            conexao = BancoDadosUtil.getConnection();
+            comando = conexao.prepareStatement(SQL_DELETE_DEPARTAMENTO);
+
+            comando.setString(1, Cod_Departamento);
+
+            comando.execute();
+            conexao.commit();
+
+        } catch (Exception e) {
+            if (conexao != null) {
+                conexao.rollback();
+            }
+            throw new RuntimeException(e);
+
+        } finally {
+            if (comando != null && !comando.isClosed()) {
+                comando.close();
+            }
+            if (conexao != null && !conexao.isClosed()) {
+                conexao.close();
+            }
+        }
+    }
+
     //SELECIONA todos os DEPARTAMENTO
     public Departamento selectTodosDepartamentos() throws SQLException {
         Connection conexao = null;
@@ -133,6 +164,73 @@ public class DepartamentoDAO {
             }
         }
         return DEP;
+    }
+
+    public ResultSet PreencheTabelaDepartamentos() throws SQLException {
+        Connection conexao = null;
+        PreparedStatement comando = null;
+        ResultSet resultado = null;
+        Departamento DEP = null;
+
+        try {
+
+            conexao = BancoDadosUtil.getConnection();
+
+            comando = conexao.prepareStatement(SQL_SELECT_TODOS_DEPARTAMENTOS);
+
+            resultado = comando.executeQuery();
+
+            conexao.commit();
+
+        } catch (Exception e) {
+            if (conexao != null) {
+                conexao.rollback();
+            }
+            throw new RuntimeException(e);
+
+        } finally {
+            if (comando != null && !comando.isClosed()) {
+                comando.close();
+            }
+            if (conexao != null && !conexao.isClosed()) {
+                conexao.close();
+            }
+        }
+        return resultado;
+    }
+
+    public ResultSet PesquisaNaTabelaDepartamentos(String NomeDepartamento) throws SQLException {
+        Connection conexao = null;
+        PreparedStatement comando = null;
+        ResultSet resultado = null;
+        Departamento DEP = null;
+
+        try {
+
+            conexao = BancoDadosUtil.getConnection();
+
+            comando = conexao.prepareStatement(SQL_SELECT_DEPARTAMENTO_POR_NOME);
+            comando.setString(1, NomeDepartamento + "%");
+
+            resultado = comando.executeQuery();
+
+            conexao.commit();
+
+        } catch (Exception e) {
+            if (conexao != null) {
+                conexao.rollback();
+            }
+            throw new RuntimeException(e);
+
+        } finally {
+            if (comando != null && !comando.isClosed()) {
+                comando.close();
+            }
+            if (conexao != null && !conexao.isClosed()) {
+                conexao.close();
+            }
+        }
+        return resultado;
     }
 
     //SELECIONA UM DEPARTAMENTO, DE ACORDO OS PARAMETRO(COD_DEPARTAMENTO)
