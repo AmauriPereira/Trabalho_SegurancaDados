@@ -1,6 +1,7 @@
 package br.edu.ifnmg.alvespereira.segurancadados.apresentacao;
 
 import br.edu.ifnmg.alvespereira.segurancadados.entidades.Departamento;
+import br.edu.ifnmg.alvespereira.segurancadados.excecoes.excecaoDepartamento;
 import br.edu.ifnmg.alvespereira.segurancadados.negocio.DepartamentoBO;
 import java.sql.SQLException;
 import javax.swing.JOptionPane;
@@ -100,6 +101,10 @@ public class CadastroDepInTform extends javax.swing.JInternalFrame {
                     "Cadastro de Departamento", JOptionPane.INFORMATION_MESSAGE);
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null, "Erro ao Cadastrar o departamento",
+                    "Cadastro de Departamento", JOptionPane.ERROR_MESSAGE);
+        } catch (excecaoDepartamento ex) {
+            JOptionPane.showMessageDialog(null, "Ja existe um Departamento cadastrado\n"
+                    + "  Com este nome ou código!!!",
                     "Cadastro de Departamento", JOptionPane.ERROR_MESSAGE);
         }
     }//GEN-LAST:event_btnCadastrarActionPerformed
