@@ -204,6 +204,11 @@ public class GerenciaProjetos extends javax.swing.JInternalFrame {
         lblDataTermino.setText("Data Término:");
 
         cbDepartamentos.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        cbDepartamentos.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cbDepartamentosActionPerformed(evt);
+            }
+        });
         cbDepartamentos.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusGained(java.awt.event.FocusEvent evt) {
                 cbDepartamentosFocusGained(evt);
@@ -309,6 +314,11 @@ public class GerenciaProjetos extends javax.swing.JInternalFrame {
 
         btnOK.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/edu/ifnmg/alvespereira/segurancadados/icones/bullet-aller-icone-7275-32.png"))); // NOI18N
         btnOK.setText("Ok");
+        btnOK.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnOKActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -433,6 +443,14 @@ public class GerenciaProjetos extends javax.swing.JInternalFrame {
                     "Gestão de Projeto", JOptionPane.ERROR_MESSAGE);
         }
     }//GEN-LAST:event_btnExcluirActionPerformed
+
+    private void cbDepartamentosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbDepartamentosActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_cbDepartamentosActionPerformed
+
+    private void btnOKActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnOKActionPerformed
+        this.dispose();
+    }//GEN-LAST:event_btnOKActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

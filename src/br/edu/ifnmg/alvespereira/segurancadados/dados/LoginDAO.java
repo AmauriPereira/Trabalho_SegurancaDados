@@ -38,7 +38,7 @@ public class LoginDAO {
 
                 
                 DepartamentoDAO depDAO = new DepartamentoDAO();
-                user.setCodDepartamento(depDAO.selectDepartamentoPorCodigo(resultado.getString("COD_DEPARTAMENTO")));
+                user.setDepartamento(depDAO.selectDepartamentoPorCodigo(resultado.getString("COD_DEPARTAMENTO")));
 
             }
 

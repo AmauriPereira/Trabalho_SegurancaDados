@@ -1,9 +1,11 @@
 package br.edu.ifnmg.alvespereira.segurancadados.negocio;
 
 import br.edu.ifnmg.alvespereira.segurancadados.dados.DepartamentoDAO;
+import br.edu.ifnmg.alvespereira.segurancadados.dados.ProjetoDAO;
 import br.edu.ifnmg.alvespereira.segurancadados.dados.UsuarioDAO;
 import br.edu.ifnmg.alvespereira.segurancadados.entidades.Departamento;
 import br.edu.ifnmg.alvespereira.segurancadados.entidades.Usuario;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
@@ -137,5 +139,50 @@ public class UsuarioBO {
         return Encarregado;
 
     }
+    
+    public ResultSet preencheTabelaGerente() throws SQLException {
+        UsuarioDAO Gerente = new UsuarioDAO();
+        ResultSet resultPreencherTabela = Gerente.preencherTabelaGerente();
 
+        return resultPreencherTabela;
+
+    }
+    
+    public ResultSet preencheTabelaEncarregado(String Departamento) throws SQLException {
+        UsuarioDAO Encarregado = new UsuarioDAO();
+        ResultSet resultPreencherTabela = Encarregado.preencherTabelaEncarregado(Departamento);
+
+        return resultPreencherTabela;
+
+    }
+    
+    public ResultSet pesquisaGerente(String NomeGerente) throws SQLException {
+        UsuarioDAO Gerente = new UsuarioDAO();
+        ResultSet resultPesquisa = Gerente.pesquisaGerente(NomeGerente);
+
+        return resultPesquisa;
+
+    }
+    
+    public void UpdateGerente(Usuario gerente) throws SQLException {
+
+        UsuarioDAO usuarioDAO = new UsuarioDAO();    
+        usuarioDAO.AtualizarGerente(gerente);
+
+    }
+    public void DeleteGerente(Usuario usuario) throws SQLException {
+
+        UsuarioDAO usuarioDAO = new UsuarioDAO();
+        usuarioDAO.DeleteUsuario(usuario);
+
+    }
+    
+    public void DeleteEncarregado(Usuario usuario) throws SQLException {
+
+        UsuarioDAO usuarioDAO = new UsuarioDAO();
+        usuarioDAO.DeleteUsuario(usuario);
+
+    }
+
+    
 }

@@ -5,24 +5,85 @@
  */
 package br.edu.ifnmg.alvespereira.segurancadados.apresentacao;
 
+import br.edu.ifnmg.alvespereira.segurancadados.entidades.Departamento;
+import br.edu.ifnmg.alvespereira.segurancadados.entidades.Usuario;
 import br.edu.ifnmg.alvespereira.segurancadados.negocio.DepartamentoBO;
+import br.edu.ifnmg.alvespereira.segurancadados.negocio.UsuarioBO;
+import java.io.UnsupportedEncodingException;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
+import net.proteanit.sql.DbUtils;
 
 /**
  *
  * @author Amauri
  */
-public class GerenciarUsuarioForm extends javax.swing.JInternalFrame {
+public class GerenciarGerenteForm extends javax.swing.JInternalFrame {
 
     /**
      * Creates new form EditarUsuarioForm
      */
-    public GerenciarUsuarioForm() {
+    private static Usuario usuarioLogado = new Usuario();
+
+    public GerenciarGerenteForm(Usuario userLogado) {
         initComponents();
-        this.popularCB();
-    
+        usuarioLogado = userLogado;
+        this.listarGerentes();
+        this.popularCmbDepartamento();
+        this.btnExcluir.setEnabled(false);
+        this.btnSalvarAlterações.setEnabled(false);
+        this.txtCodigo.setEnabled(false);
+        this.txtTipo.setEnabled(false);
+        this.cmbDepartamento.setEnabled(false);
+
+    }
+
+    public void listarGerentes() {
+        UsuarioBO gerente = new UsuarioBO();
+
+        try {
+            tbResultadoBusca.setModel(DbUtils.resultSetToTableModel(gerente.preencheTabelaGerente()));
+        } catch (SQLException ex) {
+
+        }
+
+    }
+
+    public void listarPesqGerente() {
+        UsuarioBO Gerente = new UsuarioBO();
+
+        try {
+
+            tbResultadoBusca.setModel(DbUtils.resultSetToTableModel(Gerente.pesquisaGerente(txtCampoBuscaGerente.getText())));
+
+        } catch (SQLException ex) {
+
+        }
+
+    }
+
+    public void popularCmbDepartamento() {
+        ArrayList<String> Departamentos = new ArrayList<>();
+        DepartamentoBO departamentoBO = new DepartamentoBO();
+
+        try {
+            Departamentos = departamentoBO.ComboBoxDepartamentos();
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Erro ao popular o departamento",
+                    "Departamento", JOptionPane.ERROR_MESSAGE);
+        }
+
+        cmbDepartamento.removeAllItems();
+        cmbDepartamento.addItem("Selecione");
+        for (String item : Departamentos) {
+            cmbDepartamento.addItem(item);
+        }
+
     }
 
     /**
@@ -38,24 +99,27 @@ public class GerenciarUsuarioForm extends javax.swing.JInternalFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         tbResultadoBusca = new javax.swing.JTable();
         jPanelBuscarUsuario = new javax.swing.JPanel();
-        cmbBuscaFuncionario = new javax.swing.JComboBox();
-        btnBuscar = new javax.swing.JButton();
+        txtCampoBuscaGerente = new javax.swing.JTextField();
         jPanel2 = new javax.swing.JPanel();
         lbbTipoUsuario = new javax.swing.JLabel();
         lblNome = new javax.swing.JLabel();
         lblEmail = new javax.swing.JLabel();
         lblDepartamento = new javax.swing.JLabel();
         lblSenha = new javax.swing.JLabel();
-        txtTipo = new javax.swing.JTextField();
         txtNome = new javax.swing.JTextField();
         txtEmail = new javax.swing.JTextField();
         txtSenha = new javax.swing.JTextField();
         cmbDepartamento = new javax.swing.JComboBox();
+        lblCodigo = new javax.swing.JLabel();
+        txtCodigo = new javax.swing.JTextField();
+        txtTipo = new javax.swing.JTextField();
         btnSalvarAlterações = new javax.swing.JButton();
         btnExcluir = new javax.swing.JButton();
         btnOK = new javax.swing.JButton();
 
-        setTitle("Gerênciar Usuários");
+        setClosable(true);
+        setIconifiable(true);
+        setTitle("Gerênciar Gerente");
 
         tbResultadoBusca.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -68,16 +132,23 @@ public class GerenciarUsuarioForm extends javax.swing.JInternalFrame {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
+        tbResultadoBusca.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tbResultadoBuscaMouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(tbResultadoBusca);
 
-        jPanelBuscarUsuario.setBorder(javax.swing.BorderFactory.createTitledBorder("Buscar Usuario"));
+        jPanelBuscarUsuario.setBorder(javax.swing.BorderFactory.createTitledBorder("Buscar Gerente"));
 
-        cmbBuscaFuncionario.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-
-        btnBuscar.setText("Buscar");
-        btnBuscar.addActionListener(new java.awt.event.ActionListener() {
+        txtCampoBuscaGerente.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnBuscarActionPerformed(evt);
+                txtCampoBuscaGerenteActionPerformed(evt);
+            }
+        });
+        txtCampoBuscaGerente.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                txtCampoBuscaGerenteKeyReleased(evt);
             }
         });
 
@@ -86,20 +157,16 @@ public class GerenciarUsuarioForm extends javax.swing.JInternalFrame {
         jPanelBuscarUsuarioLayout.setHorizontalGroup(
             jPanelBuscarUsuarioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanelBuscarUsuarioLayout.createSequentialGroup()
-                .addGap(34, 34, 34)
-                .addComponent(cmbBuscaFuncionario, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGap(18, 18, 18)
-                .addComponent(btnBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 86, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(37, 37, 37))
+                .addGap(38, 38, 38)
+                .addComponent(txtCampoBuscaGerente, javax.swing.GroupLayout.PREFERRED_SIZE, 352, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanelBuscarUsuarioLayout.setVerticalGroup(
             jPanelBuscarUsuarioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanelBuscarUsuarioLayout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanelBuscarUsuarioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(cmbBuscaFuncionario, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnBuscar))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addComponent(txtCampoBuscaGerente, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(14, Short.MAX_VALUE))
         );
 
         jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder("Dados do usuário"));
@@ -116,6 +183,14 @@ public class GerenciarUsuarioForm extends javax.swing.JInternalFrame {
 
         cmbDepartamento.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
+        lblCodigo.setText("Código:");
+
+        txtTipo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtTipoActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
@@ -126,7 +201,11 @@ public class GerenciarUsuarioForm extends javax.swing.JInternalFrame {
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addComponent(lbbTipoUsuario)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(txtTipo))
+                        .addComponent(txtTipo)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(lblCodigo)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(txtCodigo, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addComponent(lblDepartamento)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -138,7 +217,7 @@ public class GerenciarUsuarioForm extends javax.swing.JInternalFrame {
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addComponent(lblEmail)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(txtEmail)
+                        .addComponent(txtEmail, javax.swing.GroupLayout.DEFAULT_SIZE, 248, Short.MAX_VALUE)
                         .addGap(18, 18, 18)
                         .addComponent(lblSenha)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -151,6 +230,8 @@ public class GerenciarUsuarioForm extends javax.swing.JInternalFrame {
                 .addContainerGap()
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lbbTipoUsuario)
+                    .addComponent(lblCodigo)
+                    .addComponent(txtCodigo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(txtTipo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -170,8 +251,18 @@ public class GerenciarUsuarioForm extends javax.swing.JInternalFrame {
         );
 
         btnSalvarAlterações.setText("Salvar Alterações");
+        btnSalvarAlterações.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSalvarAlteraçõesActionPerformed(evt);
+            }
+        });
 
         btnExcluir.setText("Excluir");
+        btnExcluir.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnExcluirActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanelGerenciarUsuarioLayout = new javax.swing.GroupLayout(jPanelGerenciarUsuario);
         jPanelGerenciarUsuario.setLayout(jPanelGerenciarUsuarioLayout);
@@ -208,6 +299,11 @@ public class GerenciarUsuarioForm extends javax.swing.JInternalFrame {
         );
 
         btnOK.setText("Ok");
+        btnOK.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnOKActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -235,51 +331,142 @@ public class GerenciarUsuarioForm extends javax.swing.JInternalFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
-       
-    }//GEN-LAST:event_btnBuscarActionPerformed
+    private void txtCampoBuscaGerenteKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtCampoBuscaGerenteKeyReleased
+        listarPesqGerente();
+    }//GEN-LAST:event_txtCampoBuscaGerenteKeyReleased
+
+    private void tbResultadoBuscaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tbResultadoBuscaMouseClicked
+        this.btnExcluir.setEnabled(true);
+        this.btnSalvarAlterações.setEnabled(true);
+        int seleciona = tbResultadoBusca.getSelectedRow();
+
+        cmbDepartamento.setSelectedItem(tbResultadoBusca.getModel().getValueAt(seleciona, 3).toString());
+        txtCodigo.setText(tbResultadoBusca.getModel().getValueAt(seleciona, 0).toString());
+        txtNome.setText(tbResultadoBusca.getModel().getValueAt(seleciona, 1).toString());
+        txtTipo.setText(tbResultadoBusca.getModel().getValueAt(seleciona, 2).toString());
+        txtEmail.setText(tbResultadoBusca.getModel().getValueAt(seleciona, 4).toString());
+    }//GEN-LAST:event_tbResultadoBuscaMouseClicked
+
+    private void btnSalvarAlteraçõesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalvarAlteraçõesActionPerformed
+        int idUsuario;
+        String Nome;
+        String Email;
+        String Tipo;
+        String Senha = null;
+        Departamento Departamento = null;
+
+        //Seta o departamento do usuario
+        try {
+            DepartamentoBO depBO = new DepartamentoBO();
+            Departamento = depBO.selectDepartamento(cmbDepartamento.getSelectedItem() + "");
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Erro ao selecionar o departamento",
+                    "Cadastro de usuários", JOptionPane.ERROR_MESSAGE);
+        }
+
+        //Seta o Nome e a descrição projeto
+        Nome = txtNome.getText();
+        Email = txtEmail.getText();
+        Tipo = txtTipo.getText();
+        Senha = txtSenha.getText();
+        idUsuario = Integer.parseInt(txtCodigo.getText());
+
+        MessageDigest cript;
+        try {
+            cript = MessageDigest.getInstance("SHA-256");
+            byte messageDigest[] = cript.digest(Senha.getBytes("UTF-8"));
+
+            StringBuilder hexString = new StringBuilder();
+            for (byte b : messageDigest) {
+                hexString.append(String.format("%02X", 0xFF & b));
+            }
+            Senha = hexString.toString();
+
+        } catch (NoSuchAlgorithmException ex) {
+            Logger.getLogger(CadastroDiretorForm.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (UnsupportedEncodingException ex) {
+            Logger.getLogger(CadastroDiretorForm.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        //Cria um novo projeto e seta todos os dados
+        Usuario gerente = new Usuario();
+        gerente.setIdUsuario(idUsuario);
+        gerente.setNome(Nome);
+        gerente.setEmail(Email);
+        gerente.setSenha(Senha);
+        gerente.setDepartamento(Departamento);
+        gerente.setTipo(Tipo);
+
+        //Cria um novo objeto do tipo ProjetoBO e 
+        //passa como parmetro o projeto que será cadastrado
+        UsuarioBO usuarioBO = new UsuarioBO();
+
+        try {
+            usuarioBO.UpdateGerente(gerente);
+            JOptionPane.showMessageDialog(null, "Usuario Atualizado com Sucesso !!!",
+                    "Gestão de Usuário", JOptionPane.INFORMATION_MESSAGE);
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Erro ao Atualizado projeto",
+                    "Gestão de Usuário", JOptionPane.ERROR_MESSAGE);
+        }
+    }//GEN-LAST:event_btnSalvarAlteraçõesActionPerformed
+
+    private void txtTipoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtTipoActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtTipoActionPerformed
+
+    private void btnExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExcluirActionPerformed
+        //Cria um novo projeto e seta o ID do  projetoque sera excluido
+        Usuario usuario = new Usuario();
+
+        int codGerente = Integer.parseInt(txtCodigo.getText());
+        usuario.setIdUsuario(codGerente);
+        usuario.setTipo("Gerente");
+
+        //Cria um novo objeto do tipo ProjetoBO e 
+        //passa como parmetro o projeto que será Deletado
+        UsuarioBO usuarioBO = new UsuarioBO();
+
+        try {
+            usuarioBO.DeleteGerente(usuario);
+            JOptionPane.showMessageDialog(null, "Usuario Deletado com Sucesso !!!",
+                    "Gestão de Usuário", JOptionPane.INFORMATION_MESSAGE);
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Erro ao Deletado Usuário",
+                    "Gestão de Usuário", JOptionPane.ERROR_MESSAGE);
+        }
+    }//GEN-LAST:event_btnExcluirActionPerformed
+
+    private void btnOKActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnOKActionPerformed
+        this.dispose();
+    }//GEN-LAST:event_btnOKActionPerformed
+
+    private void txtCampoBuscaGerenteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtCampoBuscaGerenteActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtCampoBuscaGerenteActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btnBuscar;
     private javax.swing.JButton btnExcluir;
     private javax.swing.JButton btnOK;
     private javax.swing.JButton btnSalvarAlterações;
-    private javax.swing.JComboBox cmbBuscaFuncionario;
     private javax.swing.JComboBox cmbDepartamento;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanelBuscarUsuario;
     private javax.swing.JPanel jPanelGerenciarUsuario;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JLabel lbbTipoUsuario;
+    private javax.swing.JLabel lblCodigo;
     private javax.swing.JLabel lblDepartamento;
     private javax.swing.JLabel lblEmail;
     private javax.swing.JLabel lblNome;
     private javax.swing.JLabel lblSenha;
     private javax.swing.JTable tbResultadoBusca;
+    private javax.swing.JTextField txtCampoBuscaGerente;
+    private javax.swing.JTextField txtCodigo;
     private javax.swing.JTextField txtEmail;
     private javax.swing.JTextField txtNome;
     private javax.swing.JTextField txtSenha;
     private javax.swing.JTextField txtTipo;
     // End of variables declaration//GEN-END:variables
-
-    //Metodo que add todos os departamentos cadastrados na ComboBox
-    public void popularCB() {
-        ArrayList<String> Departamentos = new ArrayList<>();
-        DepartamentoBO depBO = new DepartamentoBO();
-
-        try {
-            Departamentos = depBO.ComboBoxDepartamentos();
-        } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(null, "Erro ao popular o departamento",
-                    "Departamento", JOptionPane.ERROR_MESSAGE);
-        }
-
-        cmbBuscaFuncionario.removeAllItems();
-        cmbBuscaFuncionario.addItem("Selecione");
-        for (String item : Departamentos) {
-            cmbBuscaFuncionario.addItem(item);
-        }
-
-    }
 }

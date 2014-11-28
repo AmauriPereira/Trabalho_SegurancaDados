@@ -9,7 +9,6 @@ public class Projeto {
     private String descricao;
     private Date dataInicio;
     private Date dataTermino;
-
     private Departamento departamento;
 
     public int getIdProjeto() {

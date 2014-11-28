@@ -17,11 +17,11 @@ public class GerenciarAtvidadeFom extends javax.swing.JInternalFrame {
      * Creates new form EditarAtvidadeFom
      */
     private static Usuario UserLogado = null;
-    
+
     public GerenciarAtvidadeFom(Usuario usuarioLogado) {
         initComponents();
-        UserLogado = usuarioLogado;
-        System.out.println(usuarioLogado.getDepartamento().getCodigo()+"Cod departamento do usuario logado");
+        UserLogado = usuarioLogado;       
+
     }
 
     /**
@@ -55,6 +55,8 @@ public class GerenciarAtvidadeFom extends javax.swing.JInternalFrame {
 
         jTextField3.setText("jTextField3");
 
+        setClosable(true);
+        setIconifiable(true);
         setTitle("Gerênciar Atividades");
 
         jPanelBusca.setBorder(javax.swing.BorderFactory.createTitledBorder("Buscar por projeto"));

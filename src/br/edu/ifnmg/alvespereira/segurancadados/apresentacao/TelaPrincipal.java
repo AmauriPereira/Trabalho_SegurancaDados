@@ -280,6 +280,11 @@ public class TelaPrincipal extends javax.swing.JFrame {
         itmMnu_Gerente.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_F2, java.awt.event.InputEvent.ALT_MASK));
         itmMnu_Gerente.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/edu/ifnmg/alvespereira/segurancadados/icones/bill-homme-personne-utilisateur-icone-6596-32.png"))); // NOI18N
         itmMnu_Gerente.setText("     Gerente   ");
+        itmMnu_Gerente.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                itmMnu_GerenteActionPerformed(evt);
+            }
+        });
         mnuAtualizar.add(itmMnu_Gerente);
 
         itmMnu_Encarregado.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_F3, java.awt.event.InputEvent.ALT_MASK));
@@ -481,7 +486,12 @@ public class TelaPrincipal extends javax.swing.JFrame {
     }//GEN-LAST:event_itmMnu_DepartamentoActionPerformed
 
     private void itmMnu_EncarregadoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itmMnu_EncarregadoActionPerformed
-        // TODO add your handling code here:
+        GerenciarEncarregadoForm gerenciarEncarregadoForm = null;
+        gerenciarEncarregadoForm = new GerenciarEncarregadoForm(usuarioLogado);
+        gerenciarEncarregadoForm.setVisible(true);
+        centralizaForm(gerenciarEncarregadoForm);
+        JDP1.add(gerenciarEncarregadoForm);
+
     }//GEN-LAST:event_itmMnu_EncarregadoActionPerformed
 
     private void jMenuItem9ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem9ActionPerformed
@@ -601,6 +611,14 @@ public class TelaPrincipal extends javax.swing.JFrame {
         JDP1.add(gerenciarAtvidadeFom);
 
     }//GEN-LAST:event_itmMnu_AtividadeActionPerformed
+
+    private void itmMnu_GerenteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itmMnu_GerenteActionPerformed
+        GerenciarGerenteForm gerenciarGerenteForm = null;
+        gerenciarGerenteForm = new GerenciarGerenteForm(usuarioLogado);
+        gerenciarGerenteForm.setVisible(true);
+        centralizaForm(gerenciarGerenteForm);
+        JDP1.add(gerenciarGerenteForm);
+    }//GEN-LAST:event_itmMnu_GerenteActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel Data;
