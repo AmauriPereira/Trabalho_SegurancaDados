@@ -17,7 +17,7 @@ public class ProjetoDAO {
     private static final String SQL_SELECT_TODOS_PROJETOS = "SELECT ID_PROJETO AS Cod ,  NOME as Projeto , DESCRICAO as Descrição , DATA_INCIO as Inicio , DATA_TERMINO as Término , COD_DEPARTAMENTO as Departamento FROM PROJETO";
 
     //consulta prenche a tabela projeto
-    private static final String SQL_TODOS_PROJETOS_tabela = "SELECT ID_PROJETO AS Cod ,  NOME as Projeto ,"
+    private static final String SQL_TODOS_PROJETOS_TABELA = "SELECT ID_PROJETO AS Cod ,  NOME as Projeto ,"
             + "DESCRICAO as Descrição , DATA_INCIO as Inicio , DATA_TERMINO as Término , departamento.nome as Departamento "
             + "FROM PROJETO "
             + "inner join DEPARTAMENTO on (projeto.cod_departamento =  departamento.cod_departamento)"
@@ -36,7 +36,7 @@ public class ProjetoDAO {
             + "PROJETO.DESCRICAO = ?, PROJETO.DATA_INCIO =  ? , PROJETO.DATA_TERMINO =  ?,"
             + "PROJETO.COD_DEPARTAMENTO = ? WHERE PROJETO.ID_PROJETO = ?";
 
-    private static final String SQL_DELETE_UM_PROJETO = "delete from PROJETO where ID_PROJETO = ?";
+    private static final String SQL_DELETE_UM_PROJETO = "DELETE FROM PROJETO WHERE ID_PROJETO = ?";
 
     public void criarProjeto(Projeto projeto) throws SQLException {
         Connection conexao = null;
@@ -280,7 +280,7 @@ public class ProjetoDAO {
 
             conexao = BancoDadosUtil.getConnection();
 
-            comando = conexao.prepareStatement(SQL_TODOS_PROJETOS_tabela);
+            comando = conexao.prepareStatement(SQL_TODOS_PROJETOS_TABELA);
             comando.setString(1, Departamento);
 
             resultado = comando.executeQuery();
