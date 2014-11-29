@@ -1,11 +1,11 @@
 package br.edu.ifnmg.alvespereira.segurancadados.apresentacao;
 
+import br.edu.ifnmg.alvespereira.segurancadados.apresentacao.utilitarios.ValidacaoEmail;
 import br.edu.ifnmg.alvespereira.segurancadados.apresentacao.utilitarios.criptografiaUtil;
 import br.edu.ifnmg.alvespereira.segurancadados.entidades.Departamento;
 import br.edu.ifnmg.alvespereira.segurancadados.entidades.Usuario;
 import br.edu.ifnmg.alvespereira.segurancadados.excecoes.excecaoControlAcessDepartamento;
 import br.edu.ifnmg.alvespereira.segurancadados.excecoes.excecaoControleAcesso;
-import br.edu.ifnmg.alvespereira.segurancadados.excecoes.excecaoEncarregado;
 import br.edu.ifnmg.alvespereira.segurancadados.excecoes.excecaoEncarregadoExistente;
 import br.edu.ifnmg.alvespereira.segurancadados.excecoes.excecaoGerenteExistente;
 import br.edu.ifnmg.alvespereira.segurancadados.excecoes.excecaoGerentePorDepartamento;
@@ -13,8 +13,6 @@ import br.edu.ifnmg.alvespereira.segurancadados.negocio.DepartamentoBO;
 import br.edu.ifnmg.alvespereira.segurancadados.negocio.UsuarioBO;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 
 public final class CadastroUserForm extends javax.swing.JInternalFrame {
@@ -199,77 +197,86 @@ public final class CadastroUserForm extends javax.swing.JInternalFrame {
             JOptionPane.showMessageDialog(null, "Não foi possivel realizar o cadastrar \n Selecione um Departamento",
                     "Cadastro de Gerente", JOptionPane.ERROR_MESSAGE);
         } else {
-            String TipoUser = txtTipoUser.getText();
-            String Email = txtEmail.getText();
-            String Nome = txtNome.getText();
-            String Senha = txtSenha.getText();
+            boolean emailValidado;
+            ValidacaoEmail validacao = new ValidacaoEmail();
+            emailValidado = validacao.validaEmail(txtEmail.getText());
 
-            Departamento departamento = new Departamento();
-            DepartamentoBO depBO = new DepartamentoBO();
+            if (emailValidado == true) {
+                String TipoUser = txtTipoUser.getText();
+                String Email = txtEmail.getText();
+                String Nome = txtNome.getText();
+                String Senha = txtSenha.getText();
 
-            try {
-                departamento = depBO.selectDepartamento(cbDepartamentos.getSelectedItem() + "");
-            } catch (SQLException ex) {
-                JOptionPane.showMessageDialog(null, "Erro ao selecionar o departamento",
-                        "Cadastro de usuários", JOptionPane.ERROR_MESSAGE);
-            }
+                Departamento departamento = new Departamento();
+                DepartamentoBO depBO = new DepartamentoBO();
 
-            //codigo abaixo chama mtodo q realiza a criptografia da senha
-            criptografiaUtil criptografiaSenha = new criptografiaUtil();
-            Senha = criptografiaSenha.criptografiaSenha(Senha);
-
-            Usuario userCadastro = new Usuario();
-            //seta o usuario que sera cadastrado, 
-            //Com os dados armazenados nas variaveis criadas acima
-            userCadastro.setNome(Nome);
-            userCadastro.setEmail(Email);
-            userCadastro.setSenha(Senha);
-            userCadastro.setTipo(TipoUser);
-            userCadastro.setDepartamento(departamento);
-
-            UsuarioBO UsuarioBO = new UsuarioBO();
-
-            if (txtTipoUser.getText().equals("Gerente")) {
                 try {
-                    UsuarioBO.criarGerente(userCadastro);
-                    JOptionPane.showMessageDialog(null, "Gerente Cadastrado com Sucesso !!!",
-                            "Cadastro de Gerente", JOptionPane.INFORMATION_MESSAGE);
+                    departamento = depBO.selectDepartamento(cbDepartamentos.getSelectedItem() + "");
                 } catch (SQLException ex) {
-
-                } catch (excecaoGerenteExistente ex) {
-                    JOptionPane.showMessageDialog(null, "Não foi possivel cadastrar Gerente, \n"
-                            + " Ja existe um gerente cadastrado com este Nome",
-                            "Cadastro de Gerente", JOptionPane.ERROR_MESSAGE);
-
-                } catch (excecaoGerentePorDepartamento ex) {
-                    JOptionPane.showMessageDialog(null, "Não foi possivel cadastrar Gerente, \n "
-                            + "Ja existe um gerente cadastrado para este DEPARTAMENTO !!!",
-                            "Cadastro de Gerente", JOptionPane.ERROR_MESSAGE);
+                    JOptionPane.showMessageDialog(null, "Erro ao selecionar o departamento",
+                            "Cadastro de usuários", JOptionPane.ERROR_MESSAGE);
                 }
-            }
 
-            if (txtTipoUser.getText().equals("Encarregado")) {
-                try {
+                //codigo abaixo chama mtodo q realiza a criptografia da senha
+                criptografiaUtil criptografiaSenha = new criptografiaUtil();
+                Senha = criptografiaSenha.criptografiaSenha(Senha);
 
-                    UsuarioBO.criarEncarregado(userCadastro, usuarioLogado);
-                    JOptionPane.showMessageDialog(null, "Encarregado Cadastrado com Sucesso !!!",
-                            "Encarregado de Gerente", JOptionPane.INFORMATION_MESSAGE);
+                Usuario userCadastro = new Usuario();
+                //seta o usuario que sera cadastrado, 
+                //Com os dados armazenados nas variaveis criadas acima
+                userCadastro.setNome(Nome);
+                userCadastro.setEmail(Email);
+                userCadastro.setSenha(Senha);
+                userCadastro.setTipo(TipoUser);
+                userCadastro.setDepartamento(departamento);
 
-                } catch (SQLException ex) {
+                UsuarioBO UsuarioBO = new UsuarioBO();
 
-                } catch (excecaoEncarregadoExistente ex) {
-                    JOptionPane.showMessageDialog(null, "Não foi possivel cadastrar Encarregado, \n "
-                            + "Ja existe um Encarregado cadastrado com este Nome",
-                            "Cadastro de Encarregado", JOptionPane.ERROR_MESSAGE);
-                } catch (excecaoControleAcesso ex) {
-                    JOptionPane.showMessageDialog(null, "Não foi possivel cadastrar Encarregado, \n "
-                            + "Você não possui previlégios para cadastrar Encarregados",
-                            "Cadastro de Encarregado", JOptionPane.ERROR_MESSAGE);
-                } catch (excecaoControlAcessDepartamento ex) {
-                    JOptionPane.showMessageDialog(null, "Não foi possivel cadastrar Encarregado, \n "
-                            + "Você não possui previlégios para cadastrar \nEncarregados nesse DEPARTAMENTO !!!",
-                            "Cadastro de Encarregado", JOptionPane.ERROR_MESSAGE);
+                if (txtTipoUser.getText().equals("Gerente")) {
+                    try {
+                        UsuarioBO.criarGerente(userCadastro);
+                        JOptionPane.showMessageDialog(null, "Gerente Cadastrado com Sucesso !!!",
+                                "Cadastro de Gerente", JOptionPane.INFORMATION_MESSAGE);
+                    } catch (SQLException ex) {
+
+                    } catch (excecaoGerenteExistente ex) {
+                        JOptionPane.showMessageDialog(null, "Não foi possivel cadastrar Gerente, \n"
+                                + " Ja existe um gerente cadastrado com este Nome",
+                                "Cadastro de Gerente", JOptionPane.ERROR_MESSAGE);
+
+                    } catch (excecaoGerentePorDepartamento ex) {
+                        JOptionPane.showMessageDialog(null, "Não foi possivel cadastrar Gerente, \n "
+                                + "Ja existe um gerente cadastrado para este DEPARTAMENTO !!!",
+                                "Cadastro de Gerente", JOptionPane.ERROR_MESSAGE);
+                    }
                 }
+
+                if (txtTipoUser.getText().equals("Encarregado")) {
+                    try {
+
+                        UsuarioBO.criarEncarregado(userCadastro, usuarioLogado);
+                        JOptionPane.showMessageDialog(null, "Encarregado Cadastrado com Sucesso !!!",
+                                "Encarregado de Gerente", JOptionPane.INFORMATION_MESSAGE);
+
+                    } catch (SQLException ex) {
+
+                    } catch (excecaoEncarregadoExistente ex) {
+                        JOptionPane.showMessageDialog(null, "Não foi possivel cadastrar Encarregado, \n "
+                                + "Ja existe um Encarregado cadastrado com este Nome",
+                                "Cadastro de Encarregado", JOptionPane.ERROR_MESSAGE);
+                    } catch (excecaoControleAcesso ex) {
+                        JOptionPane.showMessageDialog(null, "Não foi possivel cadastrar Encarregado, \n "
+                                + "Você não possui previlégios para cadastrar Encarregados",
+                                "Cadastro de Encarregado", JOptionPane.ERROR_MESSAGE);
+                    } catch (excecaoControlAcessDepartamento ex) {
+                        JOptionPane.showMessageDialog(null, "Não foi possivel cadastrar Encarregado, \n "
+                                + "Você não possui previlégios para cadastrar \nEncarregados nesse DEPARTAMENTO !!!",
+                                "Cadastro de Encarregado", JOptionPane.ERROR_MESSAGE);
+                    }
+                }
+            } else {
+                JOptionPane.showMessageDialog(null, "Email Inválido !!!", "Cadastro de Usuario", JOptionPane.ERROR_MESSAGE);
+
             }
         }
 
