@@ -45,10 +45,12 @@ public class TelaPrincipal extends javax.swing.JFrame {
         //(UsuarioLogado, DEparatmento, Função) - hora e data
         this.configBarraStatus();
 
+        this.atividadesAtrasadas();
+
     }
 
     //Metodo que configura as insformações da barra de status do sistema
-    //(UsuarioLogado, DEparatmento, Função) - hora e data
+    //(UsuarioLogado, Deparatmento, Função) - hora e data
     private void configBarraStatus() {
 
         this.txtFuncao.setText(usuarioLogado.getTipo());
@@ -102,6 +104,13 @@ public class TelaPrincipal extends javax.swing.JFrame {
         itmMnu_Encarregado = new javax.swing.JMenuItem();
         MenuProjeto = new javax.swing.JMenuItem();
         itmMnu_Atividade = new javax.swing.JMenuItem();
+        jMenu1 = new javax.swing.JMenu();
+        itmMnuLancarHoras = new javax.swing.JMenuItem();
+        jMenu2 = new javax.swing.JMenu();
+        jMenuItem1 = new javax.swing.JMenuItem();
+        jMenuItem2 = new javax.swing.JMenuItem();
+        jMenuItem3 = new javax.swing.JMenuItem();
+        jMenuItem4 = new javax.swing.JMenuItem();
         mnuOpcoes = new javax.swing.JMenu();
         jMenuItem9 = new javax.swing.JMenuItem();
         itmMnuSair = new javax.swing.JMenuItem();
@@ -318,6 +327,46 @@ public class TelaPrincipal extends javax.swing.JFrame {
         mnuAtualizar.add(itmMnu_Atividade);
 
         jMenuBar1.add(mnuAtualizar);
+
+        jMenu1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/edu/ifnmg/alvespereira/segurancadados/icones/listes-icone-3873-32.png"))); // NOI18N
+        jMenu1.setText("Controle de Atividades");
+
+        itmMnuLancarHoras.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_L, java.awt.event.InputEvent.CTRL_MASK));
+        itmMnuLancarHoras.setText("Lançar Horas");
+        itmMnuLancarHoras.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                itmMnuLancarHorasActionPerformed(evt);
+            }
+        });
+        jMenu1.add(itmMnuLancarHoras);
+
+        jMenuBar1.add(jMenu1);
+
+        jMenu2.setText("Relatórios");
+
+        jMenuItem1.setText("Usuários");
+        jMenuItem1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem1ActionPerformed(evt);
+            }
+        });
+        jMenu2.add(jMenuItem1);
+
+        jMenuItem2.setText("Projetos");
+        jMenu2.add(jMenuItem2);
+
+        jMenuItem3.setText("Atividades de Projeto");
+        jMenuItem3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem3ActionPerformed(evt);
+            }
+        });
+        jMenu2.add(jMenuItem3);
+
+        jMenuItem4.setText("Departamentos");
+        jMenu2.add(jMenuItem4);
+
+        jMenuBar1.add(jMenu2);
 
         mnuOpcoes.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/edu/ifnmg/alvespereira/segurancadados/icones/engrenages-package-systeme-roues-icone-8982-32.png"))); // NOI18N
         mnuOpcoes.setText("      Opções    ");
@@ -637,8 +686,8 @@ public class TelaPrincipal extends javax.swing.JFrame {
             JDP1.add(gerenciarAtvidadeFom);
         } else {
             JOptionPane.showMessageDialog(null, "Você não possui previlégios para acessar \n   "
-                    + "a Tela de Gestão de Atividades!!!",
-                    "Gestão de Encarregado", JOptionPane.ERROR_MESSAGE);
+                    + "a Tela de Gestão de Atividades!",
+                    "Gestão de Atividades", JOptionPane.ERROR_MESSAGE);
 
         }
 
@@ -653,11 +702,34 @@ public class TelaPrincipal extends javax.swing.JFrame {
             JDP1.add(gerenciarGerenteForm);
         } else {
             JOptionPane.showMessageDialog(null, "Você não possui previlégios para acessar \n   "
-                    + "a Tela de Gestão de Gerente!!!",
+                    + "a Tela de Gestão de Gerente!",
                     "Cadastro de Gerente", JOptionPane.ERROR_MESSAGE);
 
         }
     }//GEN-LAST:event_itmMnu_GerenteActionPerformed
+
+    private void itmMnuLancarHorasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itmMnuLancarHorasActionPerformed
+        if (usuarioLogado.getTipo().equals("Diretor")) {
+            LancarHorasAtividadeForm lancarHorasAtividadeForm = null;
+            lancarHorasAtividadeForm = new LancarHorasAtividadeForm(usuarioLogado);
+            lancarHorasAtividadeForm.setVisible(true);
+            centralizaForm(lancarHorasAtividadeForm);
+            JDP1.add(lancarHorasAtividadeForm);
+        } else {
+            JOptionPane.showMessageDialog(null, "Você não possui previlégios para acessar \n   "
+                    + "a Tela de Gestão de Gerente!",
+                    "Cadastro de Gerente", JOptionPane.ERROR_MESSAGE);
+
+        }
+    }//GEN-LAST:event_itmMnuLancarHorasActionPerformed
+
+    private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jMenuItem1ActionPerformed
+
+    private void jMenuItem3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem3ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jMenuItem3ActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel Data;
@@ -668,13 +740,20 @@ public class TelaPrincipal extends javax.swing.JFrame {
     private javax.swing.JMenuItem itmMnuDepartamento;
     private javax.swing.JMenuItem itmMnuEncarregado;
     private javax.swing.JMenuItem itmMnuGerente;
+    private javax.swing.JMenuItem itmMnuLancarHoras;
     private javax.swing.JMenuItem itmMnuProjeto;
     private javax.swing.JMenuItem itmMnuSair;
     private javax.swing.JMenuItem itmMnu_Atividade;
     private javax.swing.JMenuItem itmMnu_Departamento;
     private javax.swing.JMenuItem itmMnu_Encarregado;
     private javax.swing.JMenuItem itmMnu_Gerente;
+    private javax.swing.JMenu jMenu1;
+    private javax.swing.JMenu jMenu2;
     private javax.swing.JMenuBar jMenuBar1;
+    private javax.swing.JMenuItem jMenuItem1;
+    private javax.swing.JMenuItem jMenuItem2;
+    private javax.swing.JMenuItem jMenuItem3;
+    private javax.swing.JMenuItem jMenuItem4;
     private javax.swing.JMenuItem jMenuItem9;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JLabel lblData;
@@ -699,4 +778,18 @@ public class TelaPrincipal extends javax.swing.JFrame {
         }
     }
 
+    // metodo de chamar tela de atividades em atraso
+    private void atividadesAtrasadas() {
+        if (usuarioLogado.getTipo().equals("Gerente")) {
+            AtividadesAtrazadasForm atividadesAtrazadasForm = null;
+
+            atividadesAtrazadasForm = new AtividadesAtrazadasForm(usuarioLogado);
+
+            atividadesAtrazadasForm.setVisible(true);
+            centralizaForm(atividadesAtrazadasForm);
+            atividadesAtrazadasForm.toFront();
+            JDP1.add(atividadesAtrazadasForm);
+        }
+
+    }
 }

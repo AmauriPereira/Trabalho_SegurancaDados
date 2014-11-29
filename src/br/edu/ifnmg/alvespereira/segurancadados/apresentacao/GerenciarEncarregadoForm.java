@@ -296,7 +296,7 @@ public class GerenciarEncarregadoForm extends javax.swing.JInternalFrame {
 
         String departamento = this.cmbBuscaFuncionario.getSelectedItem().toString();
         UsuarioBO encarregado = new UsuarioBO();
-        //System.out.println(departamento.getNome());
+
         try {
             tbResultadoBusca.setModel(DbUtils.resultSetToTableModel(encarregado.preencheTabelaEncarregado(departamento)));
         } catch (SQLException ex) {
