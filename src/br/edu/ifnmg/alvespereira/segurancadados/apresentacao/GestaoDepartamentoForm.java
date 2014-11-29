@@ -1,16 +1,17 @@
 package br.edu.ifnmg.alvespereira.segurancadados.apresentacao;
 
 import br.edu.ifnmg.alvespereira.segurancadados.dados.DepartamentoDAO;
+import br.edu.ifnmg.alvespereira.segurancadados.entidades.Departamento;
 import br.edu.ifnmg.alvespereira.segurancadados.excecoes.excecaoDeletarElemento;
+import br.edu.ifnmg.alvespereira.segurancadados.excecoes.excecaoDepartamento;
 import br.edu.ifnmg.alvespereira.segurancadados.negocio.DepartamentoBO;
 import java.sql.SQLException;
-import java.sql.SQLIntegrityConstraintViolationException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import net.proteanit.sql.DbUtils;
 
 public class GestaoDepartamentoForm extends javax.swing.JInternalFrame {
+
+    private static String CodDepartamentoAntigo = null;
 
     public GestaoDepartamentoForm() {
         initComponents();
@@ -75,6 +76,7 @@ public class GestaoDepartamentoForm extends javax.swing.JInternalFrame {
 
         jPanel3.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Atividades", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 12), new java.awt.Color(0, 102, 102))); // NOI18N
 
+        txtCodDepartamnento.setEditable(false);
         txtCodDepartamnento.setBackground(new java.awt.Color(204, 204, 204));
         txtCodDepartamnento.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         txtCodDepartamnento.setForeground(new java.awt.Color(0, 102, 102));
@@ -183,6 +185,11 @@ public class GestaoDepartamentoForm extends javax.swing.JInternalFrame {
 
         btnSalvarAlteracao.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/edu/ifnmg/alvespereira/segurancadados/icones/filesave-icone-8124-32.png"))); // NOI18N
         btnSalvarAlteracao.setText("Salvar Alterações");
+        btnSalvarAlteracao.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSalvarAlteracaoActionPerformed(evt);
+            }
+        });
 
         jToggleButton3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/edu/ifnmg/alvespereira/segurancadados/icones/bullet-aller-icone-7275-32.png"))); // NOI18N
         jToggleButton3.setText("Ok");
@@ -262,8 +269,10 @@ public class GestaoDepartamentoForm extends javax.swing.JInternalFrame {
 
     private void tblDepartamentosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblDepartamentosMouseClicked
         this.PreencherTabela();
+        this.CodDepartamentoAntigo = txtCodDepartamnento.getText();
         this.btnExcluir.setEnabled(true);
         this.btnSalvarAlteracao.setEnabled(true);
+
     }//GEN-LAST:event_tblDepartamentosMouseClicked
 
     private void btnExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExcluirActionPerformed
@@ -271,7 +280,7 @@ public class GestaoDepartamentoForm extends javax.swing.JInternalFrame {
         try {
             departamentoBO.DeleteDepartamento(txtCodDepartamnento.getText());
             JOptionPane.showMessageDialog(null, "Departamento Deletado com Sucesso !!!",
-                    "Cadastro de Departamento", JOptionPane.INFORMATION_MESSAGE);
+                    "Gestão de Departamento", JOptionPane.INFORMATION_MESSAGE);
             txtCodDepartamnento.setText("");
             txtNomeDepartamento.setText("");
             this.listarDepartamentos();
@@ -279,13 +288,43 @@ public class GestaoDepartamentoForm extends javax.swing.JInternalFrame {
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null, "Erro ao deletar o departamento\n"
                     + " Não é possivel deletar este Departamento",
-                    "Cadastro de Departamento", JOptionPane.ERROR_MESSAGE);
+                    "Gestão de Departamento", JOptionPane.ERROR_MESSAGE);
         } catch (excecaoDeletarElemento ex) {
             JOptionPane.showMessageDialog(null, "Erro ao deletar o departamento\n"
                     + " Não é possivel deletar este Departamento",
-                    "Cadastro de Departamento", JOptionPane.ERROR_MESSAGE);
+                    "Gestão de Departamento", JOptionPane.ERROR_MESSAGE);
         }
     }//GEN-LAST:event_btnExcluirActionPerformed
+
+    private void btnSalvarAlteracaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalvarAlteracaoActionPerformed
+
+        Departamento DEP = new Departamento();
+        String Nome = txtNomeDepartamento.getText();
+        String CodDep = txtCodDepartamnento.getText();
+
+        DEP.setNome(Nome);
+        DEP.setCodigo(CodDep);
+
+        DepartamentoBO departamentoBO = new DepartamentoBO();
+        try {
+            departamentoBO.UpdateDep(DEP, CodDepartamentoAntigo);
+
+            JOptionPane.showMessageDialog(null, "Departamento Atuzalido com Sucesso !!!",
+                    "Gestão de Departamento", JOptionPane.INFORMATION_MESSAGE);
+            txtCodDepartamnento.setText("");
+            txtNomeDepartamento.setText("");
+            this.listarDepartamentos();
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Erro ao Atualizar o departamento\n"
+                    + " Não é possivel Atualizar este Departamento",
+                    "Gestão de Departamento", JOptionPane.ERROR_MESSAGE);
+        } catch (excecaoDepartamento ex) {
+            JOptionPane.showMessageDialog(null, "Erro ao Atualizar o departamento\n"
+                    + " Ja Existe um departamento com este nome ou codigo. "
+                    + "\n PorFavor Altere !!! ",
+                    "Gestão de Departamento", JOptionPane.ERROR_MESSAGE);
+        }
+    }//GEN-LAST:event_btnSalvarAlteracaoActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

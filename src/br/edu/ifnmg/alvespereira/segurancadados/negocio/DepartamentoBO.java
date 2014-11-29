@@ -82,4 +82,21 @@ public class DepartamentoBO {
 
     }
 
+    public void UpdateDep(Departamento DEP, String CodDepartamentoAntigo) throws SQLException, excecaoDepartamento {
+
+        DepartamentoDAO depDAO = new DepartamentoDAO();
+        Departamento DepExistente = null;
+
+        DepExistente = depDAO.selecDepartamento(DEP.getNome(), DEP.getCodigo());
+
+        if (DepExistente == null || DepExistente.getCodigo().equals(DEP.getCodigo())) {
+
+            depDAO.UpdateDepartamento(DEP, CodDepartamentoAntigo);
+
+        } else {
+            throw new excecaoDepartamento();
+
+        }
+    }
+
 }
