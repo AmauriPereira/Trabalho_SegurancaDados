@@ -157,7 +157,7 @@ public class LancarHorasAtividadeForm extends javax.swing.JInternalFrame {
         String AtividadeSelcionada = (String) this.cmbAtividade.getSelectedItem();
 
         AtividadeBO atividadeBO = new AtividadeBO();
-        System.out.println(AtividadeSelcionada);
+
         try {
             atividadeBO.andamentoAtividade(atividade, AtividadeSelcionada);
             JOptionPane.showMessageDialog(null, "Lançamento realizado com Sucesso!",
