@@ -390,7 +390,7 @@ public class GerenciarGerenteForm extends javax.swing.JInternalFrame {
         UsuarioBO usuarioBO = new UsuarioBO();
 
         try {
-            usuarioBO.UpdateGerente(gerente);
+            usuarioBO.UpdateUsuario(gerente);
             JOptionPane.showMessageDialog(null, "Gerente Atualizado com Sucesso !!!",
                     "Gestão de Usuário", JOptionPane.INFORMATION_MESSAGE);
         } catch (SQLException ex) {

@@ -360,7 +360,7 @@ public class GerenciarEncarregadoForm extends javax.swing.JInternalFrame {
         UsuarioBO usuarioBO = new UsuarioBO();
 
         try {
-            usuarioBO.UpdateGerente(encarregado);
+            usuarioBO.UpdateUsuario(encarregado);
             JOptionPane.showMessageDialog(null, "Encarregado Atualizado com Sucesso !!!",
                     "Gestão de Encarregado", JOptionPane.INFORMATION_MESSAGE);
         } catch (SQLException ex) {

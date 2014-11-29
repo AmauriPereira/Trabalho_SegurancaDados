@@ -155,10 +155,10 @@ public class UsuarioBO {
 
     }
 
-    public void UpdateGerente(Usuario gerente) throws SQLException {
+    public void UpdateUsuario(Usuario user) throws SQLException {
 
         UsuarioDAO usuarioDAO = new UsuarioDAO();
-        usuarioDAO.AtualizarGerente(gerente);
+        usuarioDAO.AtulizaUsuario(user);
 
     }
 

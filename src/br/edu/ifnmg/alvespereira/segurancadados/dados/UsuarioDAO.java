@@ -470,7 +470,7 @@ public class UsuarioDAO {
 
     }
 
-    public void AtualizarGerente(Usuario gerente) throws SQLException {
+    public void AtulizaUsuario(Usuario user) throws SQLException {
         Connection conexao = null;
         PreparedStatement comando = null;
 
@@ -478,13 +478,12 @@ public class UsuarioDAO {
 
             conexao = BancoDadosUtil.getConnection();
             comando = conexao.prepareStatement(SQL_UPDATE_UM_GERENTE);
-            comando.setString(1, gerente.getNome());
-            comando.setString(2, gerente.getEmail());
-            comando.setString(3, gerente.getSenha());
-            comando.setString(4, gerente.getTipo());
-            comando.setString(5, gerente.getDepartamento().getCodigo());
-            comando.setInt(6, gerente.getIdUsuario());
-            System.out.println(gerente.getIdUsuario());
+            comando.setString(1, user.getNome());
+            comando.setString(2, user.getEmail());
+            comando.setString(3, user.getSenha());
+            comando.setString(4, user.getTipo());
+            comando.setString(5, user.getDepartamento().getCodigo());
+            comando.setInt(6, user.getIdUsuario());
 
             comando.executeUpdate();
             conexao.commit();
