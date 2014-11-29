@@ -1,6 +1,7 @@
 package br.edu.ifnmg.alvespereira.segurancadados.dados;
 
 import br.edu.ifnmg.alvespereira.segurancadados.entidades.Usuario;
+import br.edu.ifnmg.alvespereira.segurancadados.excecoes.excecaoDeletarElemento;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -32,7 +33,7 @@ public class UsuarioDAO {
             + "inner join DEPARTAMENTO on (USUARIO.COD_DEPARTAMENTO =  DEPARTAMENTO.COD_DEPARTAMENTO)"
             + "WHERE NOME LIKE ? AND TIPO = 'Gerente'";
 
-    private static final String SQL_SELECT_GERENTE_POR_DEPARTAMENTO = "SELECT  NOME, EMAIL, SENHA, TIPO, DEPARMENTO.NOME, ID_USUARIO FROM USUARIO "
+    private static final String SQL_SELECT_GERENTE_POR_DEPARTAMENTO = "SELECT  NOME, EMAIL, SENHA, TIPO, DEPARTAMENTO.NOME, ID_USUARIO FROM USUARIO "
             + "inner join DEPARTAMENTO on (USUARIO.COD_DEPARTAMENTO =  DEPARTAMENTO.COD_DEPARTAMENTO)"
             + "WHERE USUARIO.TIPO =  ?  AND  USUARIO.COD_DEPARTAMENTO = ?";
 
@@ -406,7 +407,7 @@ public class UsuarioDAO {
             conexao = BancoDadosUtil.getConnection();
             comando = conexao.prepareStatement(SQL_SELECT_TODOS_ENCARREGADO);
             comando.setString(1, "Encarregado");
-            
+
             resultado = comando.executeQuery();
             Encaregado.removeAll(Encaregado);
 
@@ -492,7 +493,7 @@ public class UsuarioDAO {
             if (conexao != null) {
                 conexao.rollback();
             }
-            throw new RuntimeException(e);
+            // throw new RuntimeException(e);
 
         } finally {
             if (comando != null && !comando.isClosed()) {
@@ -504,7 +505,7 @@ public class UsuarioDAO {
         }
     }
 
-    public void DeleteUsuario(Usuario usuario) throws SQLException {
+    public void DeleteUsuario(Usuario usuario) throws SQLException, excecaoDeletarElemento {
         Connection conexao = null;
         PreparedStatement comando = null;
 
@@ -526,7 +527,7 @@ public class UsuarioDAO {
             if (conexao != null) {
                 conexao.rollback();
             }
-            throw new RuntimeException(e);
+            throw new excecaoDeletarElemento();
 
         } finally {
             if (comando != null && !comando.isClosed()) {

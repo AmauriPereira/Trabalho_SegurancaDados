@@ -1,9 +1,12 @@
 package br.edu.ifnmg.alvespereira.segurancadados.apresentacao;
 
 import br.edu.ifnmg.alvespereira.segurancadados.dados.DepartamentoDAO;
+import br.edu.ifnmg.alvespereira.segurancadados.excecoes.excecaoDeletarElemento;
 import br.edu.ifnmg.alvespereira.segurancadados.negocio.DepartamentoBO;
 import java.sql.SQLException;
 import java.sql.SQLIntegrityConstraintViolationException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import net.proteanit.sql.DbUtils;
 
@@ -274,6 +277,10 @@ public class GestaoDepartamentoForm extends javax.swing.JInternalFrame {
             this.listarDepartamentos();
 
         } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Erro ao deletar o departamento\n"
+                    + " Não é possivel deletar este Departamento",
+                    "Cadastro de Departamento", JOptionPane.ERROR_MESSAGE);
+        } catch (excecaoDeletarElemento ex) {
             JOptionPane.showMessageDialog(null, "Erro ao deletar o departamento\n"
                     + " Não é possivel deletar este Departamento",
                     "Cadastro de Departamento", JOptionPane.ERROR_MESSAGE);

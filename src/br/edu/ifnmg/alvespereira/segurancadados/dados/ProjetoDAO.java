@@ -1,6 +1,7 @@
 package br.edu.ifnmg.alvespereira.segurancadados.dados;
 
 import br.edu.ifnmg.alvespereira.segurancadados.entidades.Projeto;
+import br.edu.ifnmg.alvespereira.segurancadados.excecoes.excecaoDeletarElemento;
 import java.sql.Connection;
 import java.sql.Date;
 import java.sql.PreparedStatement;
@@ -108,7 +109,7 @@ public class ProjetoDAO {
         }
     }
 
-    public void DeleteProjeto(Projeto projeto) throws SQLException {
+    public void DeleteProjeto(Projeto projeto) throws SQLException, excecaoDeletarElemento {
         Connection conexao = null;
         PreparedStatement comando = null;
 
@@ -126,7 +127,8 @@ public class ProjetoDAO {
             if (conexao != null) {
                 conexao.rollback();
             }
-            throw new RuntimeException(e);
+            //throw new RuntimeException(e);
+            throw new excecaoDeletarElemento();
 
         } finally {
             if (comando != null && !comando.isClosed()) {

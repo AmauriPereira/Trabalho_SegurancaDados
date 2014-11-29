@@ -3,6 +3,12 @@ package br.edu.ifnmg.alvespereira.segurancadados.apresentacao;
 import br.edu.ifnmg.alvespereira.segurancadados.apresentacao.utilitarios.criptografiaUtil;
 import br.edu.ifnmg.alvespereira.segurancadados.entidades.Departamento;
 import br.edu.ifnmg.alvespereira.segurancadados.entidades.Usuario;
+import br.edu.ifnmg.alvespereira.segurancadados.excecoes.excecaoControlAcessDepartamento;
+import br.edu.ifnmg.alvespereira.segurancadados.excecoes.excecaoControleAcesso;
+import br.edu.ifnmg.alvespereira.segurancadados.excecoes.excecaoEncarregado;
+import br.edu.ifnmg.alvespereira.segurancadados.excecoes.excecaoEncarregadoExistente;
+import br.edu.ifnmg.alvespereira.segurancadados.excecoes.excecaoGerenteExistente;
+import br.edu.ifnmg.alvespereira.segurancadados.excecoes.excecaoGerentePorDepartamento;
 import br.edu.ifnmg.alvespereira.segurancadados.negocio.DepartamentoBO;
 import br.edu.ifnmg.alvespereira.segurancadados.negocio.UsuarioBO;
 import java.sql.SQLException;
@@ -226,16 +232,43 @@ public final class CadastroUserForm extends javax.swing.JInternalFrame {
             if (txtTipoUser.getText().equals("Gerente")) {
                 try {
                     UsuarioBO.criarGerente(userCadastro);
+                    JOptionPane.showMessageDialog(null, "Gerente Cadastrado com Sucesso !!!",
+                            "Cadastro de Gerente", JOptionPane.INFORMATION_MESSAGE);
                 } catch (SQLException ex) {
-                    Logger.getLogger(CadastroUserForm.class.getName()).log(Level.SEVERE, null, ex);
+
+                } catch (excecaoGerenteExistente ex) {
+                    JOptionPane.showMessageDialog(null, "Não foi possivel cadastrar Gerente, \n"
+                            + " Ja existe um gerente cadastrado com este Nome",
+                            "Cadastro de Gerente", JOptionPane.ERROR_MESSAGE);
+
+                } catch (excecaoGerentePorDepartamento ex) {
+                    JOptionPane.showMessageDialog(null, "Não foi possivel cadastrar Gerente, \n "
+                            + "Ja existe um gerente cadastrado para este DEPARTAMENTO !!!",
+                            "Cadastro de Gerente", JOptionPane.ERROR_MESSAGE);
                 }
             }
 
             if (txtTipoUser.getText().equals("Encarregado")) {
                 try {
+
                     UsuarioBO.criarEncarregado(userCadastro, usuarioLogado);
+                    JOptionPane.showMessageDialog(null, "Encarregado Cadastrado com Sucesso !!!",
+                            "Encarregado de Gerente", JOptionPane.INFORMATION_MESSAGE);
+
                 } catch (SQLException ex) {
-                    Logger.getLogger(CadastroUserForm.class.getName()).log(Level.SEVERE, null, ex);
+
+                } catch (excecaoEncarregadoExistente ex) {
+                    JOptionPane.showMessageDialog(null, "Não foi possivel cadastrar Encarregado, \n "
+                            + "Ja existe um Encarregado cadastrado com este Nome",
+                            "Cadastro de Encarregado", JOptionPane.ERROR_MESSAGE);
+                } catch (excecaoControleAcesso ex) {
+                    JOptionPane.showMessageDialog(null, "Não foi possivel cadastrar Encarregado, \n "
+                            + "Você não possui previlégios para cadastrar Encarregados",
+                            "Cadastro de Encarregado", JOptionPane.ERROR_MESSAGE);
+                } catch (excecaoControlAcessDepartamento ex) {
+                    JOptionPane.showMessageDialog(null, "Não foi possivel cadastrar Encarregado, \n "
+                            + "Você não possui previlégios para cadastrar \nEncarregados nesse DEPARTAMENTO !!!",
+                            "Cadastro de Encarregado", JOptionPane.ERROR_MESSAGE);
                 }
             }
         }

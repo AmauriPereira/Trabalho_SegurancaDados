@@ -1,33 +1,18 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package br.edu.ifnmg.alvespereira.segurancadados.apresentacao;
 
+import br.edu.ifnmg.alvespereira.segurancadados.apresentacao.utilitarios.criptografiaUtil;
 import br.edu.ifnmg.alvespereira.segurancadados.entidades.Departamento;
 import br.edu.ifnmg.alvespereira.segurancadados.entidades.Usuario;
+import br.edu.ifnmg.alvespereira.segurancadados.excecoes.excecaoDeletarElemento;
 import br.edu.ifnmg.alvespereira.segurancadados.negocio.DepartamentoBO;
 import br.edu.ifnmg.alvespereira.segurancadados.negocio.UsuarioBO;
-import java.io.UnsupportedEncodingException;
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import net.proteanit.sql.DbUtils;
 
-/**
- *
- * @author Amauri
- */
 public class GerenciarEncarregadoForm extends javax.swing.JInternalFrame {
 
-    /**
-     * Creates new form EditarUsuarioForm
-     */
     Usuario userLogado = null;
 
     public GerenciarEncarregadoForm(Usuario usuarioLogado) {
@@ -108,7 +93,7 @@ public class GerenciarEncarregadoForm extends javax.swing.JInternalFrame {
         });
         jScrollPane1.setViewportView(tbResultadoBusca);
 
-        jPanelBuscarUsuario.setBorder(javax.swing.BorderFactory.createTitledBorder(null, " Buscar usuário por departamento", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 12), new java.awt.Color(0, 102, 102))); // NOI18N
+        jPanelBuscarUsuario.setBorder(javax.swing.BorderFactory.createTitledBorder(null, " Buscar Encarregado por departamento", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 12), new java.awt.Color(0, 102, 102))); // NOI18N
 
         cmbBuscaFuncionario.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
         cmbBuscaFuncionario.addKeyListener(new java.awt.event.KeyAdapter() {
@@ -357,22 +342,9 @@ public class GerenciarEncarregadoForm extends javax.swing.JInternalFrame {
         Senha = txtSenha.getText();
         idUsuario = Integer.parseInt(txtCodigo.getText());
 
-        MessageDigest cript;
-        try {
-            cript = MessageDigest.getInstance("SHA-256");
-            byte messageDigest[] = cript.digest(Senha.getBytes("UTF-8"));
-
-            StringBuilder hexString = new StringBuilder();
-            for (byte b : messageDigest) {
-                hexString.append(String.format("%02X", 0xFF & b));
-            }
-            Senha = hexString.toString();
-
-        } catch (NoSuchAlgorithmException ex) {
-            Logger.getLogger(CadastroDiretorForm.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (UnsupportedEncodingException ex) {
-            Logger.getLogger(CadastroDiretorForm.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        //codigo abaixo chama mtodo q realiza a criptografia da senha
+        criptografiaUtil criptografiaSenha = new criptografiaUtil();
+        Senha = criptografiaSenha.criptografiaSenha(Senha);
 
         //Cria um novo projeto e seta todos os dados
         Usuario encarregado = new Usuario();
@@ -389,16 +361,16 @@ public class GerenciarEncarregadoForm extends javax.swing.JInternalFrame {
 
         try {
             usuarioBO.UpdateGerente(encarregado);
-            JOptionPane.showMessageDialog(null, "Usuario Atualizado com Sucesso !!!",
-                    "Gestão de Usuário", JOptionPane.INFORMATION_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Encarregado Atualizado com Sucesso !!!",
+                    "Gestão de Encarregado", JOptionPane.INFORMATION_MESSAGE);
         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(null, "Erro ao Atualizado projeto",
-                    "Gestão de Usuário", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Erro ao Atualizar o Encarregado",
+                    "Gestão de Encarregado", JOptionPane.ERROR_MESSAGE);
         }
     }//GEN-LAST:event_btnSalvarAlteraçõesActionPerformed
 
     private void btnExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExcluirActionPerformed
-        //Cria um novo projeto e seta o ID do  projetoque sera excluido
+
         Usuario usuario = new Usuario();
 
         int codGerente = Integer.parseInt(txtCodigo.getText());
@@ -411,11 +383,14 @@ public class GerenciarEncarregadoForm extends javax.swing.JInternalFrame {
 
         try {
             usuarioBO.DeleteEncarregado(usuario);
-            JOptionPane.showMessageDialog(null, "Usuario Deletado com Sucesso !!!",
+            JOptionPane.showMessageDialog(null, "Encarregado Deletado com Sucesso !!!",
                     "Gestão de Usuário", JOptionPane.INFORMATION_MESSAGE);
         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(null, "Usuário Deletado com Sucesso",
-                    "Gestão de Usuário", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Erro ao Deletar  Encarregado",
+                    "Gestão de Encarregado", JOptionPane.ERROR_MESSAGE);
+        } catch (excecaoDeletarElemento ex) {
+            JOptionPane.showMessageDialog(null, "Erro ao Deletar  Encarregado",
+                    "Gestão de Encarregado", JOptionPane.ERROR_MESSAGE);
         }
     }//GEN-LAST:event_btnExcluirActionPerformed
 

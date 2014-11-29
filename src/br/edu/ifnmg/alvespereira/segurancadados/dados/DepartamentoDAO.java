@@ -1,11 +1,13 @@
 package br.edu.ifnmg.alvespereira.segurancadados.dados;
 
 import br.edu.ifnmg.alvespereira.segurancadados.entidades.Departamento;
+import br.edu.ifnmg.alvespereira.segurancadados.excecoes.excecaoDeletarElemento;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import javax.swing.JOptionPane;
 
 public class DepartamentoDAO {
 
@@ -94,7 +96,7 @@ public class DepartamentoDAO {
         return DEP;
     }
 
-    public void DeleteDepartamento(String Cod_Departamento) throws SQLException {
+    public void DeleteDepartamento(String Cod_Departamento) throws SQLException, excecaoDeletarElemento {
         Connection conexao = null;
         PreparedStatement comando = null;
 
@@ -111,8 +113,10 @@ public class DepartamentoDAO {
         } catch (Exception e) {
             if (conexao != null) {
                 conexao.rollback();
+
             }
-            throw new RuntimeException(e);
+            throw new excecaoDeletarElemento();
+            //throw new RuntimeException(e);
 
         } finally {
             if (comando != null && !comando.isClosed()) {
