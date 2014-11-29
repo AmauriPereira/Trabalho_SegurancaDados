@@ -3,10 +3,15 @@ package br.edu.ifnmg.alvespereira.segurancadados.negocio;
 import br.edu.ifnmg.alvespereira.segurancadados.dados.DepartamentoDAO;
 import br.edu.ifnmg.alvespereira.segurancadados.dados.UsuarioDAO;
 import br.edu.ifnmg.alvespereira.segurancadados.entidades.Usuario;
+import br.edu.ifnmg.alvespereira.segurancadados.excecoes.excecaoControlAcessDepartamento;
+import br.edu.ifnmg.alvespereira.segurancadados.excecoes.excecaoControleAcesso;
+import br.edu.ifnmg.alvespereira.segurancadados.excecoes.excecaoDeletarElemento;
+import br.edu.ifnmg.alvespereira.segurancadados.excecoes.excecaoEncarregadoExistente;
+import br.edu.ifnmg.alvespereira.segurancadados.excecoes.excecaoGerenteExistente;
+import br.edu.ifnmg.alvespereira.segurancadados.excecoes.excecaoGerentePorDepartamento;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import javax.swing.JOptionPane;
 
 public class UsuarioBO {
 
@@ -37,7 +42,7 @@ public class UsuarioBO {
     //INSERT GERENTE: VERIFICA SE HA ALGUM GERENTE CADASTRADO COM O MESMO NOME, CASO HAJA 
     //INFORMA AO USUARIO DO SISTEMA, CASO NÃO HAJA VERIFICA SE JA EXISTE UM GERENTE CADASTRADO
     //PARA O DEPARTAMENTO SELECIONADO
-    public void criarGerente(Usuario Gerente) throws SQLException {
+    public void criarGerente(Usuario Gerente) throws SQLException, excecaoGerenteExistente, excecaoGerentePorDepartamento {
         UsuarioDAO userDAO = new UsuarioDAO();
         Usuario GerenteExistente = userDAO.selectGerente(Gerente.getNome(), Gerente.getTipo());
 
@@ -47,18 +52,12 @@ public class UsuarioBO {
             //VERIFICA SE JA EXISTE UM GERENTE CADASTRADO PARA O DEPARTAMENTO SELECIONADO
             if (gerentePorDepartmento == null) {
                 userDAO.criaUSER(Gerente);
-                JOptionPane.showMessageDialog(null, "Gerente Cadastrado com Sucesso !!!",
-                        "Cadastro de Gerente", JOptionPane.INFORMATION_MESSAGE);
             } else {
-                JOptionPane.showMessageDialog(null, "Não foi possivel cadastrar Gerente, \n "
-                        + "Ja existe um gerente cadastrado para este DEPARTAMENTO !!!",
-                        "Cadastro de Gerente", JOptionPane.ERROR_MESSAGE);
+                throw new excecaoGerentePorDepartamento();
             }
 
         } else {
-            JOptionPane.showMessageDialog(null, "Não foi possivel cadastrar Gerente, \n"
-                    + " Ja existe um gerente cadastrado com este Nome",
-                    "Cadastro de Gerente", JOptionPane.ERROR_MESSAGE);
+            throw new excecaoGerenteExistente();
         }
 
     }
@@ -66,7 +65,7 @@ public class UsuarioBO {
     //INSERT ENCARREGADO: VERIFICA SE HA ALGUM ENCARREGADO CADASTRADO COM O MESMO NOME, CASO HAJA 
     //INFORMA AO USUARIO DO SISTEMA, VERIFICA SE O GERENTE ESTAR CADASTRANDO O ENCARREGADO 
     //NO SEU DEPARTAMENTO, Obs: GERENTE SÓ PODE CADASTRAR ENCARREGADOS EM SEU DEPARTAMENTO
-    public void criarEncarregado(Usuario Encarregado, Usuario userLogado) throws SQLException {
+    public void criarEncarregado(Usuario Encarregado, Usuario userLogado) throws SQLException, excecaoEncarregadoExistente, excecaoControleAcesso, excecaoControlAcessDepartamento {
         UsuarioDAO userDAO = new UsuarioDAO();
         DepartamentoDAO DepDAO = new DepartamentoDAO();
 
@@ -81,30 +80,24 @@ public class UsuarioBO {
 
                     if (Encarregado.getDepartamento().getCodigo().equals(userLogado.getDepartamento().getCodigo())) {
                         userDAO.criaUSER(Encarregado);
-                        JOptionPane.showMessageDialog(null, "Encarregado Cadastrado com Sucesso !!!",
-                                "Encarregado de Gerente", JOptionPane.INFORMATION_MESSAGE);
+
                     } else {
-                        JOptionPane.showMessageDialog(null, "Não foi possivel cadastrar Encarregado, \n "
-                                + "Você não possui previlégios para cadastrar Encarregados nesse Departamento", "Cadastro de Encarregado", JOptionPane.ERROR_MESSAGE);
+                        throw new excecaoControlAcessDepartamento();
+
                     }
+
                 }
 
                 if (userLogado.getTipo().equals("Diretor")) {
                     userDAO.criaUSER(Encarregado);
-                    JOptionPane.showMessageDialog(null, "Encarregado Cadastrado com Sucesso !!!",
-                            "Encarregado de Gerente", JOptionPane.INFORMATION_MESSAGE);
                 }
 
             } else {
-                JOptionPane.showMessageDialog(null, "Não foi possivel cadastrar Encarregado, \n "
-                        + "Você não possui previlégios para cadastrar Encarregados", "Cadastro de Encarregado", JOptionPane.ERROR_MESSAGE);
+                throw new excecaoControleAcesso();
             }
-
         } else {
-            JOptionPane.showMessageDialog(null, "Não foi possivel cadastrar Encarregado, \n "
-                    + "Ja existe um Encarregado cadastrado com este Nome", "Cadastro de Encarregado", JOptionPane.ERROR_MESSAGE);
+            throw new excecaoEncarregadoExistente();
         }
-
     }
 
     public Usuario selectUmEncarregado(String Nome, String Tipo) throws SQLException {
@@ -137,7 +130,7 @@ public class UsuarioBO {
         return Encarregado;
 
     }
-    
+
     public ResultSet preencheTabelaGerente() throws SQLException {
         UsuarioDAO Gerente = new UsuarioDAO();
         ResultSet resultPreencherTabela = Gerente.preencherTabelaGerente();
@@ -145,7 +138,7 @@ public class UsuarioBO {
         return resultPreencherTabela;
 
     }
-    
+
     public ResultSet preencheTabelaEncarregado(String Departamento) throws SQLException {
         UsuarioDAO Encarregado = new UsuarioDAO();
         ResultSet resultPreencherTabela = Encarregado.preencherTabelaEncarregado(Departamento);
@@ -153,7 +146,7 @@ public class UsuarioBO {
         return resultPreencherTabela;
 
     }
-    
+
     public ResultSet pesquisaGerente(String NomeGerente) throws SQLException {
         UsuarioDAO Gerente = new UsuarioDAO();
         ResultSet resultPesquisa = Gerente.pesquisaGerente(NomeGerente);
@@ -161,26 +154,26 @@ public class UsuarioBO {
         return resultPesquisa;
 
     }
-    
-    public void UpdateGerente(Usuario gerente) throws SQLException {
 
-        UsuarioDAO usuarioDAO = new UsuarioDAO();    
-        usuarioDAO.AtualizarGerente(gerente);
-
-    }
-    public void DeleteGerente(Usuario usuario) throws SQLException {
+    public void UpdateUsuario(Usuario user) throws SQLException {
 
         UsuarioDAO usuarioDAO = new UsuarioDAO();
-        usuarioDAO.DeleteUsuario(usuario);
+        usuarioDAO.AtulizaUsuario(user);
 
     }
-    
-    public void DeleteEncarregado(Usuario usuario) throws SQLException {
+
+    public void DeleteGerente(Usuario usuario) throws SQLException, excecaoDeletarElemento {
 
         UsuarioDAO usuarioDAO = new UsuarioDAO();
         usuarioDAO.DeleteUsuario(usuario);
 
     }
 
-    
+    public void DeleteEncarregado(Usuario usuario) throws SQLException, excecaoDeletarElemento {
+
+        UsuarioDAO usuarioDAO = new UsuarioDAO();
+        usuarioDAO.DeleteUsuario(usuario);
+
+    }
+
 }

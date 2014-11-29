@@ -1,20 +1,20 @@
-
 package br.edu.ifnmg.alvespereira.segurancadados.apresentacao;
 
 import br.edu.ifnmg.alvespereira.segurancadados.apresentacao.utilitarios.criptografiaUtil;
 import br.edu.ifnmg.alvespereira.segurancadados.entidades.Departamento;
 import br.edu.ifnmg.alvespereira.segurancadados.entidades.Usuario;
+import br.edu.ifnmg.alvespereira.segurancadados.excecoes.excecaoDeletarElemento;
 import br.edu.ifnmg.alvespereira.segurancadados.negocio.DepartamentoBO;
 import br.edu.ifnmg.alvespereira.segurancadados.negocio.UsuarioBO;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import net.proteanit.sql.DbUtils;
 
-
 public class GerenciarGerenteForm extends javax.swing.JInternalFrame {
 
-   
     private static Usuario usuarioLogado = new Usuario();
 
     public GerenciarGerenteForm(Usuario userLogado) {
@@ -24,7 +24,7 @@ public class GerenciarGerenteForm extends javax.swing.JInternalFrame {
         this.popularCmbDepartamento();
         this.btnExcluir.setEnabled(false);
         this.btnSalvarAlterações.setEnabled(false);
-        
+
         this.cmbDepartamento.setEnabled(false);
 
     }
@@ -72,7 +72,6 @@ public class GerenciarGerenteForm extends javax.swing.JInternalFrame {
 
     }
 
-   
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -391,12 +390,12 @@ public class GerenciarGerenteForm extends javax.swing.JInternalFrame {
         UsuarioBO usuarioBO = new UsuarioBO();
 
         try {
-            usuarioBO.UpdateGerente(gerente);
-            JOptionPane.showMessageDialog(null, "Usuario Atualizado com Sucesso !!!",
+            usuarioBO.UpdateUsuario(gerente);
+            JOptionPane.showMessageDialog(null, "Gerente Atualizado com Sucesso !!!",
                     "Gestão de Usuário", JOptionPane.INFORMATION_MESSAGE);
         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(null, "Erro ao Atualizado projeto",
-                    "Gestão de Usuário", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Erro ao Atualizado Gerente",
+                    "Gestão de Gerente", JOptionPane.ERROR_MESSAGE);
         }
     }//GEN-LAST:event_btnSalvarAlteraçõesActionPerformed
 
@@ -418,11 +417,14 @@ public class GerenciarGerenteForm extends javax.swing.JInternalFrame {
 
         try {
             usuarioBO.DeleteGerente(usuario);
-            JOptionPane.showMessageDialog(null, "Usuario Deletado com Sucesso !!!",
-                    "Gestão de Usuário", JOptionPane.INFORMATION_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Gerente Deletado com Sucesso !!!",
+                    "Gestão de Gerente", JOptionPane.INFORMATION_MESSAGE);
         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(null, "Erro ao Deletado Usuário",
-                    "Gestão de Usuário", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Erro ao Deletado Gerente",
+                    "Gestão de Gerente", JOptionPane.ERROR_MESSAGE);
+        } catch (excecaoDeletarElemento ex) {
+            JOptionPane.showMessageDialog(null, "Erro ao Deletado Gerente",
+                    "Gestão de Gerente", JOptionPane.ERROR_MESSAGE);
         }
     }//GEN-LAST:event_btnExcluirActionPerformed
 

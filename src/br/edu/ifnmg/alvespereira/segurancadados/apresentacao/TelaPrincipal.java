@@ -498,19 +498,34 @@ public class TelaPrincipal extends javax.swing.JFrame {
     }//GEN-LAST:event_itmMnuSairActionPerformed
 
     private void itmMnu_DepartamentoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itmMnu_DepartamentoActionPerformed
-        GestaoDepartamentoForm gestaoDepartamentoForm = null;
-        gestaoDepartamentoForm = new GestaoDepartamentoForm();
-        gestaoDepartamentoForm.setVisible(true);
-        centralizaForm(gestaoDepartamentoForm);
-        JDP1.add(gestaoDepartamentoForm);
+        if (usuarioLogado.getTipo().equals("Diretor")) {
+
+            GestaoDepartamentoForm gestaoDepartamentoForm = null;
+            gestaoDepartamentoForm = new GestaoDepartamentoForm();
+            gestaoDepartamentoForm.setVisible(true);
+            centralizaForm(gestaoDepartamentoForm);
+            JDP1.add(gestaoDepartamentoForm);
+        } else {
+            JOptionPane.showMessageDialog(null, "Você não possui previlégios para acessar \n"
+                    + "a Tela de Gestão de Departamentos!!!",
+                    "Gestão de Departamentos", JOptionPane.ERROR_MESSAGE);
+        }
     }//GEN-LAST:event_itmMnu_DepartamentoActionPerformed
 
     private void itmMnu_EncarregadoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itmMnu_EncarregadoActionPerformed
-        GerenciarEncarregadoForm gerenciarEncarregadoForm = null;
-        gerenciarEncarregadoForm = new GerenciarEncarregadoForm(usuarioLogado);
-        gerenciarEncarregadoForm.setVisible(true);
-        centralizaForm(gerenciarEncarregadoForm);
-        JDP1.add(gerenciarEncarregadoForm);
+        if ((usuarioLogado.getTipo().equals("Diretor")) || (usuarioLogado.getTipo().equals("Gerente"))) {
+            GerenciarEncarregadoForm gerenciarEncarregadoForm = null;
+            gerenciarEncarregadoForm = new GerenciarEncarregadoForm(usuarioLogado);
+            gerenciarEncarregadoForm.setVisible(true);
+            centralizaForm(gerenciarEncarregadoForm);
+            JDP1.add(gerenciarEncarregadoForm);
+        } else {
+            JOptionPane.showMessageDialog(null, "Você não possui previlégios para acessar \n   "
+                    + "a Tela de Gestão de Encarregado!!!",
+                    "Gestão de Encarregado", JOptionPane.ERROR_MESSAGE);
+
+        }
+
 
     }//GEN-LAST:event_itmMnu_EncarregadoActionPerformed
 
@@ -592,7 +607,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
                 //Se o usuario que esta logado for Um diretor ou um Gerente;
                 //caso não seja um diretor nem Gerente é exibida uma mensagem ao usuario do sistema.
                 //Obs: Somente diretor e gerente podem cadastrar Encarregados.
-                if ((usuarioLogado.getTipo().equals("Diretor")) || (usuarioLogado.getTipo().equals("Gerente"))) {
+                if (usuarioLogado.getTipo().equals("Gerente")) {
 
                     CadastroAtividadeForm cadastroAtividadeForm = new CadastroAtividadeForm();
 
@@ -613,31 +628,51 @@ public class TelaPrincipal extends javax.swing.JFrame {
     }//GEN-LAST:event_itmMnuAtividadeActionPerformed
 
     private void MenuProjetoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MenuProjetoActionPerformed
+        if (usuarioLogado.getTipo().equals("Gerente")) {
+            GerenciaProjetos GP = null;
+            GP = new GerenciaProjetos(usuarioLogado);
+            GP.setVisible(true);
+            centralizaForm(GP);
+            JDP1.add(GP);
+        } else {
+            JOptionPane.showMessageDialog(null, "Você não possui previlégios para acessar \n   "
+                    + "a Tela de Gestão de projeto!!!",
+                    "Gestão de Projeto", JOptionPane.ERROR_MESSAGE);
 
-        GerenciaProjetos GP = null;
-        GP = new GerenciaProjetos(usuarioLogado);
-        GP.setVisible(true);
-        centralizaForm(GP);
-        JDP1.add(GP);
+        }
 
 
     }//GEN-LAST:event_MenuProjetoActionPerformed
 
     private void itmMnu_AtividadeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itmMnu_AtividadeActionPerformed
-        GerenciarAtvidadeFom gerenciarAtvidadeFom = null;
-        gerenciarAtvidadeFom = new GerenciarAtvidadeFom(usuarioLogado);
-        gerenciarAtvidadeFom.setVisible(true);
-        centralizaForm(gerenciarAtvidadeFom);
-        JDP1.add(gerenciarAtvidadeFom);
+        if (usuarioLogado.getTipo().equals("Gerente")) {
+            GerenciarAtvidadeFom gerenciarAtvidadeFom = null;
+            gerenciarAtvidadeFom = new GerenciarAtvidadeFom(usuarioLogado);
+            gerenciarAtvidadeFom.setVisible(true);
+            centralizaForm(gerenciarAtvidadeFom);
+            JDP1.add(gerenciarAtvidadeFom);
+        } else {
+            JOptionPane.showMessageDialog(null, "Você não possui previlégios para acessar \n   "
+                    + "a Tela de Gestão de Atividades!!!",
+                    "Gestão de Encarregado", JOptionPane.ERROR_MESSAGE);
+
+        }
 
     }//GEN-LAST:event_itmMnu_AtividadeActionPerformed
 
     private void itmMnu_GerenteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itmMnu_GerenteActionPerformed
-        GerenciarGerenteForm gerenciarGerenteForm = null;
-        gerenciarGerenteForm = new GerenciarGerenteForm(usuarioLogado);
-        gerenciarGerenteForm.setVisible(true);
-        centralizaForm(gerenciarGerenteForm);
-        JDP1.add(gerenciarGerenteForm);
+        if (usuarioLogado.getTipo().equals("Diretor")) {
+            GerenciarGerenteForm gerenciarGerenteForm = null;
+            gerenciarGerenteForm = new GerenciarGerenteForm(usuarioLogado);
+            gerenciarGerenteForm.setVisible(true);
+            centralizaForm(gerenciarGerenteForm);
+            JDP1.add(gerenciarGerenteForm);
+        } else {
+            JOptionPane.showMessageDialog(null, "Você não possui previlégios para acessar \n   "
+                    + "a Tela de Gestão de Gerente!!!",
+                    "Cadastro de Gerente", JOptionPane.ERROR_MESSAGE);
+
+        }
     }//GEN-LAST:event_itmMnu_GerenteActionPerformed
 
     private void itmMnuLancarHorasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itmMnuLancarHorasActionPerformed

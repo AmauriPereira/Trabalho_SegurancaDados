@@ -10,9 +10,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
 
-
 public class CadastroAtividadeForm extends javax.swing.JInternalFrame {
-
 
     public CadastroAtividadeForm() {
         initComponents();
@@ -234,15 +232,10 @@ public class CadastroAtividadeForm extends javax.swing.JInternalFrame {
             AtividadeBO AtividadeBO = new AtividadeBO();
             AtividadeBO.criarAtividade(atividade);
 
-
             JOptionPane.showMessageDialog(null, "Atividade Cadastrada com Sucesso !!!",
                     "Cadastro de Atividade", JOptionPane.INFORMATION_MESSAGE);
 
-
-       
-
         } catch (SQLException ex) {
-
 
             JOptionPane.showMessageDialog(null, "Erro ao Cadastrar a Atividade",
                     "Cadastro de Atividade", JOptionPane.ERROR_MESSAGE);

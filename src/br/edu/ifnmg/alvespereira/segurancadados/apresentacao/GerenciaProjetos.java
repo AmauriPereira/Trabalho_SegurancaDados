@@ -3,6 +3,7 @@ package br.edu.ifnmg.alvespereira.segurancadados.apresentacao;
 import br.edu.ifnmg.alvespereira.segurancadados.entidades.Departamento;
 import br.edu.ifnmg.alvespereira.segurancadados.entidades.Projeto;
 import br.edu.ifnmg.alvespereira.segurancadados.entidades.Usuario;
+import br.edu.ifnmg.alvespereira.segurancadados.excecoes.excecaoDeletarElemento;
 import br.edu.ifnmg.alvespereira.segurancadados.negocio.DepartamentoBO;
 import br.edu.ifnmg.alvespereira.segurancadados.negocio.ProjetoBO;
 import java.sql.SQLException;
@@ -32,7 +33,7 @@ public class GerenciaProjetos extends javax.swing.JInternalFrame {
         ProjetoBO projet = new ProjetoBO();
 
         try {
-            tbProjetos.setModel(DbUtils.resultSetToTableModel(projet.preencheTabela(usuarioLogado.getDepartamento().getCodigo())));
+             tbProjetos.setModel(DbUtils.resultSetToTableModel(projet.preencheTabela(usuarioLogado.getDepartamento().getCodigo())));
         } catch (SQLException ex) {
 
         }
@@ -398,7 +399,7 @@ public class GerenciaProjetos extends javax.swing.JInternalFrame {
             DataInicio = ConverteData(txtDataInicio.getText());
             DataTermino = ConverteData(txtDataTermino.getText());
         } catch (Exception ex) {
-            JOptionPane.showMessageDialog(null, "Erro na Data de  Inicio e Término do projeto",
+            JOptionPane.showMessageDialog(null, "Erro na Data de  Inicio ou Término do projeto",
                     "Cadastro de Projeto", JOptionPane.ERROR_MESSAGE);
         }
 
@@ -420,7 +421,7 @@ public class GerenciaProjetos extends javax.swing.JInternalFrame {
             JOptionPane.showMessageDialog(null, "Projeto Atualizado com Sucesso !!!",
                     "Gestão de Projeto", JOptionPane.INFORMATION_MESSAGE);
         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(null, "Erro ao Atualizado projeto",
+            JOptionPane.showMessageDialog(null, "Erro ao Atualizar projeto",
                     "Gestão de Projeto", JOptionPane.ERROR_MESSAGE);
         }
     }//GEN-LAST:event_btnSalvarAlteracaoActionPerformed
@@ -442,6 +443,9 @@ public class GerenciaProjetos extends javax.swing.JInternalFrame {
                     "Gestão de Projeto", JOptionPane.INFORMATION_MESSAGE);
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null, "Erro ao Deletado projeto",
+                    "Gestão de Projeto", JOptionPane.ERROR_MESSAGE);
+        } catch (excecaoDeletarElemento ex) {
+            JOptionPane.showMessageDialog(null, "Erro ao Deletar projeto",
                     "Gestão de Projeto", JOptionPane.ERROR_MESSAGE);
         }
     }//GEN-LAST:event_btnExcluirActionPerformed

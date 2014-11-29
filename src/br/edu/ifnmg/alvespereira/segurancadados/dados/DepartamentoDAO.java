@@ -1,6 +1,7 @@
 package br.edu.ifnmg.alvespereira.segurancadados.dados;
 
 import br.edu.ifnmg.alvespereira.segurancadados.entidades.Departamento;
+import br.edu.ifnmg.alvespereira.segurancadados.excecoes.excecaoDeletarElemento;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -17,6 +18,7 @@ public class DepartamentoDAO {
     private static final String SQL_SELECT_DEPARTAMENTO_POR_COD = "SELECT COD_DEPARTAMENTO, NOME FROM DEPARTAMENTO WHERE DEPARTAMENTO.COD_DEPARTAMENTO = ?";
     private static final String SQL_SELECT_DEPARTAMENTO_POR_NOME = "SELECT COD_DEPARTAMENTO, NOME FROM DEPARTAMENTO WHERE DEPARTAMENTO.NOME LIKE ?";
     private static final String SQL_DELETE_DEPARTAMENTO = "DELETE FROM DEPARTAMENTO WHERE  COD_DEPARTAMENTO = ?";
+    private static final String SQL_UPDATE_DEPARTAMENTO = "UPDATE DEPARTAMENTO SET COD_DEPARTAMENTO =  ?, NOME  = ? WHERE  COD_DEPARTAMENTO = ?";
 
     // ABAIXO METODOS DE INSERÇÃO(INSERT), REMOÇÃO(DELETE), ATUALIZAÇÃO(UPDATE), RECUPERAÇÃO(SELECT)
     //INSERT DEPARTAMENTO
@@ -94,7 +96,7 @@ public class DepartamentoDAO {
         return DEP;
     }
 
-    public void DeleteDepartamento(String Cod_Departamento) throws SQLException {
+    public void DeleteDepartamento(String Cod_Departamento) throws SQLException, excecaoDeletarElemento {
         Connection conexao = null;
         PreparedStatement comando = null;
 
@@ -111,8 +113,44 @@ public class DepartamentoDAO {
         } catch (Exception e) {
             if (conexao != null) {
                 conexao.rollback();
+
             }
-            throw new RuntimeException(e);
+            throw new excecaoDeletarElemento();
+            //throw new RuntimeException(e);
+
+        } finally {
+            if (comando != null && !comando.isClosed()) {
+                comando.close();
+            }
+            if (conexao != null && !conexao.isClosed()) {
+                conexao.close();
+            }
+        }
+    }
+
+    public void UpdateDepartamento(Departamento departamento, String CodDepartamentoAntigo) throws SQLException {
+        Connection conexao = null;
+        PreparedStatement comando = null;
+
+        try {
+
+            conexao = BancoDadosUtil.getConnection();
+            comando = conexao.prepareStatement(SQL_UPDATE_DEPARTAMENTO);
+
+            comando.setString(1, departamento.getCodigo());
+            comando.setString(2, departamento.getNome());
+            comando.setString(3, CodDepartamentoAntigo);
+
+            comando.executeUpdate();
+            conexao.commit();
+
+        } catch (Exception e) {
+            if (conexao != null) {
+                conexao.rollback();
+
+            }
+            // throw new excecaoDeletarElemento();
+            //throw new RuntimeException(e);
 
         } finally {
             if (comando != null && !comando.isClosed()) {
