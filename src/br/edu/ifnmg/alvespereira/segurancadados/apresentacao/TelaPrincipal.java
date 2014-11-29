@@ -40,6 +40,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
 
         //recebe os dados do usuario que logou no sistema
         this.usuarioLogado = userLogado;
+         System.out.println(usuarioLogado.getIdUsuario());
 
         //Chama o Metodo que configura as insformações da barra de status do sistema
         //(UsuarioLogado, DEparatmento, Função) - hora e data
@@ -321,6 +322,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
 
         jMenuBar1.add(mnuAtualizar);
 
+        jMenu1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/edu/ifnmg/alvespereira/segurancadados/icones/listes-icone-3873-32.png"))); // NOI18N
         jMenu1.setText("Controle de Atividades");
 
         itmMnuLancarHoras.setText("Lançar Horas");

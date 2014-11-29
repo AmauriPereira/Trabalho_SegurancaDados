@@ -5,6 +5,7 @@
  */
 package br.edu.ifnmg.alvespereira.segurancadados.apresentacao;
 
+import br.edu.ifnmg.alvespereira.segurancadados.entidades.Atividade;
 import br.edu.ifnmg.alvespereira.segurancadados.entidades.Usuario;
 import br.edu.ifnmg.alvespereira.segurancadados.negocio.AtividadeBO;
 import java.sql.SQLException;
@@ -32,13 +33,13 @@ public class LancarHorasAtividadeForm extends javax.swing.JInternalFrame {
         ArrayList<String> Atividade = new ArrayList<>();
         AtividadeBO atividadeBO = new AtividadeBO();
 
-        String idUsuario = Integer.toString(usuarioLogado.getIdUsuario());
+        String nomeUsuario = usuarioLogado.getNome();
 
         try {
-            Atividade = atividadeBO.ComboBoxAtividades(idUsuario);
+            Atividade = atividadeBO.ComboBoxAtividades(nomeUsuario);
         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(null, "Erro ao popular o departamento",
-                    "Departamento", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Erro ao popular o atividade",
+                    "Atividade", JOptionPane.ERROR_MESSAGE);
         }
 
         cmbAtividade.removeAllItems();
@@ -80,6 +81,11 @@ public class LancarHorasAtividadeForm extends javax.swing.JInternalFrame {
         lblConclusao.setText("Conclusão (%):");
 
         btnSalvar.setText("Salvar");
+        btnSalvar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSalvarActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -140,6 +146,29 @@ public class LancarHorasAtividadeForm extends javax.swing.JInternalFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void btnSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalvarActionPerformed
+        Float Conclusao = Float.parseFloat(txtConclusao.getText());
+        Float HorasTrabalhadas = Float.parseFloat(txtHoras.getText());
+
+        Atividade atividade = new Atividade();
+        atividade.setConlusao(Conclusao);
+        atividade.setHorasTrabalhadas(HorasTrabalhadas);
+
+        String AtividadeSelcionada = (String) this.cmbAtividade.getSelectedItem();
+
+        AtividadeBO atividadeBO = new AtividadeBO();
+        System.out.println(AtividadeSelcionada);
+        try {
+            atividadeBO.andamentoAtividade(atividade, AtividadeSelcionada);
+            JOptionPane.showMessageDialog(null, "Lançamento realizado com Sucesso!",
+                    "Sucesso Lançamento", JOptionPane.INFORMATION_MESSAGE);
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Lançamento realizado com Sucesso!",
+                    "Sucesso Lançamento", JOptionPane.ERROR_MESSAGE);
+        }
+
+    }//GEN-LAST:event_btnSalvarActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnSalvar;
@@ -151,4 +180,5 @@ public class LancarHorasAtividadeForm extends javax.swing.JInternalFrame {
     private javax.swing.JTextField txtConclusao;
     private javax.swing.JTextField txtHoras;
     // End of variables declaration//GEN-END:variables
+
 }

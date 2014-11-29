@@ -5,6 +5,8 @@ public class Atividade {
     private int idAtividade;
     private String nome;
     private Float duracao;
+    private Float conlusao;
+    private Float horasTrabalhadas;
     private Usuario encarregado;
     private Projeto projeto;
 
@@ -30,6 +32,22 @@ public class Atividade {
 
     public void setDuracao(Float duracao) {
         this.duracao = duracao;
+    }
+
+    public Float getConlusao() {
+        return conlusao;
+    }
+
+    public void setConlusao(Float conlusao) {
+        this.conlusao = conlusao;
+    }
+
+    public Float getHorasTrabalhadas() {
+        return horasTrabalhadas;
+    }
+
+    public void setHorasTrabalhadas(Float horasTrabalhadas) {
+        this.horasTrabalhadas = horasTrabalhadas;
     }
 
     public Usuario getEncarregado() {

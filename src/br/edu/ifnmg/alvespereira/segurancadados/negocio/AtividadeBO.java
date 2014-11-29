@@ -13,15 +13,24 @@ public class AtividadeBO {
         atividadeDAO.criarAtividade(atividade);
 
     }
+    
+     public void andamentoAtividade(Atividade atividade,String atividadeSelecionada) throws SQLException {
 
-    public ArrayList<String> ComboBoxAtividades(String usuario) throws SQLException {
+        AtividadeDAO atividadeDAO = new AtividadeDAO();
+        atividadeDAO.andamentoAtividade(atividade,atividadeSelecionada);
+
+    }
+
+    public ArrayList<String> ComboBoxAtividades(String nomeUsuario) throws SQLException {
 
         AtividadeDAO atividadeDAO = new AtividadeDAO();
         ArrayList<String> Atividades = new ArrayList<>();
 
-        Atividades = atividadeDAO.cbAtividades(usuario);
+        Atividades = atividadeDAO.cbAtividades(nomeUsuario);
 
         return Atividades;
 
     }
+    
+    
 }
