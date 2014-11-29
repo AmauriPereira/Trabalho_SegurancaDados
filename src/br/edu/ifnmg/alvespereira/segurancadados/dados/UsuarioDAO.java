@@ -34,11 +34,7 @@ public class UsuarioDAO {
             + "WHERE NOME LIKE ? AND TIPO = 'Gerente'";
 
     private static final String SQL_SELECT_GERENTE_POR_DEPARTAMENTO = "SELECT  NOME, EMAIL, SENHA, TIPO, DEPARTAMENTO.NOME, ID_USUARIO FROM USUARIO "
-<<<<<<< HEAD
             + "inner join DEPARTAMENTO on (DEPARTAMENTO.COD_DEPARTAMENTO =  USUARIO.COD_DEPARTAMENTO)"
-=======
-            + "inner join DEPARTAMENTO on (USUARIO.COD_DEPARTAMENTO =  DEPARTAMENTO.COD_DEPARTAMENTO)"
->>>>>>> origin/master
             + "WHERE USUARIO.TIPO =  ?  AND  USUARIO.COD_DEPARTAMENTO = ?";
 
     private static final String SQL_UPDATE_UM_GERENTE = "UPDATE USUARIO SET USUARIO.NOME = ?, "
