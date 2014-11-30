@@ -45,6 +45,8 @@ public class UsuarioDAO {
 
     private static final String SQL_DELETE_UM_ENCARREGADO = "DELETE FROM USUARIO WHERE ID_USUARIO = ?";
 
+    private static final String SQL_SELECT_RELATORIO_CADASTRO_GERENTE = "SELECT ID_USUARIO, NOME, SENHA, EMAIL FROM USUARIO WHERE TIPO = 'Encarregado'";
+
     // ABAIXO METODOS DE INSERÇÃO(INSERT), REMOÇÃO(DELETE), ATUALIZAÇÃO(UPDATE), RECUPERAÇÃO(SELECT)
     //INSERT DEPARTAMENTO 
     //INSERT USUÁRIOS(ENCARREGADO, DIRETOR, GERENTE)
@@ -395,7 +397,7 @@ public class UsuarioDAO {
 
     }
 
-    //SELECIONA TODOS OS DEPARTAMENTO, E ARMAZENA EM UMA LISTA
+    //SELECIONA TODOS OS ENCARREGADOS, E ARMAZENA EM UMA LISTA
     public ArrayList<String> cbEncarregado() throws SQLException {
         ArrayList<String> Encaregado = new ArrayList<>();
         Connection conexao = null;
@@ -410,7 +412,6 @@ public class UsuarioDAO {
 
             resultado = comando.executeQuery();
             Encaregado.removeAll(Encaregado);
-
             while (resultado.next()) {
                 Encaregado.add(resultado.getString("NOME"));
             }
@@ -537,4 +538,50 @@ public class UsuarioDAO {
             }
         }
     }
+
+    //SELECIONA TODOS OS GERENTES, E ARMAZENA EM UMA LISTA
+    public ArrayList<Usuario> listaUsuario() throws SQLException {
+        ArrayList<Usuario> listaUsuarios = new ArrayList<>();
+        Usuario usuario = new Usuario();
+        Connection conexao = null;
+        PreparedStatement comando = null;
+        ResultSet resultado = null;
+
+        try {
+
+            conexao = BancoDadosUtil.getConnection();
+            comando = conexao.prepareStatement(SQL_SELECT_RELATORIO_CADASTRO_GERENTE);
+
+            resultado = comando.executeQuery();
+            listaUsuarios.removeAll(listaUsuarios);
+
+            while (resultado.next()) {
+                usuario.setIdUsuario(resultado.getInt("ID_USUARIO"));
+                usuario.setNome(resultado.getString("NOME"));
+                usuario.setEmail(resultado.getString("EMAIL"));
+                //usuario.setDepartamento(resultado.getObject("DEPARTAMENTO"));
+
+                listaUsuarios.add(usuario);
+
+            }
+            //Encarregado.add(usuario);
+            conexao.commit();
+
+        } catch (Exception e) {
+            if (conexao != null) {
+                conexao.rollback();
+            }
+            throw new RuntimeException(e);
+
+        } finally {
+            if (comando != null && !comando.isClosed()) {
+                comando.close();
+            }
+            if (conexao != null && !conexao.isClosed()) {
+                conexao.close();
+            }
+        }
+        return listaUsuarios;
+    }
+
 }
