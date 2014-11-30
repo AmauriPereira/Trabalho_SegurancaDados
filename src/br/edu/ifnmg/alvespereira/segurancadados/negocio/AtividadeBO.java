@@ -22,6 +22,13 @@ public class AtividadeBO {
 
     }
 
+    public void UpdateAtividade(Atividade atividade) throws SQLException {
+
+        AtividadeDAO atividadeDAO = new AtividadeDAO();
+        atividadeDAO.UpdateAtividade(atividade);
+
+    }
+
     public ArrayList<String> ComboBoxAtividades(String nomeUsuario) throws SQLException {
 
         AtividadeDAO atividadeDAO = new AtividadeDAO();

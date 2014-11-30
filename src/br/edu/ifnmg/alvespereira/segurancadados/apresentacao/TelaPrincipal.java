@@ -274,7 +274,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
         jMenuBar1.add(mnuCadastros);
 
         mnuAtualizar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/edu/ifnmg/alvespereira/segurancadados/icones/tous-refresh-reload-onglets-icone-7131-32.png"))); // NOI18N
-        mnuAtualizar.setText("Gestão de  Cadastros             ");
+        mnuAtualizar.setText("Gestão de  Cadastros          ");
 
         itmMnu_Departamento.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_F1, java.awt.event.InputEvent.ALT_MASK));
         itmMnu_Departamento.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/edu/ifnmg/alvespereira/segurancadados/icones/0258.png"))); // NOI18N
@@ -329,9 +329,10 @@ public class TelaPrincipal extends javax.swing.JFrame {
         jMenuBar1.add(mnuAtualizar);
 
         jMenu1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/edu/ifnmg/alvespereira/segurancadados/icones/listes-icone-3873-32.png"))); // NOI18N
-        jMenu1.setText("Controle de Atividades");
+        jMenu1.setText("Controle de Atividades            ");
 
         itmMnuLancarHoras.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_L, java.awt.event.InputEvent.CTRL_MASK));
+        itmMnuLancarHoras.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/edu/ifnmg/alvespereira/segurancadados/icones/choisir-consulter-icone-6964-32.png"))); // NOI18N
         itmMnuLancarHoras.setText("Lançar Horas");
         itmMnuLancarHoras.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -342,7 +343,8 @@ public class TelaPrincipal extends javax.swing.JFrame {
 
         jMenuBar1.add(jMenu1);
 
-        jMenu2.setText("Relatórios");
+        jMenu2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/edu/ifnmg/alvespereira/segurancadados/icones/pdf-icone-5197-32.png"))); // NOI18N
+        jMenu2.setText("Relatórios                     ");
 
         jMenuItem1.setText("Usuários");
         jMenuItem1.addActionListener(new java.awt.event.ActionListener() {
@@ -709,7 +711,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
     }//GEN-LAST:event_itmMnu_GerenteActionPerformed
 
     private void itmMnuLancarHorasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itmMnuLancarHorasActionPerformed
-        if (usuarioLogado.getTipo().equals("Diretor")) {
+        if (usuarioLogado.getTipo().equals("Encarregado")) {
             LancarHorasAtividadeForm lancarHorasAtividadeForm = null;
             lancarHorasAtividadeForm = new LancarHorasAtividadeForm(usuarioLogado);
             lancarHorasAtividadeForm.setVisible(true);
@@ -717,8 +719,8 @@ public class TelaPrincipal extends javax.swing.JFrame {
             JDP1.add(lancarHorasAtividadeForm);
         } else {
             JOptionPane.showMessageDialog(null, "Você não possui previlégios para acessar \n   "
-                    + "a Tela de Gestão de Gerente!",
-                    "Cadastro de Gerente", JOptionPane.ERROR_MESSAGE);
+                    + "a Tela de Laçamento de Horas Trabalhadas!",
+                    "Laçamento de Horas Trabalhadas", JOptionPane.ERROR_MESSAGE);
 
         }
     }//GEN-LAST:event_itmMnuLancarHorasActionPerformed

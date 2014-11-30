@@ -67,11 +67,11 @@ public class CadastroAtividadeForm extends javax.swing.JInternalFrame {
         lblDuracao = new javax.swing.JLabel();
         txtNome = new javax.swing.JTextField();
         lblEncarregado = new javax.swing.JLabel();
-        cmbEncarregado = new javax.swing.JComboBox();
         lblProjeto = new javax.swing.JLabel();
         cmbProjeto = new javax.swing.JComboBox();
         btnCadastrar = new javax.swing.JButton();
         txtDuracao = new javax.swing.JTextField();
+        cmbEncarregado = new javax.swing.JComboBox();
 
         setClosable(true);
         setIconifiable(true);
@@ -83,11 +83,9 @@ public class CadastroAtividadeForm extends javax.swing.JInternalFrame {
 
         lblNome.setText("Nome:");
 
-        lblDuracao.setText("Duração:");
+        lblDuracao.setText("Duração(HH:mm):");
 
         lblEncarregado.setText("Encarregado:");
-
-        cmbEncarregado.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
         lblProjeto.setText("Projeto:");
 
@@ -105,6 +103,8 @@ public class CadastroAtividadeForm extends javax.swing.JInternalFrame {
                 btnCadastrarActionPerformed(evt);
             }
         });
+
+        cmbEncarregado.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
         javax.swing.GroupLayout jPanelDadosAtividadeLayout = new javax.swing.GroupLayout(jPanelDadosAtividade);
         jPanelDadosAtividade.setLayout(jPanelDadosAtividadeLayout);
@@ -133,13 +133,13 @@ public class CadastroAtividadeForm extends javax.swing.JInternalFrame {
                                 .addComponent(lblEncarregado)
                                 .addGap(18, 18, 18)))
                         .addGroup(jPanelDadosAtividadeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(cmbEncarregado, 0, 297, Short.MAX_VALUE)
-                            .addComponent(cmbProjeto, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                            .addComponent(cmbProjeto, 0, 297, Short.MAX_VALUE)
+                            .addComponent(cmbEncarregado, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
                 .addContainerGap())
             .addGroup(jPanelDadosAtividadeLayout.createSequentialGroup()
                 .addGap(149, 149, 149)
                 .addComponent(btnCadastrar)
-                .addContainerGap(134, Short.MAX_VALUE))
+                .addContainerGap(155, Short.MAX_VALUE))
         );
 
         jPanelDadosAtividadeLayout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {lblDuracao, lblEncarregado, lblNome, lblProjeto});
@@ -164,7 +164,8 @@ public class CadastroAtividadeForm extends javax.swing.JInternalFrame {
                     .addComponent(lblEncarregado)
                     .addComponent(cmbEncarregado, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
-                .addComponent(btnCadastrar, javax.swing.GroupLayout.DEFAULT_SIZE, 49, Short.MAX_VALUE))
+                .addComponent(btnCadastrar, javax.swing.GroupLayout.DEFAULT_SIZE, 46, Short.MAX_VALUE)
+                .addContainerGap())
         );
 
         jPanelDadosAtividadeLayout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {cmbProjeto, txtNome});

@@ -91,8 +91,8 @@
                               </Group>
                           </Group>
                           <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                              <Component id="cmbEncarregado" pref="297" max="32767" attributes="0"/>
-                              <Component id="cmbProjeto" max="32767" attributes="0"/>
+                              <Component id="cmbProjeto" pref="297" max="32767" attributes="0"/>
+                              <Component id="cmbEncarregado" max="32767" attributes="0"/>
                           </Group>
                       </Group>
                   </Group>
@@ -101,7 +101,7 @@
               <Group type="102" alignment="0" attributes="0">
                   <EmptySpace min="-2" pref="149" max="-2" attributes="0"/>
                   <Component id="btnCadastrar" min="-2" max="-2" attributes="0"/>
-                  <EmptySpace pref="134" max="32767" attributes="0"/>
+                  <EmptySpace pref="155" max="32767" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
@@ -129,7 +129,8 @@
                       <Component id="cmbEncarregado" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace type="separate" max="-2" attributes="0"/>
-                  <Component id="btnCadastrar" pref="49" max="32767" attributes="0"/>
+                  <Component id="btnCadastrar" pref="46" max="32767" attributes="0"/>
+                  <EmptySpace max="-2" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
@@ -142,7 +143,7 @@
         </Component>
         <Component class="javax.swing.JLabel" name="lblDuracao">
           <Properties>
-            <Property name="text" type="java.lang.String" value="Dura&#xe7;&#xe3;o:"/>
+            <Property name="text" type="java.lang.String" value="Dura&#xe7;&#xe3;o(HH:mm):"/>
           </Properties>
         </Component>
         <Component class="javax.swing.JTextField" name="txtNome">
@@ -151,21 +152,6 @@
           <Properties>
             <Property name="text" type="java.lang.String" value="Encarregado:"/>
           </Properties>
-        </Component>
-        <Component class="javax.swing.JComboBox" name="cmbEncarregado">
-          <Properties>
-            <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
-              <StringArray count="4">
-                <StringItem index="0" value="Item 1"/>
-                <StringItem index="1" value="Item 2"/>
-                <StringItem index="2" value="Item 3"/>
-                <StringItem index="3" value="Item 4"/>
-              </StringArray>
-            </Property>
-          </Properties>
-          <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="cmbEncarregadoActionPerformed"/>
-          </Events>
         </Component>
         <Component class="javax.swing.JLabel" name="lblProjeto">
           <Properties>
@@ -199,6 +185,18 @@
           </Events>
         </Component>
         <Component class="javax.swing.JTextField" name="txtDuracao">
+        </Component>
+        <Component class="javax.swing.JComboBox" name="cmbEncarregado">
+          <Properties>
+            <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
+              <StringArray count="4">
+                <StringItem index="0" value="Item 1"/>
+                <StringItem index="1" value="Item 2"/>
+                <StringItem index="2" value="Item 3"/>
+                <StringItem index="3" value="Item 4"/>
+              </StringArray>
+            </Property>
+          </Properties>
         </Component>
       </SubComponents>
     </Container>
