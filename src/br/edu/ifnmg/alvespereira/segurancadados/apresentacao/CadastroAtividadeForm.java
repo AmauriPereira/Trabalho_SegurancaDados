@@ -12,10 +12,14 @@ import javax.swing.JOptionPane;
 
 public class CadastroAtividadeForm extends javax.swing.JInternalFrame {
 
-    public CadastroAtividadeForm() {
+    private static Usuario usuarioLogado = new Usuario();
+
+    public CadastroAtividadeForm(Usuario userLogado) {
         initComponents();
+        this.usuarioLogado = userLogado;
         this.popularCbProjeto();
         this.popularCbEncarregado();
+
     }
 
     //Metodo que add todos os projetos cadastrados na ComboBox
@@ -24,7 +28,7 @@ public class CadastroAtividadeForm extends javax.swing.JInternalFrame {
         ProjetoBO projetoBO = new ProjetoBO();
 
         try {
-            Projetos = projetoBO.ComboBoxProjeto();
+            Projetos = projetoBO.CMBProjeto(usuarioLogado.getDepartamento().getCodigo());
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null, "Erro ao popular o projetos",
                     "Projetos", JOptionPane.ERROR_MESSAGE);
@@ -44,7 +48,7 @@ public class CadastroAtividadeForm extends javax.swing.JInternalFrame {
         UsuarioBO EncarregadoBO = new UsuarioBO();
 
         try {
-            Encarregado = EncarregadoBO.ComboBoxEncarregado();
+            Encarregado = EncarregadoBO.ComboBoxEncarregadoPorDepartamento(this.usuarioLogado.getDepartamento().getCodigo());
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null, "Erro ao popular os Encarregados",
                     "Projetos", JOptionPane.ERROR_MESSAGE);
@@ -56,6 +60,15 @@ public class CadastroAtividadeForm extends javax.swing.JInternalFrame {
             cmbEncarregado.addItem(item);
         }
 
+    }
+
+    public void limpar() {
+
+        txtNome.setText("");
+        txtDuracao.setText("");
+
+        cmbProjeto.setSelectedItem("Selecione");
+        cmbEncarregado.setSelectedItem("Selecione");
     }
 
     @SuppressWarnings("unchecked")
@@ -191,56 +204,67 @@ public class CadastroAtividadeForm extends javax.swing.JInternalFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnCadastrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCadastrarActionPerformed
+        if (cmbProjeto.getSelectedItem().equals("Selecione")) {
+            JOptionPane.showMessageDialog(null, "Erro selecione o Projeto",
+                    "Gestão de Atividade", JOptionPane.ERROR_MESSAGE);
+        } else {
 
-        //Tela de Cadastro de Atividades
-        String Nome = txtNome.getText();
-        float Horas = Float.parseFloat(txtDuracao.getText());
+            if (cmbEncarregado.getSelectedItem().equals("Selecione")) {
+                JOptionPane.showMessageDialog(null, "Erro selecione o Encarregado",
+                        "Gestão de Atividade", JOptionPane.ERROR_MESSAGE);
+            } else {
+                //Tela de Cadastro de Atividades
+                String Nome = txtNome.getText();
+                float Horas = Float.parseFloat(txtDuracao.getText());
 
-        Float Duracao = Horas;
+                Float Duracao = Horas;
 
-///Busca o Encarregado referente ao nome selecionado na combobox encarregado
-        //e armazena os dados na variavel encarregado
-        Usuario encarregado = null;
+                ///Busca o Encarregado referente ao nome selecionado na combobox encarregado
+                //e armazena os dados na variavel encarregado
+                Usuario encarregado = null;
 
-        try {
-            UsuarioBO EncarregadoBO = new UsuarioBO();
-            encarregado = EncarregadoBO.selectUmEncarregado(cmbEncarregado.getSelectedItem() + "", "Encarregado");
-        } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(null, "Erro ao selecionar o Encarregado",
-                    "Cadastro de Atividade", JOptionPane.ERROR_MESSAGE);
-        }
+                try {
+                    UsuarioBO EncarregadoBO = new UsuarioBO();
+                    encarregado = EncarregadoBO.selectUmEncarregado(cmbEncarregado.getSelectedItem() + "", "Encarregado");
+                } catch (SQLException ex) {
+                    JOptionPane.showMessageDialog(null, "Erro ao selecionar o Encarregado",
+                            "Cadastro de Atividade", JOptionPane.ERROR_MESSAGE);
+                }
 
-        //Busca o projeto referente ao nome selecionado na combobox projeto
-        //e armazena os dados na variavel projet
-        Projeto projet = null;
+                //Busca o projeto referente ao nome selecionado na combobox projeto
+                //e armazena os dados na variavel projet
+                Projeto projet = null;
 
-        try {
-            ProjetoBO projetBO = new ProjetoBO();
-            projet = projetBO.selectUmProjeto(cmbProjeto.getSelectedItem() + "");
-        } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(null, "Erro ao selecionar o Projeto",
-                    "Cadastro de Atividade", JOptionPane.ERROR_MESSAGE);
-        }
+                try {
+                    ProjetoBO projetBO = new ProjetoBO();
+                    projet = projetBO.selectUmProjeto(cmbProjeto.getSelectedItem() + "");
+                    this.limpar();
+                } catch (SQLException ex) {
+                    JOptionPane.showMessageDialog(null, "Erro ao selecionar o Projeto",
+                            "Cadastro de Atividade", JOptionPane.ERROR_MESSAGE);
+                }
 
-        //Cria a variavel do tipo atividade e seta os dados na mesma
-        Atividade atividade = new Atividade();
-        atividade.setNome(Nome);
-        atividade.setDuracao(Duracao);
-        atividade.setEncarregado(encarregado);
-        atividade.setProjeto(projet);
+                //Cria a variavel do tipo atividade e seta os dados na mesma
+                Atividade atividade = new Atividade();
+                atividade.setNome(Nome);
+                atividade.setDuracao(Duracao);
+                atividade.setEncarregado(encarregado);
+                atividade.setProjeto(projet);
 
-        try {
-            AtividadeBO AtividadeBO = new AtividadeBO();
-            AtividadeBO.criarAtividade(atividade);
+                try {
+                    AtividadeBO AtividadeBO = new AtividadeBO();
+                    AtividadeBO.criarAtividade(atividade);
 
-            JOptionPane.showMessageDialog(null, "Atividade Cadastrada com Sucesso !!!",
-                    "Cadastro de Atividade", JOptionPane.INFORMATION_MESSAGE);
+                    JOptionPane.showMessageDialog(null, "Atividade Cadastrada com Sucesso !!!",
+                            "Cadastro de Atividade", JOptionPane.INFORMATION_MESSAGE);
 
-        } catch (SQLException ex) {
+                } catch (SQLException ex) {
 
-            JOptionPane.showMessageDialog(null, "Erro ao Cadastrar a Atividade",
-                    "Cadastro de Atividade", JOptionPane.ERROR_MESSAGE);
+                    JOptionPane.showMessageDialog(null, "Erro ao Cadastrar a Atividade",
+                            "Cadastro de Atividade", JOptionPane.ERROR_MESSAGE);
 
+                }
+            }
         }
 
 

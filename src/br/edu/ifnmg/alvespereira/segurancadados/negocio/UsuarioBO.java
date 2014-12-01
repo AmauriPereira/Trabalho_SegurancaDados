@@ -131,6 +131,17 @@ public class UsuarioBO {
 
     }
 
+    public ArrayList<String> ComboBoxEncarregadoPorDepartamento(String CodDepartamento) throws SQLException {
+
+        UsuarioDAO usuarioDAO = new UsuarioDAO();
+        ArrayList<String> Encarregado = new ArrayList<>();
+
+        Encarregado = usuarioDAO.cmbEncarregadosPorDepartamento(CodDepartamento);
+
+        return Encarregado;
+
+    }
+
     public ResultSet preencheTabelaGerente() throws SQLException {
         UsuarioDAO Gerente = new UsuarioDAO();
         ResultSet resultPreencherTabela = Gerente.preencherTabelaGerente();
@@ -176,4 +187,13 @@ public class UsuarioBO {
 
     }
 
+    public ArrayList<Usuario> relatorioUsuarios() throws SQLException {
+
+        UsuarioDAO usuarioDAO = new UsuarioDAO();
+        ArrayList<Usuario> Encarregado = new ArrayList<>();
+
+        Encarregado = usuarioDAO.listaUsuario();
+
+        return Encarregado;
+    }
 }

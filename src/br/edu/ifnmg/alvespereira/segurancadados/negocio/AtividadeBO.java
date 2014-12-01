@@ -48,4 +48,27 @@ public class AtividadeBO {
 
     }
 
+    public ResultSet preencherTabelaAtividadeGESTAO(String codDepartamento) throws SQLException {
+        AtividadeDAO atividadeDAO = new AtividadeDAO();
+        ResultSet resultPreencherTabela = atividadeDAO.preencherTabelaATividadeGESTAO(codDepartamento);
+
+        return resultPreencherTabela;
+
+    }
+
+    public ResultSet preencherTabelaAtividadesPesquisadasGESTAO(String NomeAtividade, String codDepartamento) throws SQLException {
+        AtividadeDAO atividadeDAO = new AtividadeDAO();
+        ResultSet resultPreencherTabela = atividadeDAO.preencherTabelaATividadePesquisadasGESTAO(NomeAtividade, codDepartamento);
+
+        return resultPreencherTabela;
+
+    }
+
+    public void deleteAtividade(int IDatividade) throws SQLException {
+        
+        AtividadeDAO atividadeDAO = new AtividadeDAO();
+        atividadeDAO.DeleteAtividade(IDatividade);
+
+    }
+
 }
