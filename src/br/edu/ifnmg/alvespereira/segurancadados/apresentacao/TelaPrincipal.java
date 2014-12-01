@@ -351,7 +351,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
 
         jMenuBar1.add(jMenu1);
 
-        mnuRelatorios.setText("Relatórios                     ");
+        mnuRelatorios.setText("Relatórios                         ");
 
         itmMnuRelatorioUsuarios.setText("Usuários");
         itmMnuRelatorioUsuarios.addActionListener(new java.awt.event.ActionListener() {
