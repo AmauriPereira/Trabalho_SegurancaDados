@@ -598,7 +598,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
 
             if (usuarioLogado.getTipo().equals("Gerente")) {
 
-                CadastroProjetoForm cadastroProjetoForm = new CadastroProjetoForm();
+                CadastroProjetoForm cadastroProjetoForm = new CadastroProjetoForm(usuarioLogado);
 
                 cadastroProjetoForm.setVisible(true);
                 centralizaForm(cadastroProjetoForm);

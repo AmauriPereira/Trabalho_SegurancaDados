@@ -3,11 +3,14 @@ package br.edu.ifnmg.alvespereira.segurancadados.apresentacao;
 import br.edu.ifnmg.alvespereira.segurancadados.entidades.Atividade;
 import br.edu.ifnmg.alvespereira.segurancadados.entidades.Projeto;
 import br.edu.ifnmg.alvespereira.segurancadados.entidades.Usuario;
+import br.edu.ifnmg.alvespereira.segurancadados.excecoes.atividadeExistente;
 import br.edu.ifnmg.alvespereira.segurancadados.negocio.AtividadeBO;
 import br.edu.ifnmg.alvespereira.segurancadados.negocio.ProjetoBO;
 import br.edu.ifnmg.alvespereira.segurancadados.negocio.UsuarioBO;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import net.proteanit.sql.DbUtils;
 
@@ -375,70 +378,100 @@ public class GerenciarAtvidadeFom extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_txtDuracaoActionPerformed
 
     private void btnSalvarAlteracoesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalvarAlteracoesActionPerformed
-        if (cmbProjeto.getSelectedItem().equals("Selecione")) {
-            JOptionPane.showMessageDialog(null, "Erro selecione o Projeto",
+        if (txtNome.getText().equals("") || txtDuracao.getText().equals("")) {
+            JOptionPane.showMessageDialog(null, "Erro - Preencha todos os Campos",
                     "Gestão de Atividade", JOptionPane.ERROR_MESSAGE);
         } else {
 
-            if (cmbEncarregado.getSelectedItem().equals("Selecione")) {
-                JOptionPane.showMessageDialog(null, "Erro selecione o Encarregado",
+            if (cmbProjeto.getSelectedItem().equals("Selecione")) {
+                JOptionPane.showMessageDialog(null, "Erro selecione o Projeto",
                         "Gestão de Atividade", JOptionPane.ERROR_MESSAGE);
             } else {
 
-                //Tela de Cadastro de Atividades
-                String Nome = txtNome.getText();
-                float Horas = Float.parseFloat(txtDuracao.getText());
+                if (cmbEncarregado.getSelectedItem().equals("Selecione")) {
+                    JOptionPane.showMessageDialog(null, "Erro selecione o Encarregado",
+                            "Gestão de Atividade", JOptionPane.ERROR_MESSAGE);
+                } else {
 
-                Float Duracao = Horas;
-                int CodAtividade = Integer.parseInt(txtIDatividade.getText());
+                    //Tela de Cadastro de Atividades
+                    String Nome = txtNome.getText();
 
-                ///Busca o Encarregado referente ao nome selecionado na combobox encarregado
-                //e armazena os dados na variavel encarregado
-                Usuario encarregado = null;
+                    Float Duracao = null;
+                    boolean validacao = false;
 
-                try {
-                    UsuarioBO EncarregadoBO = new UsuarioBO();
-                    encarregado = EncarregadoBO.selectUmEncarregado(cmbEncarregado.getSelectedItem() + "", "Encarregado");
-                } catch (SQLException ex) {
-                    JOptionPane.showMessageDialog(null, "Erro ao selecionar o Encarregado",
-                            "Cadastro de Atividade", JOptionPane.ERROR_MESSAGE);
-                }
+                    try {
+                        float Horas = Float.parseFloat(txtDuracao.getText());
 
-                //Busca o projeto referente ao nome selecionado na combobox projeto
-                //e armazena os dados na variavel projet
-                Projeto projet = null;
+                        Duracao = Horas;
+                        validacao = true;
 
-                try {
-                    ProjetoBO projetBO = new ProjetoBO();
-                    projet = projetBO.selectUmProjeto(cmbProjeto.getSelectedItem() + "");
-                } catch (SQLException ex) {
-                    JOptionPane.showMessageDialog(null, "Erro ao selecionar o Projeto",
-                            "Cadastro de Atividade", JOptionPane.ERROR_MESSAGE);
-                }
+                    } catch (NumberFormatException ex) {
+                        JOptionPane.showMessageDialog(null, "Digite somente numeros no campo Duracao!!! \n "
+                                + "Formato aceitavel(Hrs.Min) - Ex(10.30)",
+                                "Cadastro de Atividade", JOptionPane.ERROR_MESSAGE);
+                    }
 
-                //Cria a variavel do tipo atividade e seta os dados na mesma
-                Atividade atividade = new Atividade();
-                atividade.setNome(Nome);
-                atividade.setDuracao(Duracao);
-                atividade.setEncarregado(encarregado);
-                atividade.setProjeto(projet);
-                atividade.setIdAtividade(CodAtividade);
+                    int CodAtividade = Integer.parseInt(txtIDatividade.getText());
 
-                try {
-                    AtividadeBO AtividadeBO = new AtividadeBO();
-                    AtividadeBO.UpdateAtividade(atividade);
-                    JOptionPane.showMessageDialog(null, "Atividade Atualizada com Sucesso !!!",
-                            "Gestao de Atividade", JOptionPane.INFORMATION_MESSAGE);
-                    this.listarAtividadesGETSAO();
-                    this.btnSalvarAlteracoes.setEnabled(false);
-                    this.btnExcluir.setEnabled(false);
-                    this.limpar();
-                } catch (SQLException ex) {
+                    ///Busca o Encarregado referente ao nome selecionado na combobox encarregado
+                    //e armazena os dados na variavel encarregado
+                    Usuario encarregado = null;
+
+                    try {
+                        UsuarioBO EncarregadoBO = new UsuarioBO();
+                        encarregado = EncarregadoBO.selectUmEncarregado(cmbEncarregado.getSelectedItem() + "", "Encarregado");
+                    } catch (SQLException ex) {
+                        JOptionPane.showMessageDialog(null, "Erro ao selecionar o Encarregado",
+                                "Cadastro de Atividade", JOptionPane.ERROR_MESSAGE);
+                    }
+
+                    //Busca o projeto referente ao nome selecionado na combobox projeto
+                    //e armazena os dados na variavel projet
+                    Projeto projet = null;
+
+                    try {
+                        ProjetoBO projetBO = new ProjetoBO();
+                        projet = projetBO.selectUmProjeto(cmbProjeto.getSelectedItem() + "");
+                    } catch (SQLException ex) {
+                        JOptionPane.showMessageDialog(null, "Erro ao selecionar o Projeto",
+                                "Cadastro de Atividade", JOptionPane.ERROR_MESSAGE);
+                    }
+
+                    //Cria a variavel do tipo atividade e seta os dados na mesma
+                    Atividade atividade = new Atividade();
+                    atividade.setNome(Nome);
+                    atividade.setDuracao(Duracao);
+                    atividade.setEncarregado(encarregado);
+                    atividade.setProjeto(projet);
+                    atividade.setIdAtividade(CodAtividade);
+
+                    try {
+                        if (validacao == true) {
+                            AtividadeBO AtividadeBO = new AtividadeBO();
+                            AtividadeBO.UpdateAtividade(atividade);
+                            JOptionPane.showMessageDialog(null, "Atividade Atualizada com Sucesso !!!",
+                                    "Gestao de Atividade", JOptionPane.INFORMATION_MESSAGE);
+                            this.listarAtividadesGETSAO();
+                            this.btnSalvarAlteracoes.setEnabled(false);
+                            this.btnExcluir.setEnabled(false);
+                            this.limpar();
+                        }
+                    } catch (SQLException ex) {
+                        JOptionPane.showMessageDialog(null, "Erro ao Atulizar a Atividade",
+                                "Gestão de Atividade", JOptionPane.ERROR_MESSAGE);
+
+                    } catch (atividadeExistente ex) {
+                        JOptionPane.showMessageDialog(null, "Ja existe uma Atividade com este Nome!!!",
+                                "Gestão de Atividade", JOptionPane.ERROR_MESSAGE);
+                    } catch (NumberFormatException ex) {
+                        JOptionPane.showMessageDialog(null, "Digite somente numeros no campo Duracão!!! \n "
+                                + "Formato aceitavel(Hrs.Min) - Ex(10.30)",
+                                "Gestão de Atividade", JOptionPane.ERROR_MESSAGE);
+                    }
 
                 }
 
             }
-
         }
     }//GEN-LAST:event_btnSalvarAlteracoesActionPerformed
 

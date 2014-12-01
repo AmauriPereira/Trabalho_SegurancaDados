@@ -2,6 +2,7 @@ package br.edu.ifnmg.alvespereira.segurancadados.negocio;
 
 import br.edu.ifnmg.alvespereira.segurancadados.dados.AtividadeDAO;
 import br.edu.ifnmg.alvespereira.segurancadados.entidades.Atividade;
+import br.edu.ifnmg.alvespereira.segurancadados.excecoes.atividadeExistente;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -9,15 +10,17 @@ import java.util.ArrayList;
 
 public class AtividadeBO {
 
-    public void criarAtividade(Atividade atividade) throws SQLException {
+    public void criarAtividade(Atividade atividade) throws SQLException, atividadeExistente {
 
         AtividadeDAO atividadeDAO = new AtividadeDAO();
 
-        Atividade atividadeExistente = new Atividade();
+        Atividade atividadeExistente = null;
         atividadeExistente = atividadeDAO.SelectATividadePorNome(atividade.getNome());
 
         if (atividadeExistente == null) {
             atividadeDAO.criarAtividade(atividade);
+        } else {
+            throw new atividadeExistente();
         }
     }
 
@@ -28,10 +31,17 @@ public class AtividadeBO {
 
     }
 
-    public void UpdateAtividade(Atividade atividade) throws SQLException {
-
+    public void UpdateAtividade(Atividade atividade) throws SQLException, atividadeExistente {
         AtividadeDAO atividadeDAO = new AtividadeDAO();
-        atividadeDAO.UpdateAtividade(atividade);
+
+        Atividade atividadeExistente = null;
+        atividadeExistente = atividadeDAO.SelectATividadePorNome(atividade.getNome());
+
+        if (atividadeExistente == null || atividadeExistente.getIdAtividade() == atividade.getIdAtividade()) {
+            atividadeDAO.UpdateAtividade(atividade);
+        } else {
+            throw new atividadeExistente();
+        }
 
     }
 

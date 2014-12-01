@@ -5,8 +5,6 @@ import br.edu.ifnmg.alvespereira.segurancadados.excecoes.excecaoCodDepartamentoI
 import br.edu.ifnmg.alvespereira.segurancadados.excecoes.excecaoDepartamento;
 import br.edu.ifnmg.alvespereira.segurancadados.negocio.DepartamentoBO;
 import java.sql.SQLException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 
 public class CadastroDepInTform extends javax.swing.JInternalFrame {

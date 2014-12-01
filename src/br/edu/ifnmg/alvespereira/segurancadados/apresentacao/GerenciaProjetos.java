@@ -3,6 +3,7 @@ package br.edu.ifnmg.alvespereira.segurancadados.apresentacao;
 import br.edu.ifnmg.alvespereira.segurancadados.entidades.Departamento;
 import br.edu.ifnmg.alvespereira.segurancadados.entidades.Projeto;
 import br.edu.ifnmg.alvespereira.segurancadados.entidades.Usuario;
+import br.edu.ifnmg.alvespereira.segurancadados.excecoes.ExcecaoprojetoExistente;
 import br.edu.ifnmg.alvespereira.segurancadados.excecoes.excecaoDeletarElemento;
 import br.edu.ifnmg.alvespereira.segurancadados.negocio.DepartamentoBO;
 import br.edu.ifnmg.alvespereira.segurancadados.negocio.ProjetoBO;
@@ -33,7 +34,7 @@ public class GerenciaProjetos extends javax.swing.JInternalFrame {
         ProjetoBO projet = new ProjetoBO();
 
         try {
-             tbProjetos.setModel(DbUtils.resultSetToTableModel(projet.preencheTabela(usuarioLogado.getDepartamento().getCodigo())));
+            tbProjetos.setModel(DbUtils.resultSetToTableModel(projet.preencheTabela(usuarioLogado.getDepartamento().getCodigo())));
         } catch (SQLException ex) {
 
         }
@@ -58,7 +59,7 @@ public class GerenciaProjetos extends javax.swing.JInternalFrame {
         DepartamentoBO depBO = new DepartamentoBO();
 
         try {
-            Departamentos = depBO.ComboBoxDepartamentos();
+            Departamentos = depBO.CMBDepartamento(usuarioLogado.getDepartamento().getCodigo());
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null, "Erro ao popular o departamento",
                     "Departamento", JOptionPane.ERROR_MESSAGE);
@@ -114,8 +115,8 @@ public class GerenciaProjetos extends javax.swing.JInternalFrame {
         btnExcluir = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
         txtCod = new javax.swing.JTextField();
-        txtDataInicio = new javax.swing.JTextField();
-        txtDataTermino = new javax.swing.JTextField();
+        txtDataInicio = new javax.swing.JFormattedTextField();
+        txtDataTermino = new javax.swing.JFormattedTextField();
         btnOK = new javax.swing.JButton();
 
         setClosable(true);
@@ -204,7 +205,7 @@ public class GerenciaProjetos extends javax.swing.JInternalFrame {
 
         lblDataTermino.setText("Data Término:");
 
-        cbDepartamentos.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        cbDepartamentos.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         cbDepartamentos.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
         cbDepartamentos.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -242,6 +243,18 @@ public class GerenciaProjetos extends javax.swing.JInternalFrame {
         txtCod.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         txtCod.setForeground(new java.awt.Color(0, 102, 102));
 
+        try {
+            txtDataInicio.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("##/##/####")));
+        } catch (java.text.ParseException ex) {
+            ex.printStackTrace();
+        }
+
+        try {
+            txtDataTermino.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("##/##/####")));
+        } catch (java.text.ParseException ex) {
+            ex.printStackTrace();
+        }
+
         javax.swing.GroupLayout jPanelDadosProjetosLayout = new javax.swing.GroupLayout(jPanelDadosProjetos);
         jPanelDadosProjetos.setLayout(jPanelDadosProjetosLayout);
         jPanelDadosProjetosLayout.setHorizontalGroup(
@@ -265,12 +278,13 @@ public class GerenciaProjetos extends javax.swing.JInternalFrame {
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addGroup(jPanelDadosProjetosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                     .addComponent(cbDepartamentos, javax.swing.GroupLayout.PREFERRED_SIZE, 314, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addGroup(jPanelDadosProjetosLayout.createSequentialGroup()
-                                        .addComponent(txtDataInicio, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelDadosProjetosLayout.createSequentialGroup()
+                                        .addGap(4, 4, 4)
+                                        .addComponent(txtDataInicio)
                                         .addGap(18, 18, 18)
                                         .addComponent(lblDataTermino)
                                         .addGap(18, 18, 18)
-                                        .addComponent(txtDataTermino)))))
+                                        .addComponent(txtDataTermino, javax.swing.GroupLayout.PREFERRED_SIZE, 101, javax.swing.GroupLayout.PREFERRED_SIZE)))))
                         .addGap(137, 137, 137))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelDadosProjetosLayout.createSequentialGroup()
                         .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -375,54 +389,84 @@ public class GerenciaProjetos extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_cbDepartamentosFocusGained
 
     private void btnSalvarAlteracaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalvarAlteracaoActionPerformed
-        String nome, Descricao;
-        Date DataInicio = null, DataTermino = null;
-        Departamento departamento = null;
+        if (txtNomeProjeto.getText().equals("") || txtDescricaoProjeto.getText().equals("")
+                || txtDataInicio.getText().equals("  /  /    ")
+                || txtDataTermino.getText().equals("  /  /    ")) {
 
-        //Seta o departamento do projeto
-        try {
-            DepartamentoBO depBO = new DepartamentoBO();
-            departamento = depBO.selectDepartamento(cbDepartamentos.getSelectedItem() + "");
-        } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(null, "Erro ao selecionar o departamento",
-                    "Cadastro de usuários", JOptionPane.ERROR_MESSAGE);
-        }
-
-        //Seta o Nome e a descrição projeto
-        nome = txtNomeProjeto.getText();
-        Descricao = txtDescricaoProjeto.getText();
-        int CodProjeto = Integer.parseInt(txtCod.getText());
-
-        try {
-            //Converte e seta a data inicio e termino
-
-            DataInicio = ConverteData(txtDataInicio.getText());
-            DataTermino = ConverteData(txtDataTermino.getText());
-        } catch (Exception ex) {
-            JOptionPane.showMessageDialog(null, "Erro na Data de  Inicio ou Término do projeto",
+            JOptionPane.showMessageDialog(null, "Prencha todos os Campos !!!",
                     "Cadastro de Projeto", JOptionPane.ERROR_MESSAGE);
-        }
 
-        //Cria um novo projeto e seta todos os dados
-        Projeto projeto = new Projeto();
-        projeto.setNome(nome);
-        projeto.setDescricao(Descricao);
-        projeto.setDataInicio(DataInicio);
-        projeto.setDataTermino(DataTermino);
-        projeto.setDepartamento(departamento);
-        projeto.setIdProjeto(CodProjeto);
+        } else {
 
-        //Cria um novo objeto do tipo ProjetoBO e 
-        //passa como parmetro o projeto que será cadastrado
-        ProjetoBO projetBO = new ProjetoBO();
+            if (cbDepartamentos.getSelectedItem().equals("Selecione")) {
 
-        try {
-            projetBO.UpdateProjeto(projeto);
-            JOptionPane.showMessageDialog(null, "Projeto Atualizado com Sucesso !!!",
-                    "Gestão de Projeto", JOptionPane.INFORMATION_MESSAGE);
-        } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(null, "Erro ao Atualizar projeto",
-                    "Gestão de Projeto", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(null, "Selecione um Departamento!!!",
+                        "Cadastro de Projeto", JOptionPane.ERROR_MESSAGE);
+            } else {
+
+                String nome, Descricao;
+                Date DataInicio = null, DataTermino = null;
+                Departamento departamento = null;
+
+                //Seta o departamento do projeto
+                try {
+                    DepartamentoBO depBO = new DepartamentoBO();
+                    departamento = depBO.selectDepartamento(cbDepartamentos.getSelectedItem() + "");
+                } catch (SQLException ex) {
+                    JOptionPane.showMessageDialog(null, "Erro ao selecionar o departamento",
+                            "Cadastro de usuários", JOptionPane.ERROR_MESSAGE);
+                }
+
+                //Seta o Nome e a descrição projeto
+                nome = txtNomeProjeto.getText();
+                Descricao = txtDescricaoProjeto.getText();
+                int CodProjeto = Integer.parseInt(txtCod.getText());
+
+                try {
+                    //Converte e seta a data inicio e termino
+
+                    DataInicio = ConverteData(txtDataInicio.getText());
+                    DataTermino = ConverteData(txtDataTermino.getText());
+                } catch (Exception ex) {
+                    JOptionPane.showMessageDialog(null, "Erro na Data de  Inicio ou Término do projeto",
+                            "Cadastro de Projeto", JOptionPane.ERROR_MESSAGE);
+                }
+
+                //Cria um novo projeto e seta todos os dados
+                Projeto projeto = new Projeto();
+                projeto.setNome(nome);
+                projeto.setDescricao(Descricao);
+                projeto.setDataInicio(DataInicio);
+                projeto.setDataTermino(DataTermino);
+                projeto.setDepartamento(departamento);
+                projeto.setIdProjeto(CodProjeto);
+
+                //Cria um novo objeto do tipo ProjetoBO e 
+                //passa como parmetro o projeto que será cadastrado
+                ProjetoBO projetBO = new ProjetoBO();
+
+                try {
+                    projetBO.UpdateProjeto(projeto);
+                    JOptionPane.showMessageDialog(null, "Projeto Atualizado com Sucesso !!!",
+                            "Gestão de Projeto", JOptionPane.INFORMATION_MESSAGE);
+
+                    txtNomeProjeto.setText("");
+                    txtDescricaoProjeto.setText("");
+                    txtDataTermino.setText("");
+                    txtDataInicio.setText("");
+                    cbDepartamentos.setSelectedItem("Selecione");
+                    this.listarProjetos();
+                    this.btnExcluir.setEnabled(false);
+                    this.btnSalvarAlteracao.setEnabled(false);
+
+                } catch (SQLException ex) {
+                    JOptionPane.showMessageDialog(null, "Erro ao Atualizar projeto",
+                            "Gestão de Projeto", JOptionPane.ERROR_MESSAGE);
+                } catch (ExcecaoprojetoExistente ex) {
+                    JOptionPane.showMessageDialog(null, "Ja existe um projeto com este Nome !!!",
+                            "Cadastro de Projeto", JOptionPane.ERROR_MESSAGE);
+                }
+            }
         }
     }//GEN-LAST:event_btnSalvarAlteracaoActionPerformed
 
@@ -441,6 +485,15 @@ public class GerenciaProjetos extends javax.swing.JInternalFrame {
             projetBO.DeleteProjeto(projeto);
             JOptionPane.showMessageDialog(null, "Projeto Deletado com Sucesso !!!",
                     "Gestão de Projeto", JOptionPane.INFORMATION_MESSAGE);
+            
+            txtNomeProjeto.setText("");
+            txtDescricaoProjeto.setText("");
+            txtDataTermino.setText("");
+            txtDataInicio.setText("");
+            cbDepartamentos.setSelectedItem("Selecione");
+            this.listarProjetos();
+            this.btnExcluir.setEnabled(false);
+            this.btnSalvarAlteracao.setEnabled(false);
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null, "Erro ao Deletado projeto",
                     "Gestão de Projeto", JOptionPane.ERROR_MESSAGE);
@@ -477,8 +530,8 @@ public class GerenciaProjetos extends javax.swing.JInternalFrame {
     private javax.swing.JLabel lblNome;
     private javax.swing.JTable tbProjetos;
     private javax.swing.JTextField txtCod;
-    private javax.swing.JTextField txtDataInicio;
-    private javax.swing.JTextField txtDataTermino;
+    private javax.swing.JFormattedTextField txtDataInicio;
+    private javax.swing.JFormattedTextField txtDataTermino;
     private javax.swing.JScrollPane txtDescricao;
     private javax.swing.JTextArea txtDescricaoProjeto;
     private javax.swing.JTextField txtNomeProjeto;

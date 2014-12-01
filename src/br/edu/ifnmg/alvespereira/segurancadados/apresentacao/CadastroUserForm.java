@@ -4,7 +4,6 @@ import br.edu.ifnmg.alvespereira.segurancadados.apresentacao.utilitarios.Validac
 import br.edu.ifnmg.alvespereira.segurancadados.apresentacao.utilitarios.criptografiaUtil;
 import br.edu.ifnmg.alvespereira.segurancadados.entidades.Departamento;
 import br.edu.ifnmg.alvespereira.segurancadados.entidades.Usuario;
-import br.edu.ifnmg.alvespereira.segurancadados.excecoes.excecaoControlAcessDepartamento;
 import br.edu.ifnmg.alvespereira.segurancadados.excecoes.excecaoControleAcesso;
 import br.edu.ifnmg.alvespereira.segurancadados.excecoes.excecaoEncarregadoExistente;
 import br.edu.ifnmg.alvespereira.segurancadados.excecoes.excecaoGerenteExistente;
@@ -251,6 +250,12 @@ public final class CadastroUserForm extends javax.swing.JInternalFrame {
                             UsuarioBO.criarGerente(userCadastro);
                             JOptionPane.showMessageDialog(null, "Gerente Cadastrado com Sucesso !!!",
                                     "Cadastro de Gerente", JOptionPane.INFORMATION_MESSAGE);
+                            txtNome.setText("");
+
+                            txtEmail.setText("");
+                            txtSenha.setText("");
+
+                            cbDepartamentos.setSelectedItem("Selecione");
                         } catch (SQLException ex) {
 
                         } catch (excecaoGerenteExistente ex) {
@@ -271,7 +276,13 @@ public final class CadastroUserForm extends javax.swing.JInternalFrame {
                             UsuarioBO.criarEncarregado(userCadastro, usuarioLogado);
                             JOptionPane.showMessageDialog(null, "Encarregado Cadastrado com Sucesso !!!",
                                     "Encarregado de Gerente", JOptionPane.INFORMATION_MESSAGE);
+                            txtNome.setText("");
 
+                            txtEmail.setText("");
+                            txtSenha.setText("");
+
+                            cbDepartamentos.setSelectedItem("Selecione");
+                            
                         } catch (SQLException ex) {
 
                         } catch (excecaoEncarregadoExistente ex) {
@@ -281,10 +292,6 @@ public final class CadastroUserForm extends javax.swing.JInternalFrame {
                         } catch (excecaoControleAcesso ex) {
                             JOptionPane.showMessageDialog(null, "Não foi possivel cadastrar Encarregado, \n "
                                     + "Você não possui previlégios para cadastrar Encarregados",
-                                    "Cadastro de Encarregado", JOptionPane.ERROR_MESSAGE);
-                        } catch (excecaoControlAcessDepartamento ex) {
-                            JOptionPane.showMessageDialog(null, "Não foi possivel cadastrar Encarregado, \n "
-                                    + "Você não possui previlégios para cadastrar \nEncarregados nesse DEPARTAMENTO !!!",
                                     "Cadastro de Encarregado", JOptionPane.ERROR_MESSAGE);
                         }
                     }

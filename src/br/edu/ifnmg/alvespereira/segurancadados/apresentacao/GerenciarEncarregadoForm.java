@@ -22,6 +22,8 @@ public class GerenciarEncarregadoForm extends javax.swing.JInternalFrame {
         userLogado = usuarioLogado;
         this.popularCmbDepartamento();
         this.popularCmbDepartamentoBuscar();
+        this.cmbDepartamento.setEnabled(false);
+        this.listaTabela();
 
     }
 
@@ -29,17 +31,52 @@ public class GerenciarEncarregadoForm extends javax.swing.JInternalFrame {
         ArrayList<String> Departamentos = new ArrayList<>();
         DepartamentoBO departamentoBO = new DepartamentoBO();
 
-        try {
-            Departamentos = departamentoBO.ComboBoxDepartamentos();
-        } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(null, "Erro ao popular o departamento",
-                    "Departamento", JOptionPane.ERROR_MESSAGE);
+        if (userLogado.getTipo().equals("Diretor")) {
+            try {
+                Departamentos = departamentoBO.ComboBoxDepartamentos();
+            } catch (SQLException ex) {
+                JOptionPane.showMessageDialog(null, "Erro ao popular o departamento",
+                        "Departamento", JOptionPane.ERROR_MESSAGE);
+            }
+        } else {
+
+            try {
+                Departamentos = departamentoBO.CMBDepartamento(userLogado.getDepartamento().getCodigo());
+            } catch (SQLException ex) {
+                JOptionPane.showMessageDialog(null, "Erro ao popular o departamento",
+                        "Departamento", JOptionPane.ERROR_MESSAGE);
+            }
+
         }
 
         cmbBuscaFuncionario.removeAllItems();
         cmbBuscaFuncionario.addItem("Selecione");
         for (String item : Departamentos) {
             cmbBuscaFuncionario.addItem(item);
+        }
+
+    }
+
+    public void listaTabela() {
+
+        UsuarioBO Encarregados = new UsuarioBO();
+        if (userLogado.getTipo().equals("Gerente")) {
+            try {
+
+                tbResultadoBusca.setModel(DbUtils.resultSetToTableModel(Encarregados.preencheTabelaEncarregadoPorDepartamento(userLogado.getDepartamento().getCodigo())));
+
+            } catch (SQLException ex) {
+
+            }
+        } else {
+            try {
+
+                tbResultadoBusca.setModel(DbUtils.resultSetToTableModel(Encarregados.preencheTabelaEncarregadoStODOS()));
+
+            } catch (SQLException ex) {
+
+            }
+
         }
 
     }
@@ -144,6 +181,10 @@ public class GerenciarEncarregadoForm extends javax.swing.JInternalFrame {
 
         lblSenha.setText("Senha:");
 
+        txtTipo.setEditable(false);
+        txtTipo.setBackground(new java.awt.Color(204, 204, 204));
+        txtTipo.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+
         txtNome.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txtNomeActionPerformed(evt);
@@ -155,6 +196,11 @@ public class GerenciarEncarregadoForm extends javax.swing.JInternalFrame {
         cmbDepartamento.setOpaque(false);
 
         lblCodigo.setText("Código:");
+
+        txtCodigo.setEditable(false);
+        txtCodigo.setBackground(new java.awt.Color(204, 204, 204));
+        txtCodigo.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        txtCodigo.setForeground(new java.awt.Color(0, 102, 102));
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -307,14 +353,19 @@ public class GerenciarEncarregadoForm extends javax.swing.JInternalFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
+        if (cmbBuscaFuncionario.getSelectedItem().equals("Selecione")) {
+            JOptionPane.showMessageDialog(null, "Erro selecione o departamento",
+                    "Departamento", JOptionPane.ERROR_MESSAGE);
 
-        String departamento = this.cmbBuscaFuncionario.getSelectedItem().toString();
-        UsuarioBO encarregado = new UsuarioBO();
+        } else {
+            String departamento = this.cmbBuscaFuncionario.getSelectedItem().toString();
+            UsuarioBO encarregado = new UsuarioBO();
 
-        try {
-            tbResultadoBusca.setModel(DbUtils.resultSetToTableModel(encarregado.preencheTabelaEncarregado(departamento)));
-        } catch (SQLException ex) {
+            try {
+                tbResultadoBusca.setModel(DbUtils.resultSetToTableModel(encarregado.preencheTabelaEncarregado(departamento)));
+            } catch (SQLException ex) {
 
+            }
         }
 
 
@@ -333,96 +384,124 @@ public class GerenciarEncarregadoForm extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_tbResultadoBuscaMouseClicked
 
     private void btnSalvarAlteraçõesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalvarAlteraçõesActionPerformed
-        boolean emailValidado;
-        ValidacaoEmail validacao = new ValidacaoEmail();
-        emailValidado = validacao.validaEmail(txtEmail.getText());
-
-        if (emailValidado == true) {
-            int idUsuario;
-            String Nome;
-            String Email;
-            String Tipo;
-            String Senha = null;
-            Departamento Departamento = null;
-
-            //Seta o departamento do encarregado
-            try {
-                DepartamentoBO depBO = new DepartamentoBO();
-                Departamento = depBO.selectDepartamento(cmbDepartamento.getSelectedItem() + "");
-            } catch (SQLException ex) {
-                JOptionPane.showMessageDialog(null, "Erro ao selecionar o departamento",
-                        "Alteração de Dados", JOptionPane.ERROR_MESSAGE);
-            }
-
-            //Seta o Nome e a descrição projeto
-            Nome = txtNome.getText();
-            Email = txtEmail.getText();
-            Tipo = txtTipo.getText();
-            Senha = txtSenha.getText();
-            idUsuario = Integer.parseInt(txtCodigo.getText());
-
-            //codigo abaixo chama mtodo q realiza a criptografia da senha
-            criptografiaUtil criptografiaSenha = new criptografiaUtil();
-            Senha = criptografiaSenha.criptografiaSenha(Senha);
-
-            //Cria um novo projeto e seta todos os dados
-            Usuario encarregado = new Usuario();
-            encarregado.setIdUsuario(idUsuario);
-            encarregado.setNome(Nome);
-            encarregado.setEmail(Email);
-            encarregado.setSenha(Senha);
-            encarregado.setDepartamento(Departamento);
-            encarregado.setTipo(Tipo);
-
-            //Cria um novo objeto do tipo ProjetoBO e 
-            //passa como parmetro o projeto que será cadastrado
-            UsuarioBO usuarioBO = new UsuarioBO();
-
-            try {
-                usuarioBO.UpdateUsuario(encarregado);
-                JOptionPane.showMessageDialog(null, "Encarregado Atualizado com Sucesso !!!",
-                        "Gestão de Encarregado", JOptionPane.INFORMATION_MESSAGE);
-            } catch (SQLException ex) {
-                JOptionPane.showMessageDialog(null, "Erro ao Atualizar o Encarregado",
-                        "Gestão de Encarregado", JOptionPane.ERROR_MESSAGE);
-            }
+        if (txtNome.getText().equals("") || txtSenha.getText().equals("")
+                || txtEmail.getText().equals("")) {
+            JOptionPane.showMessageDialog(null, "Não foi possivel Atualizar o cadastro \n Preencha todos os campos",
+                    "gestão de Encarregago", JOptionPane.ERROR_MESSAGE);
         } else {
-            JOptionPane.showMessageDialog(null, "Email Inválido !!!", "Gestão de Encarregado", JOptionPane.ERROR_MESSAGE);
+            if (cmbDepartamento.getSelectedItem().equals("Selecione")) {
+                JOptionPane.showMessageDialog(null, "Não foi possivel Atualizar o cadastro \n Selecione um Departamento",
+                        "gestão de Encarregago", JOptionPane.ERROR_MESSAGE);
+            } else {
+                boolean emailValidado;
+                ValidacaoEmail validacao = new ValidacaoEmail();
+                emailValidado = validacao.validaEmail(txtEmail.getText());
 
+                if (emailValidado == true) {
+                    int idUsuario;
+                    String Nome;
+                    String Email;
+                    String Tipo;
+                    String Senha = null;
+                    Departamento Departamento = null;
+
+                    //Seta o departamento do encarregado
+                    try {
+                        DepartamentoBO depBO = new DepartamentoBO();
+                        Departamento = depBO.selectDepartamento(cmbDepartamento.getSelectedItem() + "");
+                    } catch (SQLException ex) {
+                        JOptionPane.showMessageDialog(null, "Erro ao selecionar o departamento",
+                                "Alteração de Dados", JOptionPane.ERROR_MESSAGE);
+                    }
+
+                    //Seta o Nome e a descrição projeto
+                    Nome = txtNome.getText();
+                    Email = txtEmail.getText();
+                    Tipo = txtTipo.getText();
+                    Senha = txtSenha.getText();
+                    idUsuario = Integer.parseInt(txtCodigo.getText());
+
+                    //codigo abaixo chama mtodo q realiza a criptografia da senha
+                    criptografiaUtil criptografiaSenha = new criptografiaUtil();
+                    Senha = criptografiaSenha.criptografiaSenha(Senha);
+
+                    //Cria um novo projeto e seta todos os dados
+                    Usuario encarregado = new Usuario();
+                    encarregado.setIdUsuario(idUsuario);
+                    encarregado.setNome(Nome);
+                    encarregado.setEmail(Email);
+                    encarregado.setSenha(Senha);
+                    encarregado.setDepartamento(Departamento);
+                    encarregado.setTipo(Tipo);
+
+                    //Cria um novo objeto do tipo ProjetoBO e 
+                    //passa como parmetro o projeto que será cadastrado
+                    UsuarioBO usuarioBO = new UsuarioBO();
+
+                    try {
+                        usuarioBO.UpdateUsuario(encarregado);
+                        JOptionPane.showMessageDialog(null, "Encarregado Atualizado com Sucesso !!!",
+                                "Gestão de Encarregado", JOptionPane.INFORMATION_MESSAGE);
+
+                        this.btnExcluir.setEnabled(false);
+                        this.btnSalvarAlterações.setEnabled(false);
+                        txtNome.setText("");
+                        txtCodigo.setText("");
+                        txtEmail.setText("");
+                        txtSenha.setText("");
+                        cmbBuscaFuncionario.setSelectedItem("Selecione");
+                        txtTipo.setText("");
+                        cmbDepartamento.setSelectedItem("Selecione");
+                        this.listaTabela();
+
+                    } catch (SQLException ex) {
+                        JOptionPane.showMessageDialog(null, "Erro ao Atualizar o Encarregado",
+                                "Gestão de Encarregado", JOptionPane.ERROR_MESSAGE);
+                    }
+                } else {
+                    JOptionPane.showMessageDialog(null, "Email Inválido !!!", "Gestão de Encarregado", JOptionPane.ERROR_MESSAGE);
+
+                }
+
+            }
         }
     }//GEN-LAST:event_btnSalvarAlteraçõesActionPerformed
 
     private void btnExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExcluirActionPerformed
-        boolean emailValidado;
-        ValidacaoEmail validacao = new ValidacaoEmail();
-        emailValidado = validacao.validaEmail(txtEmail.getText());
 
-        if (emailValidado == true) {
-            Usuario usuario = new Usuario();
+        Usuario usuario = new Usuario();
 
-            int codGerente = Integer.parseInt(txtCodigo.getText());
-            usuario.setIdUsuario(codGerente);
-            usuario.setTipo("Encarregado");
+        int codGerente = Integer.parseInt(txtCodigo.getText());
+        usuario.setIdUsuario(codGerente);
+        usuario.setTipo("Encarregado");
 
-            //Cria um novo objeto do tipo ProjetoBO e 
-            //passa como parmetro o projeto que será Deletado
-            UsuarioBO usuarioBO = new UsuarioBO();
+        //Cria um novo objeto do tipo ProjetoBO e 
+        //passa como parmetro o projeto que será Deletado
+        UsuarioBO usuarioBO = new UsuarioBO();
 
-            try {
-                usuarioBO.DeleteEncarregado(usuario);
-                JOptionPane.showMessageDialog(null, "Encarregado Deletado com Sucesso !!!",
-                        "Gestão de Usuário", JOptionPane.INFORMATION_MESSAGE);
-            } catch (SQLException ex) {
-                JOptionPane.showMessageDialog(null, "Erro ao Deletar  Encarregado",
-                        "Gestão de Encarregado", JOptionPane.ERROR_MESSAGE);
-            } catch (excecaoDeletarElemento ex) {
-                JOptionPane.showMessageDialog(null, "Erro ao Deletar  Encarregado",
-                        "Gestão de Encarregado", JOptionPane.ERROR_MESSAGE);
-            }
-        } else {
-            JOptionPane.showMessageDialog(null, "Email Inválido !!!", "Gestão de Encarregado", JOptionPane.ERROR_MESSAGE);
+        try {
+            usuarioBO.DeleteEncarregado(usuario);
+            JOptionPane.showMessageDialog(null, "Encarregado Deletado com Sucesso !!!",
+                    "Gestão de Usuário", JOptionPane.INFORMATION_MESSAGE);
+            this.btnExcluir.setEnabled(false);
+            this.btnSalvarAlterações.setEnabled(false);
+            txtNome.setText("");
+            txtCodigo.setText("");
+            txtEmail.setText("");
+            txtSenha.setText("");
+            cmbBuscaFuncionario.setSelectedItem("Selecione");
+            txtTipo.setText("");
+            cmbDepartamento.setSelectedItem("Selecione");
+            this.listaTabela();
 
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Erro ao Deletar  Encarregado",
+                    "Gestão de Encarregado", JOptionPane.ERROR_MESSAGE);
+        } catch (excecaoDeletarElemento ex) {
+            JOptionPane.showMessageDialog(null, "Erro ao Deletar  Encarregado",
+                    "Gestão de Encarregado", JOptionPane.ERROR_MESSAGE);
         }
+
     }//GEN-LAST:event_btnExcluirActionPerformed
 
     private void btnOKActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnOKActionPerformed
@@ -469,11 +548,22 @@ public class GerenciarEncarregadoForm extends javax.swing.JInternalFrame {
         ArrayList<String> Departamentos = new ArrayList<>();
         DepartamentoBO depBO = new DepartamentoBO();
 
-        try {
-            Departamentos = depBO.ComboBoxDepartamentos();
-        } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(null, "Erro ao popular o departamento",
-                    "Departamento", JOptionPane.ERROR_MESSAGE);
+        if (userLogado.getTipo().equals("Diretor")) {
+            try {
+                Departamentos = depBO.ComboBoxDepartamentos();
+            } catch (SQLException ex) {
+                JOptionPane.showMessageDialog(null, "Erro ao popular o departamento",
+                        "Departamento", JOptionPane.ERROR_MESSAGE);
+            }
+        } else {
+
+            try {
+                Departamentos = depBO.CMBDepartamento(userLogado.getDepartamento().getCodigo());
+            } catch (SQLException ex) {
+                JOptionPane.showMessageDialog(null, "Erro ao popular o departamento",
+                        "Departamento", JOptionPane.ERROR_MESSAGE);
+            }
+
         }
 
         cmbDepartamento.removeAllItems();

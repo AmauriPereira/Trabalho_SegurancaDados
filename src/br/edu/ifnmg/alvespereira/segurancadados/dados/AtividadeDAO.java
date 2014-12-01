@@ -347,7 +347,7 @@ public class AtividadeDAO {
 
             resultado = comando.executeQuery();
 
-            while(resultado.next()) {
+            if (resultado.next()) {
                 atividade = new Atividade();
                 atividade.setNome(resultado.getString("NOME"));
                 atividade.setDuracao(resultado.getFloat("DURACAO"));

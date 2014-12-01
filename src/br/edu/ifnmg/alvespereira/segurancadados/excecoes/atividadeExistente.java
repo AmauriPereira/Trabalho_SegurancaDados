@@ -1,8 +1,8 @@
 package br.edu.ifnmg.alvespereira.segurancadados.excecoes;
 
-public class excecaoAtividade extends Exception {
+public class atividadeExistente extends Exception {
 
-    public excecaoAtividade() {
+    public atividadeExistente() {
         super();
     }
 
