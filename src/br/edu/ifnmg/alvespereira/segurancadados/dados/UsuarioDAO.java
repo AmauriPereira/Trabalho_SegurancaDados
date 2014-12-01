@@ -48,6 +48,8 @@ public class UsuarioDAO {
 
     private static final String SQL_SELECT_RELATORIO_CADASTRO_GERENTE = "SELECT ID_USUARIO, NOME, SENHA, EMAIL FROM USUARIO WHERE TIPO = 'Encarregado'";
 
+    private static final String SQL_SELECT_REATORIO_CADASTRO_GERENTE = "SELECT ID_USUARIO, NOME, SENHA, EMAIL FROM USUARIO WHERE TIPO = 'Encarregado'";
+
     // ABAIXO METODOS DE INSERÇÃO(INSERT), REMOÇÃO(DELETE), ATUALIZAÇÃO(UPDATE), RECUPERAÇÃO(SELECT)
     //INSERT DEPARTAMENTO 
     //INSERT USUÁRIOS(ENCARREGADO, DIRETOR, GERENTE)
@@ -413,6 +415,7 @@ public class UsuarioDAO {
 
             resultado = comando.executeQuery();
             Encaregado.removeAll(Encaregado);
+
             while (resultado.next()) {
                 Encaregado.add(resultado.getString("NOME"));
             }
@@ -450,6 +453,7 @@ public class UsuarioDAO {
 
             resultado = comando.executeQuery();
             Encaregado.removeAll(Encaregado);
+
             while (resultado.next()) {
                 Encaregado.add(resultado.getString("NOME"));
             }
