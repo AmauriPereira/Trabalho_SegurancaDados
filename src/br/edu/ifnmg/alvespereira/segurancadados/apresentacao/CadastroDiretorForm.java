@@ -1,5 +1,6 @@
 package br.edu.ifnmg.alvespereira.segurancadados.apresentacao;
 
+import br.edu.ifnmg.alvespereira.segurancadados.apresentacao.utilitarios.ValidacaoEmail;
 import br.edu.ifnmg.alvespereira.segurancadados.apresentacao.utilitarios.criptografiaUtil;
 import br.edu.ifnmg.alvespereira.segurancadados.entidades.Usuario;
 import br.edu.ifnmg.alvespereira.segurancadados.negocio.UsuarioBO;
@@ -115,36 +116,45 @@ public class CadastroDiretorForm extends javax.swing.JFrame {
 
     // BOTÃO DE CADASTRO DE DIRETOR
     private void btnCadastrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCadastrarActionPerformed
+        ValidacaoEmail validacaoEmail = new ValidacaoEmail();
+        boolean valida = validacaoEmail.validaEmail(txtEmail.getText());
 
-        //cria um usuario que sera cadastrado
-        Usuario user = new Usuario();
+        if (valida == true) {
 
-        //variaveis recebem os dados do usuario cadastrados
-        String Nome, Email, Senha;
-        Nome = (txtNome.getText());
-        Email = (txtEmail.getText());
-        Senha = (txtSenha.getText());
+            //cria um usuario que sera cadastrado
+            Usuario user = new Usuario();
 
-        //codigo abaixo realiza a criptografia da senha
-        criptografiaUtil criptografiaSenha = new criptografiaUtil();
-        Senha = criptografiaSenha.criptografiaSenha(Senha);
+            //variaveis recebem os dados do usuario cadastrados
+            String Nome, Email, Senha;
+            Nome = (txtNome.getText());
+            Email = (txtEmail.getText());
+            Senha = (txtSenha.getText());
 
-        //seta o usuario que sera cadastrado, 
-        //Com os dados armazenados nas variaveis criadas acima
-        user.setNome(Nome);
-        user.setEmail(Email);
-        user.setSenha(Senha);
-        user.setTipo("Diretor");
+            //codigo abaixo realiza a criptografia da senha
+            criptografiaUtil criptografiaSenha = new criptografiaUtil();
+            Senha = criptografiaSenha.criptografiaSenha(Senha);
 
-        //Instacia um objeto do tipo usuarioBO 
-        //E passa o usuario que será cadastrado no banco(user) como parametro 
-        UsuarioBO userBO = new UsuarioBO();
-        try {
-            userBO.criarDiretor(user);
-            JOptionPane.showMessageDialog(null, "Diretor Cadastrado com Sucesso !!!",
-                    "Cadastro de Diretor", JOptionPane.INFORMATION_MESSAGE);
-        } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(null, "Erro ao cadastrar Diretor !!!",
+            //seta o usuario que sera cadastrado, 
+            //Com os dados armazenados nas variaveis criadas acima
+            user.setNome(Nome);
+            user.setEmail(Email);
+            user.setSenha(Senha);
+            user.setTipo("Diretor");
+
+            //Instacia um objeto do tipo usuarioBO 
+            //E passa o usuario que será cadastrado no banco(user) como parametro 
+            UsuarioBO userBO = new UsuarioBO();
+            try {
+                userBO.criarDiretor(user);
+                JOptionPane.showMessageDialog(null, "Diretor Cadastrado com Sucesso !!!",
+                        "Cadastro de Diretor", JOptionPane.INFORMATION_MESSAGE);
+            } catch (SQLException ex) {
+                JOptionPane.showMessageDialog(null, "Erro ao cadastrar Diretor !!!",
+                        "Cadastro de Diretor", JOptionPane.ERROR_MESSAGE);
+            }
+
+        } else {
+            JOptionPane.showMessageDialog(null, "Email inválido !!!",
                     "Cadastro de Diretor", JOptionPane.ERROR_MESSAGE);
         }
 

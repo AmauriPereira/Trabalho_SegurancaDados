@@ -1,5 +1,6 @@
 package br.edu.ifnmg.alvespereira.segurancadados.apresentacao;
 
+import br.edu.ifnmg.alvespereira.segurancadados.apresentacao.utilitarios.ValidacaoEmail;
 import br.edu.ifnmg.alvespereira.segurancadados.apresentacao.utilitarios.criptografiaUtil;
 import br.edu.ifnmg.alvespereira.segurancadados.entidades.Departamento;
 import br.edu.ifnmg.alvespereira.segurancadados.entidades.Usuario;
@@ -332,78 +333,95 @@ public class GerenciarEncarregadoForm extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_tbResultadoBuscaMouseClicked
 
     private void btnSalvarAlteraçõesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalvarAlteraçõesActionPerformed
-        int idUsuario;
-        String Nome;
-        String Email;
-        String Tipo;
-        String Senha = null;
-        Departamento Departamento = null;
+        boolean emailValidado;
+        ValidacaoEmail validacao = new ValidacaoEmail();
+        emailValidado = validacao.validaEmail(txtEmail.getText());
 
-        //Seta o departamento do encarregado
-        try {
-            DepartamentoBO depBO = new DepartamentoBO();
-            Departamento = depBO.selectDepartamento(cmbDepartamento.getSelectedItem() + "");
-        } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(null, "Erro ao selecionar o departamento",
-                    "Alteração de Dados", JOptionPane.ERROR_MESSAGE);
-        }
+        if (emailValidado == true) {
+            int idUsuario;
+            String Nome;
+            String Email;
+            String Tipo;
+            String Senha = null;
+            Departamento Departamento = null;
 
-        //Seta o Nome e a descrição projeto
-        Nome = txtNome.getText();
-        Email = txtEmail.getText();
-        Tipo = txtTipo.getText();
-        Senha = txtSenha.getText();
-        idUsuario = Integer.parseInt(txtCodigo.getText());
+            //Seta o departamento do encarregado
+            try {
+                DepartamentoBO depBO = new DepartamentoBO();
+                Departamento = depBO.selectDepartamento(cmbDepartamento.getSelectedItem() + "");
+            } catch (SQLException ex) {
+                JOptionPane.showMessageDialog(null, "Erro ao selecionar o departamento",
+                        "Alteração de Dados", JOptionPane.ERROR_MESSAGE);
+            }
 
-        //codigo abaixo chama mtodo q realiza a criptografia da senha
-        criptografiaUtil criptografiaSenha = new criptografiaUtil();
-        Senha = criptografiaSenha.criptografiaSenha(Senha);
+            //Seta o Nome e a descrição projeto
+            Nome = txtNome.getText();
+            Email = txtEmail.getText();
+            Tipo = txtTipo.getText();
+            Senha = txtSenha.getText();
+            idUsuario = Integer.parseInt(txtCodigo.getText());
 
-        //Cria um novo projeto e seta todos os dados
-        Usuario encarregado = new Usuario();
-        encarregado.setIdUsuario(idUsuario);
-        encarregado.setNome(Nome);
-        encarregado.setEmail(Email);
-        encarregado.setSenha(Senha);
-        encarregado.setDepartamento(Departamento);
-        encarregado.setTipo(Tipo);
+            //codigo abaixo chama mtodo q realiza a criptografia da senha
+            criptografiaUtil criptografiaSenha = new criptografiaUtil();
+            Senha = criptografiaSenha.criptografiaSenha(Senha);
 
-        //Cria um novo objeto do tipo ProjetoBO e 
-        //passa como parmetro o projeto que será cadastrado
-        UsuarioBO usuarioBO = new UsuarioBO();
+            //Cria um novo projeto e seta todos os dados
+            Usuario encarregado = new Usuario();
+            encarregado.setIdUsuario(idUsuario);
+            encarregado.setNome(Nome);
+            encarregado.setEmail(Email);
+            encarregado.setSenha(Senha);
+            encarregado.setDepartamento(Departamento);
+            encarregado.setTipo(Tipo);
 
-        try {
-            usuarioBO.UpdateUsuario(encarregado);
-            JOptionPane.showMessageDialog(null, "Encarregado Atualizado com Sucesso !!!",
-                    "Gestão de Encarregado", JOptionPane.INFORMATION_MESSAGE);
-        } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(null, "Erro ao Atualizar o Encarregado",
-                    "Gestão de Encarregado", JOptionPane.ERROR_MESSAGE);
+            //Cria um novo objeto do tipo ProjetoBO e 
+            //passa como parmetro o projeto que será cadastrado
+            UsuarioBO usuarioBO = new UsuarioBO();
+
+            try {
+                usuarioBO.UpdateUsuario(encarregado);
+                JOptionPane.showMessageDialog(null, "Encarregado Atualizado com Sucesso !!!",
+                        "Gestão de Encarregado", JOptionPane.INFORMATION_MESSAGE);
+            } catch (SQLException ex) {
+                JOptionPane.showMessageDialog(null, "Erro ao Atualizar o Encarregado",
+                        "Gestão de Encarregado", JOptionPane.ERROR_MESSAGE);
+            }
+        } else {
+            JOptionPane.showMessageDialog(null, "Email Inválido !!!", "Gestão de Encarregado", JOptionPane.ERROR_MESSAGE);
+
         }
     }//GEN-LAST:event_btnSalvarAlteraçõesActionPerformed
 
     private void btnExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExcluirActionPerformed
+        boolean emailValidado;
+        ValidacaoEmail validacao = new ValidacaoEmail();
+        emailValidado = validacao.validaEmail(txtEmail.getText());
 
-        Usuario usuario = new Usuario();
+        if (emailValidado == true) {
+            Usuario usuario = new Usuario();
 
-        int codGerente = Integer.parseInt(txtCodigo.getText());
-        usuario.setIdUsuario(codGerente);
-        usuario.setTipo("Encarregado");
+            int codGerente = Integer.parseInt(txtCodigo.getText());
+            usuario.setIdUsuario(codGerente);
+            usuario.setTipo("Encarregado");
 
-        //Cria um novo objeto do tipo ProjetoBO e 
-        //passa como parmetro o projeto que será Deletado
-        UsuarioBO usuarioBO = new UsuarioBO();
+            //Cria um novo objeto do tipo ProjetoBO e 
+            //passa como parmetro o projeto que será Deletado
+            UsuarioBO usuarioBO = new UsuarioBO();
 
-        try {
-            usuarioBO.DeleteEncarregado(usuario);
-            JOptionPane.showMessageDialog(null, "Encarregado Deletado com Sucesso !!!",
-                    "Gestão de Usuário", JOptionPane.INFORMATION_MESSAGE);
-        } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(null, "Erro ao Deletar  Encarregado",
-                    "Gestão de Encarregado", JOptionPane.ERROR_MESSAGE);
-        } catch (excecaoDeletarElemento ex) {
-            JOptionPane.showMessageDialog(null, "Erro ao Deletar  Encarregado",
-                    "Gestão de Encarregado", JOptionPane.ERROR_MESSAGE);
+            try {
+                usuarioBO.DeleteEncarregado(usuario);
+                JOptionPane.showMessageDialog(null, "Encarregado Deletado com Sucesso !!!",
+                        "Gestão de Usuário", JOptionPane.INFORMATION_MESSAGE);
+            } catch (SQLException ex) {
+                JOptionPane.showMessageDialog(null, "Erro ao Deletar  Encarregado",
+                        "Gestão de Encarregado", JOptionPane.ERROR_MESSAGE);
+            } catch (excecaoDeletarElemento ex) {
+                JOptionPane.showMessageDialog(null, "Erro ao Deletar  Encarregado",
+                        "Gestão de Encarregado", JOptionPane.ERROR_MESSAGE);
+            }
+        } else {
+            JOptionPane.showMessageDialog(null, "Email Inválido !!!", "Gestão de Encarregado", JOptionPane.ERROR_MESSAGE);
+
         }
     }//GEN-LAST:event_btnExcluirActionPerformed
 
