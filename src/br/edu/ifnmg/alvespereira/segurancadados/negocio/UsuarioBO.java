@@ -83,7 +83,6 @@ public class UsuarioBO {
 
                     } else {
                         throw new excecaoControlAcessDepartamento();
-
                     }
 
                 }

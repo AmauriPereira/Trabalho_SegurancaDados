@@ -119,43 +119,53 @@ public class CadastroDiretorForm extends javax.swing.JFrame {
         ValidacaoEmail validacaoEmail = new ValidacaoEmail();
         boolean valida = validacaoEmail.validaEmail(txtEmail.getText());
 
-        if (valida == true) {
+        if (txtNome.getText().equals("")
+                || txtEmail.getText().equals("")
+                || txtSenha.getText().equals("")) {
 
-            //cria um usuario que sera cadastrado
-            Usuario user = new Usuario();
+            JOptionPane.showMessageDialog(null, " Preencha todos os campos!!!",
+                    "Cadastro de Diretor", JOptionPane.ERROR_MESSAGE);
+        } else {
+            if (valida == true) {
+                //cria um usuario que sera cadastrado
+                Usuario user = new Usuario();
 
-            //variaveis recebem os dados do usuario cadastrados
-            String Nome, Email, Senha;
-            Nome = (txtNome.getText());
-            Email = (txtEmail.getText());
-            Senha = (txtSenha.getText());
+                //variaveis recebem os dados do usuario cadastrados
+                String Nome, Email, Senha;
+                Nome = (txtNome.getText());
+                Email = (txtEmail.getText());
+                Senha = (txtSenha.getText());
 
-            //codigo abaixo realiza a criptografia da senha
-            criptografiaUtil criptografiaSenha = new criptografiaUtil();
-            Senha = criptografiaSenha.criptografiaSenha(Senha);
+                //codigo abaixo realiza a criptografia da senha
+                criptografiaUtil criptografiaSenha = new criptografiaUtil();
+                Senha = criptografiaSenha.criptografiaSenha(Senha);
 
-            //seta o usuario que sera cadastrado, 
-            //Com os dados armazenados nas variaveis criadas acima
-            user.setNome(Nome);
-            user.setEmail(Email);
-            user.setSenha(Senha);
-            user.setTipo("Diretor");
+                //seta o usuario que sera cadastrado, 
+                //Com os dados armazenados nas variaveis criadas acima
+                user.setNome(Nome);
+                user.setEmail(Email);
+                user.setSenha(Senha);
+                user.setTipo("Diretor");
 
-            //Instacia um objeto do tipo usuarioBO 
-            //E passa o usuario que será cadastrado no banco(user) como parametro 
-            UsuarioBO userBO = new UsuarioBO();
-            try {
-                userBO.criarDiretor(user);
-                JOptionPane.showMessageDialog(null, "Diretor Cadastrado com Sucesso !!!",
-                        "Cadastro de Diretor", JOptionPane.INFORMATION_MESSAGE);
-            } catch (SQLException ex) {
-                JOptionPane.showMessageDialog(null, "Erro ao cadastrar Diretor !!!",
+                //Instacia um objeto do tipo usuarioBO 
+                //E passa o usuario que será cadastrado no banco(user) como parametro 
+                UsuarioBO userBO = new UsuarioBO();
+                try {
+                    userBO.criarDiretor(user);
+                    JOptionPane.showMessageDialog(null, "Diretor Cadastrado com Sucesso !!!",
+                            "Cadastro de Diretor", JOptionPane.INFORMATION_MESSAGE);
+                    this.dispose();
+                    Login login = new Login();
+                    login.setVisible(true);
+
+                } catch (SQLException ex) {
+                    JOptionPane.showMessageDialog(null, "Erro ao cadastrar Diretor !!!",
+                            "Cadastro de Diretor", JOptionPane.ERROR_MESSAGE);
+                }
+            } else {
+                JOptionPane.showMessageDialog(null, "Email inválido !!!",
                         "Cadastro de Diretor", JOptionPane.ERROR_MESSAGE);
             }
-
-        } else {
-            JOptionPane.showMessageDialog(null, "Email inválido !!!",
-                    "Cadastro de Diretor", JOptionPane.ERROR_MESSAGE);
         }
 
 

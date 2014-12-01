@@ -1,5 +1,6 @@
 package br.edu.ifnmg.alvespereira.segurancadados.apresentacao;
 
+import br.edu.ifnmg.alvespereira.segurancadados.apresentacao.utilitarios.ValidacaoEmail;
 import br.edu.ifnmg.alvespereira.segurancadados.apresentacao.utilitarios.criptografiaUtil;
 import br.edu.ifnmg.alvespereira.segurancadados.entidades.Usuario;
 import br.edu.ifnmg.alvespereira.segurancadados.excecoes.excecaoLogin;
@@ -192,7 +193,19 @@ public class Login extends javax.swing.JFrame {
 
     //Chama o metodo logar
     private void btnAcessarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAcessarActionPerformed
-        Logar();
+        if (txtLogin.getText().equals("") || txtSenha.getText().equals("")) {
+            JOptionPane.showMessageDialog(null, " Preencha todos os campos!!!",
+                    "Cadastro de Departamento", JOptionPane.ERROR_MESSAGE);
+        } else {
+            ValidacaoEmail validacaoEmail = new ValidacaoEmail();
+            boolean emailValidado = validacaoEmail.validaEmail(txtLogin.getText());
+            if (emailValidado == true) {
+                Logar();
+            } else {
+                JOptionPane.showMessageDialog(null, "Email inválido !!!",
+                        "Cadastro de Diretor", JOptionPane.ERROR_MESSAGE);
+            }
+        }
     }//GEN-LAST:event_btnAcessarActionPerformed
 
 

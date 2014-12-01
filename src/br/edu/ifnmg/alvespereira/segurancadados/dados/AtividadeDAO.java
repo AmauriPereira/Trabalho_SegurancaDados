@@ -23,6 +23,9 @@ public class AtividadeDAO {
             + "INNER JOIN USUARIO ON (ATIVIDADE.ID_USUARIO = USUARIO.ID_USUARIO)\n"
             + "WHERE PROJETO.COD_DEPARTAMENTO = ?";
 
+    private static final String SQL_SELECT_ATIVIDADE = "SELECT ID_ATIVIDADE, NOME , DURACAO FROM ATIVIDADE "
+            + "WHERE ATIVIDADE.NOME = ?";
+
     private static final String SQL_SELECT_ATIVIDADESpesquisadas_TABELA = "SELECT ATIVIDADE.ID_ATIVIDADE AS Código, ATIVIDADE.NOME AS ATIVIDADE, PROJETO.NOME  AS PROJETO,\n"
             + " USUARIO.NOME AS ENCARREGADO, ATIVIDADE.DURACAO AS DURAÇÃO\n"
             + "FROM ATIVIDADE INNER JOIN PROJETO ON (ATIVIDADE.ID_PROJETO = PROJETO.ID_PROJETO)\n"
@@ -325,6 +328,50 @@ public class AtividadeDAO {
         }
 
         return resultado;
+
+    }
+
+    public Atividade SelectATividadePorNome(String NomeAtividade) throws SQLException {
+
+        Connection conexao = null;
+        PreparedStatement comando = null;
+        ResultSet resultado = null;
+        Atividade atividade = null;
+
+        try {
+
+            conexao = BancoDadosUtil.getConnection();
+
+            comando = conexao.prepareStatement(SQL_SELECT_ATIVIDADE);
+            comando.setString(1, NomeAtividade);
+
+            resultado = comando.executeQuery();
+
+            while(resultado.next()) {
+                atividade = new Atividade();
+                atividade.setNome(resultado.getString("NOME"));
+                atividade.setDuracao(resultado.getFloat("DURACAO"));
+                atividade.setIdAtividade(resultado.getInt("ID_ATIVIDADE"));
+            }
+
+            conexao.commit();
+
+        } catch (Exception e) {
+            if (conexao != null) {
+                conexao.rollback();
+            }
+            throw new RuntimeException(e);
+
+        } finally {
+            if (comando != null && !comando.isClosed()) {
+                comando.close();
+            }
+            if (conexao != null && !conexao.isClosed()) {
+                conexao.close();
+            }
+        }
+
+        return atividade;
 
     }
 

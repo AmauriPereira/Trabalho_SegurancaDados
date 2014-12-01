@@ -1,9 +1,12 @@
 package br.edu.ifnmg.alvespereira.segurancadados.apresentacao;
 
 import br.edu.ifnmg.alvespereira.segurancadados.entidades.Departamento;
+import br.edu.ifnmg.alvespereira.segurancadados.excecoes.excecaoCodDepartamentoInavlido;
 import br.edu.ifnmg.alvespereira.segurancadados.excecoes.excecaoDepartamento;
 import br.edu.ifnmg.alvespereira.segurancadados.negocio.DepartamentoBO;
 import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 
 public class CadastroDepInTform extends javax.swing.JInternalFrame {
@@ -87,25 +90,37 @@ public class CadastroDepInTform extends javax.swing.JInternalFrame {
     private void btnCadastrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCadastrarActionPerformed
         //Tela de Cadastro de Departamento
 
-        Departamento DEP = new Departamento();
-        String Nome = txtNomeDep.getText();
-        String CodDep = txtCodDep.getText();
+        if (txtNomeDep.getText().equals("") || txtCodDep.getText().equals("")) {
 
-        DEP.setNome(Nome);
-        DEP.setCodigo(CodDep);
+            JOptionPane.showMessageDialog(null, " Preencha todos os campos!!!",
+                    "Cadastro de Departamento", JOptionPane.ERROR_MESSAGE);
+        } else {
+            Departamento DEP = new Departamento();
+            String Nome = txtNomeDep.getText();
+            String CodDep = txtCodDep.getText();
 
-        DepartamentoBO depBO = new DepartamentoBO();
-        try {
-            depBO.criarDep(DEP);
-            JOptionPane.showMessageDialog(null, "Departamento Cadastrado com Sucesso !!!",
-                    "Cadastro de Departamento", JOptionPane.INFORMATION_MESSAGE);
-        } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(null, "Erro ao Cadastrar o departamento",
-                    "Cadastro de Departamento", JOptionPane.ERROR_MESSAGE);
-        } catch (excecaoDepartamento ex) {
-            JOptionPane.showMessageDialog(null, "Ja existe um Departamento cadastrado\n"
-                    + "  Com este nome ou código!!!",
-                    "Cadastro de Departamento", JOptionPane.ERROR_MESSAGE);
+            DEP.setNome(Nome);
+            DEP.setCodigo(CodDep);
+
+            DepartamentoBO depBO = new DepartamentoBO();
+            try {
+                depBO.criarDep(DEP);
+                JOptionPane.showMessageDialog(null, "Departamento Cadastrado com Sucesso !!!",
+                        "Cadastro de Departamento", JOptionPane.INFORMATION_MESSAGE);
+                txtCodDep.setText("");
+                txtNomeDep.setText("");
+
+            } catch (SQLException ex) {
+                JOptionPane.showMessageDialog(null, "Erro ao Cadastrar o departamento",
+                        "Cadastro de Departamento", JOptionPane.ERROR_MESSAGE);
+            } catch (excecaoDepartamento ex) {
+                JOptionPane.showMessageDialog(null, "Ja existe um Departamento cadastrado\n"
+                        + "  Com este nome ou código!!!",
+                        "Cadastro de Departamento", JOptionPane.ERROR_MESSAGE);
+            } catch (excecaoCodDepartamentoInavlido ex) {
+                JOptionPane.showMessageDialog(null, "É obrigatório digitar um codigo com 3 letras",
+                        "Cadastro de Departamento", JOptionPane.ERROR_MESSAGE);
+            }
         }
     }//GEN-LAST:event_btnCadastrarActionPerformed
 

@@ -2,6 +2,7 @@ package br.edu.ifnmg.alvespereira.segurancadados.negocio;
 
 import br.edu.ifnmg.alvespereira.segurancadados.dados.DepartamentoDAO;
 import br.edu.ifnmg.alvespereira.segurancadados.entidades.Departamento;
+import br.edu.ifnmg.alvespereira.segurancadados.excecoes.excecaoCodDepartamentoInavlido;
 import br.edu.ifnmg.alvespereira.segurancadados.excecoes.excecaoDeletarElemento;
 import br.edu.ifnmg.alvespereira.segurancadados.excecoes.excecaoDepartamento;
 import java.sql.ResultSet;
@@ -12,7 +13,7 @@ public class DepartamentoBO {
 
     //ABAIXO UM METODO DE INSERT NO BANCO: VERIFICA SE EXISTE ALGUM DEP CADASTRADO COM NOME OU COD IGUAL 
     // AO DIGITADO PELO USUARIO DO SOFTWARE.
-    public void criarDep(Departamento DEP) throws SQLException, excecaoDepartamento {
+    public void criarDep(Departamento DEP) throws SQLException, excecaoDepartamento, excecaoCodDepartamentoInavlido {
 
         DepartamentoDAO depDAO = new DepartamentoDAO();
         Departamento DepExistente = null;
@@ -20,8 +21,12 @@ public class DepartamentoBO {
         DepExistente = depDAO.selecDepartamento(DEP.getNome(), DEP.getCodigo());
 
         if (DepExistente == null) {
+            if (DEP.getCodigo().length() == 3) {
 
-            depDAO.criaDEP(DEP);
+                depDAO.criaDEP(DEP);
+            } else {
+                throw new excecaoCodDepartamentoInavlido();
+            }
 
         } else {
             throw new excecaoDepartamento();
@@ -45,6 +50,17 @@ public class DepartamentoBO {
         ArrayList<String> Departamentos = new ArrayList<>();
 
         Departamentos = depDAO.cbDepartamentos();
+
+        return Departamentos;
+
+    }
+
+    public ArrayList<String> CMBDepartamento(String CodDepartamento) throws SQLException {
+
+        DepartamentoDAO depDAO = new DepartamentoDAO();
+        ArrayList<String> Departamentos = new ArrayList<>();
+
+        Departamentos = depDAO.CMBDepartamento(CodDepartamento);
 
         return Departamentos;
 
