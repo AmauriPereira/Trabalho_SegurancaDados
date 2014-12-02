@@ -1,7 +1,6 @@
 package br.edu.ifnmg.alvespereira.segurancadados.dados;
 
 import br.edu.ifnmg.alvespereira.segurancadados.apresentacao.utilitarios.RelatorioProjetos;
-import br.edu.ifnmg.alvespereira.segurancadados.entidades.Departamento;
 import br.edu.ifnmg.alvespereira.segurancadados.entidades.Projeto;
 import br.edu.ifnmg.alvespereira.segurancadados.entidades.Usuario;
 import br.edu.ifnmg.alvespereira.segurancadados.excecoes.excecaoDeletarElemento;

@@ -189,9 +189,9 @@ public class alterarDadosPessoais extends javax.swing.JInternalFrame {
                 Departamento Departamento = null;
 
                 //Seta o Nome e a descrição projeto
+                idUsuario = Integer.parseInt(txtCod.getText());
                 Nome = txtNome.getText();
                 Email = txtEmail.getText();
-                Tipo = txtTipoUser.getText();
                 Senha = txtSenha.getText();
 
                 //codigo abaixo chama mtodo q realiza a criptografia da senha
@@ -201,11 +201,10 @@ public class alterarDadosPessoais extends javax.swing.JInternalFrame {
                 //Cria um novo projeto e seta todos os dados
                 Usuario usuario = new Usuario();
 
+                usuario.setIdUsuario(idUsuario);
                 usuario.setNome(Nome);
                 usuario.setEmail(Email);
                 usuario.setSenha(Senha);
-
-                usuario.setTipo(Tipo);
 
                 //Cria um novo objeto do tipo ProjetoBO e 
                 //passa como parmetro o projeto que será cadastrado

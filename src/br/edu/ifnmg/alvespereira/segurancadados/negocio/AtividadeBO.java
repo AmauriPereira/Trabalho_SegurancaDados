@@ -3,7 +3,6 @@ package br.edu.ifnmg.alvespereira.segurancadados.negocio;
 import br.edu.ifnmg.alvespereira.segurancadados.apresentacao.utilitarios.RelatorioAtividadeProjeto;
 import br.edu.ifnmg.alvespereira.segurancadados.dados.AtividadeDAO;
 import br.edu.ifnmg.alvespereira.segurancadados.entidades.Atividade;
-import br.edu.ifnmg.alvespereira.segurancadados.entidades.Projeto;
 import br.edu.ifnmg.alvespereira.segurancadados.excecoes.atividadeExistente;
 import java.sql.ResultSet;
 import java.sql.SQLException;
