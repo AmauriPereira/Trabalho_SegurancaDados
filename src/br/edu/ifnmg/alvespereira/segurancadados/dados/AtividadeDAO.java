@@ -1,5 +1,6 @@
 package br.edu.ifnmg.alvespereira.segurancadados.dados;
 
+import br.edu.ifnmg.alvespereira.segurancadados.apresentacao.utilitarios.RelatorioAtividadeProjeto;
 import br.edu.ifnmg.alvespereira.segurancadados.entidades.Atividade;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -48,6 +49,17 @@ public class AtividadeDAO {
             + "INNER JOIN USUARIO ON (USUARIO.ID_USUARIO =  ATIVIDADE.ID_USUARIO)"
             + "INNER JOIN PROJETO ON (PROJETO.ID_PROJETO =  ATIVIDADE.ID_PROJETO)"
             + " WHERE HORAS_TRABALHADAS >= DURACAO AND CONCLUSAO < '100' AND USUARIO.COD_DEPARTAMENTO = ?";
+
+    private static final String SQL_SELECT_RELATORIO_ATIVIDADE_PROJETO = "SELECT ID_ATIVIDADE,DURACAO,HORAS_TRABALHADAS,CONCLUSAO, USUARIO.NOME, PROJETO.NOME, \n"
+            + "(SELECT COUNT(ID_ATIVIDADE) FROM ATIVIDADE WHERE ATIVIDADE.ID_PROJETO = PROJETO.ID_PROJETO ) AS QTD_ATIVIDADE_PROJETO, \n"
+            + "(SELECT COUNT(ID_ATIVIDADE) FROM ATIVIDADE WHERE PROJETO.ID_PROJETO = ATIVIDADE.ID_PROJETO AND CONCLUSAO = '100') AS QTD_ATIVIDADE_CONCLUIDA, \n"
+            + "(SELECT COUNT(ID_ATIVIDADE) FROM ATIVIDADE WHERE PROJETO.ID_PROJETO = ATIVIDADE.ID_PROJETO AND HORAS_TRABALHADAS > '0'AND HORAS_TRABALHADAS < '0') AS QTD_ATIVIDADE_INICIADA, \n"
+            + "(SELECT COUNT(ID_ATIVIDADE) FROM ATIVIDADE WHERE PROJETO.ID_PROJETO = ATIVIDADE.ID_PROJETO AND CONCLUSAO IS NULL) AS QTD_ATIVIDADE_NAO_CONCLUIDA \n"
+            + "FROM ATIVIDADE \n"
+            + "INNER JOIN PROJETO ON (PROJETO.ID_PROJETO =  ATIVIDADE.ID_PROJETO) \n"
+            + "INNER JOIN DEPARTAMENTO ON (DEPARTAMENTO.COD_DEPARTAMENTO =  PROJETO.COD_DEPARTAMENTO)\n"
+            + "INNER JOIN USUARIO ON (USUARIO.COD_DEPARTAMENTO =  DEPARTAMENTO.COD_DEPARTAMENTO) \n"
+            + "WHERE PROJETO.NOME = ? AND USUARIO.TIPO ='Gerente'";
 
     public void criarAtividade(Atividade atividade) throws SQLException {
         Connection conexao = null;
@@ -258,6 +270,70 @@ public class AtividadeDAO {
 
     }
 
+    //SELECIONA TODOS OS PROJETOS DE TODOS OS DEPARTAMENTO E ARMAZENA EM UMA LISTA
+    public ArrayList<RelatorioAtividadeProjeto> listaAtividade(String nomeProjeto) throws SQLException {
+        ArrayList<RelatorioAtividadeProjeto> listaTodasAtividadeProjeto = new ArrayList<>();
+        RelatorioAtividadeProjeto relatorioAtividadeProjeto = null;
+
+        Connection conexao = null;
+        PreparedStatement comando = null;
+        ResultSet resultado = null;
+
+        try {
+
+            conexao = BancoDadosUtil.getConnection();
+
+            comando = conexao.prepareStatement(SQL_SELECT_RELATORIO_ATIVIDADE_PROJETO);
+            comando.setString(1, nomeProjeto);
+
+            resultado = comando.executeQuery();
+            listaTodasAtividadeProjeto.removeAll(listaTodasAtividadeProjeto);
+
+            //percorrendo os registros encontrados  
+            if (resultado.next()) {
+                listaTodasAtividadeProjeto = new ArrayList<RelatorioAtividadeProjeto>();
+                do {
+                    //instanciando objeto   
+                    relatorioAtividadeProjeto = new RelatorioAtividadeProjeto();
+
+
+                    /*setando atributos de acordo com os seus tipos primitivos*/
+                    relatorioAtividadeProjeto.setIdAtividade(resultado.getInt("ID_ATIVIDADE"));
+                    relatorioAtividadeProjeto.setNome(resultado.getString("NOME"));
+                    relatorioAtividadeProjeto.setDuracao(resultado.getFloat("DURACAO"));
+                    relatorioAtividadeProjeto.setConlusao(resultado.getFloat("CONCLUSAO"));
+                    relatorioAtividadeProjeto.setHorasTrabalhadas(resultado.getFloat("HORAS_TRABALHADAS"));
+                    relatorioAtividadeProjeto.setEncarregado(resultado.getString("USUARIO.NOME"));
+                    relatorioAtividadeProjeto.setProjeto(resultado.getString("PROJETO.NOME"));
+                    relatorioAtividadeProjeto.setTotalAtividades(resultado.getInt("QTD_ATIVIDADE_PROJETO"));
+                    relatorioAtividadeProjeto.setAtividadesConcluidas(resultado.getInt("QTD_ATIVIDADE_CONCLUIDA"));
+                    relatorioAtividadeProjeto.setAtividadesNaoIniciadas(resultado.getInt("QTD_ATIVIDADE_NAO_CONCLUIDA"));
+                    relatorioAtividadeProjeto.setAtividadesIniciadas(resultado.getInt("QTD_ATIVIDADE_INICIADA"));
+
+                    //add a lista de objetos encontrados e setados  
+                    listaTodasAtividadeProjeto.add(relatorioAtividadeProjeto);
+                } while (resultado.next());
+            }
+
+            conexao.commit();
+
+        } catch (Exception e) {
+            if (conexao != null) {
+                conexao.rollback();
+            }
+            throw new RuntimeException(e);
+
+        } finally {
+            if (comando != null && !comando.isClosed()) {
+                comando.close();
+            }
+            if (conexao != null && !conexao.isClosed()) {
+                conexao.close();
+            }
+        }
+        return listaTodasAtividadeProjeto;
+    }
+
     public ResultSet preencherTabelaATividadeGESTAO(String codDepartamento) throws SQLException {
 
         Connection conexao = null;
@@ -372,7 +448,6 @@ public class AtividadeDAO {
         }
 
         return atividade;
-
     }
 
 }

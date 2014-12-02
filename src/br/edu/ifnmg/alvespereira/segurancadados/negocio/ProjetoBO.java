@@ -1,7 +1,9 @@
 package br.edu.ifnmg.alvespereira.segurancadados.negocio;
 
+import br.edu.ifnmg.alvespereira.segurancadados.apresentacao.utilitarios.RelatorioProjetos;
 import br.edu.ifnmg.alvespereira.segurancadados.dados.ProjetoDAO;
 import br.edu.ifnmg.alvespereira.segurancadados.entidades.Projeto;
+import br.edu.ifnmg.alvespereira.segurancadados.entidades.Usuario;
 import br.edu.ifnmg.alvespereira.segurancadados.excecoes.ExcecaoprojetoExistente;
 import br.edu.ifnmg.alvespereira.segurancadados.excecoes.excecaoDeletarElemento;
 import java.sql.ResultSet;
@@ -75,6 +77,17 @@ public class ProjetoBO {
         return Projeto;
 
     }
+    
+    public ArrayList<String> ComboBoxEscolhaProjeto(String codDepartamento) throws SQLException {
+
+        ProjetoDAO projetoDAO = new ProjetoDAO();
+        ArrayList<String> Projeto = new ArrayList<>();
+
+        Projeto = projetoDAO.cbEscolhaProjetos(codDepartamento);
+
+        return Projeto;
+
+    }
 
     public ArrayList<String> CMBProjeto(String CodDepartamento) throws SQLException {
 
@@ -100,6 +113,17 @@ public class ProjetoBO {
         ResultSet resultPesquisa = projet.pesquisa(NomeProjeto, Departamento);
 
         return resultPesquisa;
+
+    }
+
+    public ArrayList<RelatorioProjetos> listaProjeto(Usuario usuario) throws SQLException {
+
+        ProjetoDAO projetoDAO = new ProjetoDAO();
+        ArrayList<RelatorioProjetos> listaProjeto = new ArrayList<>();
+
+        listaProjeto = projetoDAO.listaProjeto(usuario);
+
+        return listaProjeto;
 
     }
 

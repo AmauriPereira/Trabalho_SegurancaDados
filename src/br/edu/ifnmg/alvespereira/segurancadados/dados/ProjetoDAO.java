@@ -1,6 +1,9 @@
 package br.edu.ifnmg.alvespereira.segurancadados.dados;
 
+import br.edu.ifnmg.alvespereira.segurancadados.apresentacao.utilitarios.RelatorioProjetos;
+import br.edu.ifnmg.alvespereira.segurancadados.entidades.Departamento;
 import br.edu.ifnmg.alvespereira.segurancadados.entidades.Projeto;
+import br.edu.ifnmg.alvespereira.segurancadados.entidades.Usuario;
 import br.edu.ifnmg.alvespereira.segurancadados.excecoes.excecaoDeletarElemento;
 import java.sql.Connection;
 import java.sql.Date;
@@ -16,6 +19,8 @@ public class ProjetoDAO {
             + "VALUES (?,?,?,?,?)";
 
     private static final String SQL_SELECT_TODOS_PROJETOS = "SELECT ID_PROJETO AS Cod ,  NOME as Projeto , DESCRICAO as Descrição , DATA_INCIO as Inicio , DATA_TERMINO as Término , COD_DEPARTAMENTO as Departamento FROM PROJETO";
+
+    private static final String SQL_SELECT_TODOS_PROJETOS_DEPARTAMENTO = "SELECT ID_PROJETO AS Cod ,  NOME as Projeto , DESCRICAO as Descrição , DATA_INCIO as Inicio , DATA_TERMINO as Término , COD_DEPARTAMENTO as Departamento FROM PROJETO WHERE COD_DEPARTAMENTO = ?";
 
     //consulta prenche a tabela projeto
     private static final String SQL_TODOS_PROJETOS_TABELA = "SELECT ID_PROJETO AS Cod ,  NOME as Projeto ,"
@@ -40,6 +45,24 @@ public class ProjetoDAO {
             + "PROJETO.COD_DEPARTAMENTO = ? WHERE PROJETO.ID_PROJETO = ?";
 
     private static final String SQL_DELETE_UM_PROJETO = "DELETE FROM PROJETO WHERE ID_PROJETO = ?";
+
+    private static final String SQL_SELECT_RELATORIO_PROJETO_DIRETOR = ""
+            + "SELECT ID_PROJETO, NOME, DEPARTAMENTO.NOME,USUARIO.NOME, DATA_INCIO,DATA_TERMINO,\n"
+            + "(SELECT COUNT(ID_ATIVIDADE) FROM ATIVIDADE WHERE ATIVIDADE.ID_PROJETO = projeto.ID_PROJETO) AS QTD_ATIVIDADE_PROJETO,\n"
+            + "(SELECT  COUNT (ID_ATIVIDADE) FROM ATIVIDADE WHERE CONCLUSAO = '100' and ATIVIDADE.ID_PROJETO = projeto.ID_PROJETO) AS QTD_ATIVIADE_CONCLUIDA \n"
+            + "FROM PROJETO \n"
+            + "INNER JOIN DEPARTAMENTO ON(DEPARTAMENTO.COD_DEPARTAMENTO = PROJETO.COD_DEPARTAMENTO)\n"
+            + "INNER JOIN USUARIO ON (USUARIO.COD_DEPARTAMENTO = DEPARTAMENTO.COD_DEPARTAMENTO)\n"
+            + "WHERE USUARIO.TIPO = 'Gerente'";
+
+    private static final String SQL_SELECT_RELATORIO_PROJETO_GERENTE = ""
+            + "SELECT ID_PROJETO, NOME, DEPARTAMENTO.NOME,USUARIO.NOME, DATA_INCIO,DATA_TERMINO,\n"
+            + "(SELECT COUNT(ID_ATIVIDADE) FROM ATIVIDADE WHERE ATIVIDADE.ID_PROJETO = projeto.ID_PROJETO) AS QTD_ATIVIDADE_PROJETO,\n"
+            + "(SELECT  COUNT (ID_ATIVIDADE) FROM ATIVIDADE WHERE CONCLUSAO = '100' and ATIVIDADE.ID_PROJETO = projeto.ID_PROJETO) AS QTD_ATIVIADE_CONCLUIDA \n"
+            + "FROM PROJETO \n"
+            + "INNER JOIN DEPARTAMENTO ON(DEPARTAMENTO.COD_DEPARTAMENTO = PROJETO.COD_DEPARTAMENTO)\n"
+            + "INNER JOIN USUARIO ON (USUARIO.COD_DEPARTAMENTO = DEPARTAMENTO.COD_DEPARTAMENTO)\n"
+            + "WHERE USUARIO.TIPO = 'Gerente' AND USUARIO.COD_DEPARTAMENTO = ?";
 
     public void criarProjeto(Projeto projeto) throws SQLException {
         Connection conexao = null;
@@ -286,12 +309,53 @@ public class ProjetoDAO {
             conexao = BancoDadosUtil.getConnection();
             comando = conexao.prepareStatement(SQL_SELECT_TODOS_PROJETOS);
 
-            // comando.setString(1, codDepartamento);
+            /// comando.setString(1, codDepartamento);
             resultado = comando.executeQuery();
             Projeto.removeAll(Projeto);
 
             while (resultado.next()) {
                 Projeto.add(resultado.getString("NOME"));
+            }
+
+            conexao.commit();
+
+        } catch (Exception e) {
+            if (conexao != null) {
+                conexao.rollback();
+            }
+            throw new RuntimeException(e);
+
+        } finally {
+            if (comando != null && !comando.isClosed()) {
+                comando.close();
+            }
+            if (conexao != null && !conexao.isClosed()) {
+                conexao.close();
+            }
+        }
+        return Projeto;
+    }
+
+    //SELECIONA TODOS OS PROJETOS, E ARMAZENA EM UMA LISTA
+    public ArrayList<String> cbEscolhaProjetos(String codDepartamento) throws SQLException {
+        ArrayList<String> Projeto = new ArrayList<>();
+
+        Connection conexao = null;
+        PreparedStatement comando = null;
+        ResultSet resultado = null;
+
+        try {
+
+            conexao = BancoDadosUtil.getConnection();
+            comando = conexao.prepareStatement(SQL_SELECT_TODOS_PROJETOS_DEPARTAMENTO);
+            comando.setString(1, codDepartamento);
+            resultado = comando.executeQuery();
+
+            Projeto.removeAll(Projeto);
+
+            while (resultado.next()) {
+                Projeto.add(resultado.getString("NOME"));
+
             }
 
             conexao.commit();
@@ -386,4 +450,71 @@ public class ProjetoDAO {
         return resultado;
 
     }
+
+    //SELECIONA TODOS OS PROJETOS DE TODOS OS DEPARTAMENTO E ARMAZENA EM UMA LISTA
+    public ArrayList<RelatorioProjetos> listaProjeto(Usuario usuario) throws SQLException {
+        ArrayList<RelatorioProjetos> listaTodosProjeto = new ArrayList<>();
+        RelatorioProjetos relatorioProjetos = null;
+
+        Connection conexao = null;
+        PreparedStatement comando = null;
+        ResultSet resultado = null;
+
+        try {
+
+            conexao = BancoDadosUtil.getConnection();
+            if (usuario.getTipo().equals("Diretor")) {
+                //se usuario for o direto, essa consulta sera execultada
+                comando = conexao.prepareStatement(SQL_SELECT_RELATORIO_PROJETO_DIRETOR);
+            } else if (usuario.getTipo().equals("Gerente")) {
+                //se usuario for o gerente, essa consulta sera execultada
+                comando = conexao.prepareStatement(SQL_SELECT_RELATORIO_PROJETO_GERENTE);
+                comando.setString(1, usuario.getDepartamento().getCodigo());
+            }
+
+            resultado = comando.executeQuery();
+            listaTodosProjeto.removeAll(listaTodosProjeto);
+
+            //percorrendo os registros encontrados  
+            if (resultado.next()) {
+                listaTodosProjeto = new ArrayList<RelatorioProjetos>();
+                do {
+                    //instanciando objeto   
+                    relatorioProjetos = new RelatorioProjetos();
+
+
+                    /*setando atributos de acordo com os seus tipos primitivos*/
+                    relatorioProjetos.setIdProjeto(resultado.getInt("ID_PROJETO"));
+                    relatorioProjetos.setNome(resultado.getString("NOME"));
+                    relatorioProjetos.setNomeDepartamento(resultado.getString("DEPARTAMENTO.NOME"));
+                    relatorioProjetos.setNomeGerenteDepartamento(resultado.getString("USUARIO.NOME"));
+                    relatorioProjetos.setDataInicioProjeto(resultado.getDate("DATA_INCIO"));
+                    relatorioProjetos.setDataTerminoProjeto(resultado.getDate("DATA_TERMINO"));
+                    relatorioProjetos.setQtdAtividade(resultado.getInt("QTD_ATIVIDADE_PROJETO"));
+                    relatorioProjetos.setQtdAtividadeConcluida(resultado.getInt("QTD_ATIVIADE_CONCLUIDA"));
+
+                    //add a lista de objetos encontrados e setados  
+                    listaTodosProjeto.add(relatorioProjetos);
+                } while (resultado.next());
+            }
+
+            conexao.commit();
+
+        } catch (Exception e) {
+            if (conexao != null) {
+                conexao.rollback();
+            }
+            throw new RuntimeException(e);
+
+        } finally {
+            if (comando != null && !comando.isClosed()) {
+                comando.close();
+            }
+            if (conexao != null && !conexao.isClosed()) {
+                conexao.close();
+            }
+        }
+        return listaTodosProjeto;
+    }
+
 }

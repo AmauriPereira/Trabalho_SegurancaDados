@@ -206,13 +206,4 @@ public class UsuarioBO {
 
     }
 
-    public ArrayList<Usuario> relatorioUsuarios() throws SQLException {
-
-        UsuarioDAO usuarioDAO = new UsuarioDAO();
-        ArrayList<Usuario> Encarregado = new ArrayList<>();
-
-        Encarregado = usuarioDAO.listaUsuario();
-
-        return Encarregado;
-    }
 }
