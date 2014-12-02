@@ -50,6 +50,10 @@ public class UsuarioDAO {
             + "USUARIO.EMAIL = ?, USUARIO.SENHA =  ?, USUARIO.TIPO =  ? ,"
             + "USUARIO.COD_DEPARTAMENTO = ? WHERE USUARIO.ID_USUARIO = ?";
 
+    private static final String SQL_ALTERACAO_DADOS_PESSOAIS = "UPDATE USUARIO SET USUARIO.NOME = ?, "
+            + "USUARIO.EMAIL = ?, USUARIO.SENHA =  ?, USUARIO.TIPO =  ? ,"
+            + " WHERE USUARIO.EMAIL = ?";
+
     private static final String SQL_DELETE_UM_GERENTE = "DELETE FROM USUARIO WHERE ID_USUARIO = ?";
 
     private static final String SQL_DELETE_UM_ENCARREGADO = "DELETE FROM USUARIO WHERE ID_USUARIO = ?";
@@ -606,6 +610,39 @@ public class UsuarioDAO {
             comando.setString(4, user.getTipo());
             comando.setString(5, user.getDepartamento().getCodigo());
             comando.setInt(6, user.getIdUsuario());
+
+            comando.executeUpdate();
+            conexao.commit();
+
+        } catch (Exception e) {
+            if (conexao != null) {
+                conexao.rollback();
+            }
+            // throw new RuntimeException(e);
+
+        } finally {
+            if (comando != null && !comando.isClosed()) {
+                comando.close();
+            }
+            if (conexao != null && !conexao.isClosed()) {
+                conexao.close();
+            }
+        }
+    }
+
+    public void AlteracaoDadosPessoais(Usuario user) throws SQLException {
+        Connection conexao = null;
+        PreparedStatement comando = null;
+
+        try {
+
+            conexao = BancoDadosUtil.getConnection();
+            comando = conexao.prepareStatement(SQL_ALTERACAO_DADOS_PESSOAIS);
+            comando.setString(1, user.getNome());
+            comando.setString(2, user.getEmail());
+            comando.setString(3, user.getSenha());
+            comando.setString(4, user.getTipo());
+            comando.setString(5, user.getEmail());
 
             comando.executeUpdate();
             conexao.commit();

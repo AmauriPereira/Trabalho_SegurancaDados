@@ -348,8 +348,9 @@ public class GerenciarGerenteForm extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_tbResultadoBuscaMouseClicked
 
     private void btnSalvarAlteraçõesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalvarAlteraçõesActionPerformed
-        if (txtNome.getText().equals("") || txtSenha.getText().equals("")
+        if (txtNome.getText().equals("")
                 || txtEmail.getText().equals("")) {
+            
             JOptionPane.showMessageDialog(null, "Não foi possivel Atualizar o cadastro \n Preencha todos os campos",
                     "gestão de Gerente", JOptionPane.ERROR_MESSAGE);
         } else {

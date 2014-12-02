@@ -485,8 +485,9 @@ public class GerenciaProjetos extends javax.swing.JInternalFrame {
             projetBO.DeleteProjeto(projeto);
             JOptionPane.showMessageDialog(null, "Projeto Deletado com Sucesso !!!",
                     "Gestão de Projeto", JOptionPane.INFORMATION_MESSAGE);
-            
+
             txtNomeProjeto.setText("");
+            txtCod.setText("");
             txtDescricaoProjeto.setText("");
             txtDataTermino.setText("");
             txtDataInicio.setText("");
