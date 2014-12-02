@@ -455,7 +455,7 @@ public class GerenciaProjetos extends javax.swing.JInternalFrame {
                     log = new logSegurancaDados("INFO",
                             "Atualização de Projeto realizado com sucesso pelo "
                             + usuarioLogado.getTipo() + " : " + usuarioLogado.getNome());
-
+                    txtCod.setText("");
                     txtNomeProjeto.setText("");
                     txtDescricaoProjeto.setText("");
                     txtDataTermino.setText("");
@@ -487,7 +487,7 @@ public class GerenciaProjetos extends javax.swing.JInternalFrame {
         //passa como parmetro o projeto que será Deletado
         ProjetoBO projetBO = new ProjetoBO();
         logSegurancaDados log = null;
-        
+
         try {
             projetBO.DeleteProjeto(projeto);
             JOptionPane.showMessageDialog(null, "Projeto Deletado com Sucesso !!!",

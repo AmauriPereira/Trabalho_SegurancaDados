@@ -105,7 +105,7 @@ public class DepartamentoBO {
 
         DepExistente = depDAO.selectDepartamentoPorNome(DEP.getNome());
 
-        if (DepExistente == null) {
+        if (DepExistente == null || DepExistente.getCodigo().equals(DEP.getCodigo())) {
 
             depDAO.UpdateDepartamento(DEP, DEP.getCodigo());
 

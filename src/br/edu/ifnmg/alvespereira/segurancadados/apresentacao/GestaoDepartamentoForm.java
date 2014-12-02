@@ -294,6 +294,8 @@ public class GestaoDepartamentoForm extends javax.swing.JInternalFrame {
             txtCodDepartamnento.setText("");
             txtNomeDepartamento.setText("");
             this.listarDepartamentos();
+            this.btnExcluir.setEnabled(false);
+            this.btnSalvarAlteracao.setEnabled(false);
 
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null, "Erro ao deletar o departamento\n"
@@ -330,6 +332,9 @@ public class GestaoDepartamentoForm extends javax.swing.JInternalFrame {
             txtCodDepartamnento.setText("");
             txtNomeDepartamento.setText("");
             this.listarDepartamentos();
+            this.btnExcluir.setEnabled(false);
+            this.btnSalvarAlteracao.setEnabled(false);
+
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null, "Erro ao Atualizar o departamento\n"
                     + " Não é possivel Atualizar este Departamento",

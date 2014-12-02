@@ -63,6 +63,11 @@ public class LancarHorasAtividadeForm extends javax.swing.JInternalFrame {
         jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Selecione a Atividade:", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 12), new java.awt.Color(0, 102, 102))); // NOI18N
 
         cmbAtividade.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        cmbAtividade.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                cmbAtividadeFocusGained(evt);
+            }
+        });
 
         lblHoras.setText("Horas trabalhadas:");
 
@@ -204,6 +209,10 @@ public class LancarHorasAtividadeForm extends javax.swing.JInternalFrame {
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         this.dispose();
     }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void cmbAtividadeFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_cmbAtividadeFocusGained
+        this.popularCmbAtividade();
+    }//GEN-LAST:event_cmbAtividadeFocusGained
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

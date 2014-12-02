@@ -73,11 +73,14 @@ public class EscolhaProjetoForm extends javax.swing.JInternalFrame {
         setClosable(true);
         setIconifiable(true);
         setMaximizable(true);
+        setTitle("Escolha o Projeto");
+        setFrameIcon(new javax.swing.ImageIcon(getClass().getResource("/br/edu/ifnmg/alvespereira/segurancadados/icones/11295_128x128.png"))); // NOI18N
 
-        jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder("Escolha um Projeto"));
+        jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Escolha um Projeto", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 12), new java.awt.Color(0, 102, 102))); // NOI18N
 
         cmbEscolhaProjeto.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
+        jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/edu/ifnmg/alvespereira/segurancadados/icones/8441_32x32.png"))); // NOI18N
         jButton1.setText("Ok");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -91,19 +94,19 @@ public class EscolhaProjetoForm extends javax.swing.JInternalFrame {
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(cmbEscolhaProjeto, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(cmbEscolhaProjeto, 0, 342, Short.MAX_VALUE)
                 .addContainerGap())
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(141, 141, 141)
-                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(140, Short.MAX_VALUE))
+                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap()
+                .addGap(17, 17, 17)
                 .addComponent(cmbEscolhaProjeto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 30, Short.MAX_VALUE)
+                .addGap(18, 27, Short.MAX_VALUE)
                 .addComponent(jButton1)
                 .addContainerGap())
         );
@@ -129,28 +132,34 @@ public class EscolhaProjetoForm extends javax.swing.JInternalFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        AtividadeBO atividadeBO = new AtividadeBO();
+        if (cmbEscolhaProjeto.getSelectedItem().equals("Selecione")) {
+            JOptionPane.showMessageDialog(null, "Selecione um projetos",
+                    "Projetos", JOptionPane.ERROR_MESSAGE);
+        } else {
 
-        //chamar o relatorio
-        try {
-            String relatorio = System.getProperty("user.dir")
-                    + "/relatorios/RelatorioAtividadesProjeto.jasper";
+            AtividadeBO atividadeBO = new AtividadeBO();
 
-            //criar fonte de dados
-            JRBeanCollectionDataSource fonteDados = new JRBeanCollectionDataSource(atividadeBO.listaAtividade(cmbEscolhaProjeto.getSelectedItem().toString()));
+            //chamar o relatorio
+            try {
+                String relatorio = System.getProperty("user.dir")
+                        + "/relatorios/RelatorioAtividadesProjeto.jasper";
 
-            //gerar relatorio
-            JasperPrint relatorioGerado = JasperFillManager.fillReport(relatorio, null, fonteDados);
+                //criar fonte de dados
+                JRBeanCollectionDataSource fonteDados = new JRBeanCollectionDataSource(atividadeBO.listaAtividade(cmbEscolhaProjeto.getSelectedItem().toString()));
 
-            //exibir o relatorio na tela
-            JasperViewer jasperViewer = new JasperViewer(relatorioGerado, false);
-            jasperViewer.setVisible(true);
+                //gerar relatorio
+                JasperPrint relatorioGerado = JasperFillManager.fillReport(relatorio, null, fonteDados);
 
-        } catch (JRException ex) {
-            System.out.println("Falha ao gerar Relatorio: " + ex.getMessage());
-        } catch (SQLException ex) {
-            Logger.getLogger(TelaPrincipal.class.getName()).log(Level.SEVERE, null, ex);
-        } 
+                //exibir o relatorio na tela
+                JasperViewer jasperViewer = new JasperViewer(relatorioGerado, false);
+                jasperViewer.setVisible(true);
+
+            } catch (JRException ex) {
+                System.out.println("Falha ao gerar Relatorio: " + ex.getMessage());
+            } catch (SQLException ex) {
+                Logger.getLogger(TelaPrincipal.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
     }//GEN-LAST:event_jButton1ActionPerformed
 
 

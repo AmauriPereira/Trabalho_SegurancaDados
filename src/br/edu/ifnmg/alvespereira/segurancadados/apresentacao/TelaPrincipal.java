@@ -115,10 +115,8 @@ public class TelaPrincipal extends javax.swing.JFrame {
         itmMnuLancarHoras = new javax.swing.JMenuItem();
         jMenuAtividadesAtrasadas = new javax.swing.JMenuItem();
         mnuRelatorios = new javax.swing.JMenu();
-        itmMnuRelatorioUsuarios = new javax.swing.JMenuItem();
         itmMnuRelatorioAtividadesProjeto = new javax.swing.JMenuItem();
         itmMnuRelatorioProjeto = new javax.swing.JMenuItem();
-        jMenuItem4 = new javax.swing.JMenuItem();
         mnuOpcoes = new javax.swing.JMenu();
         jMenuItem9 = new javax.swing.JMenuItem();
         itmMnuSair = new javax.swing.JMenuItem();
@@ -362,16 +360,10 @@ public class TelaPrincipal extends javax.swing.JFrame {
         jMenuBar1.add(jMenu1);
 
         mnuRelatorios.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/edu/ifnmg/alvespereira/segurancadados/icones/pdf-icone-5197-32.png"))); // NOI18N
-        mnuRelatorios.setText("Relatórios                         ");
+        mnuRelatorios.setText("Relatórios                     ");
 
-        itmMnuRelatorioUsuarios.setText("Usuários");
-        itmMnuRelatorioUsuarios.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                itmMnuRelatorioUsuariosActionPerformed(evt);
-            }
-        });
-        mnuRelatorios.add(itmMnuRelatorioUsuarios);
-
+        itmMnuRelatorioAtividadesProjeto.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_P, java.awt.event.InputEvent.CTRL_MASK));
+        itmMnuRelatorioAtividadesProjeto.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/edu/ifnmg/alvespereira/segurancadados/icones/pdf-icone-6590-32.png"))); // NOI18N
         itmMnuRelatorioAtividadesProjeto.setText("Relatório de Atividades de Projeto ");
         itmMnuRelatorioAtividadesProjeto.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -380,6 +372,8 @@ public class TelaPrincipal extends javax.swing.JFrame {
         });
         mnuRelatorios.add(itmMnuRelatorioAtividadesProjeto);
 
+        itmMnuRelatorioProjeto.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_T, java.awt.event.InputEvent.CTRL_MASK));
+        itmMnuRelatorioProjeto.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/edu/ifnmg/alvespereira/segurancadados/icones/pdf-icone-6590-32.png"))); // NOI18N
         itmMnuRelatorioProjeto.setText("Relatório de Projeto");
         itmMnuRelatorioProjeto.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -388,14 +382,12 @@ public class TelaPrincipal extends javax.swing.JFrame {
         });
         mnuRelatorios.add(itmMnuRelatorioProjeto);
 
-        jMenuItem4.setText("Departamentos");
-        mnuRelatorios.add(jMenuItem4);
-
         jMenuBar1.add(mnuRelatorios);
 
         mnuOpcoes.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/edu/ifnmg/alvespereira/segurancadados/icones/engrenages-package-systeme-roues-icone-8982-32.png"))); // NOI18N
         mnuOpcoes.setText("      Opções    ");
 
+        jMenuItem9.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_O, java.awt.event.InputEvent.CTRL_MASK));
         jMenuItem9.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/edu/ifnmg/alvespereira/segurancadados/icones/edit-un-marqueur-utilisateur-icone-6327-32.png"))); // NOI18N
         jMenuItem9.setText("     Alterar Dados Pessoais");
         jMenuItem9.addActionListener(new java.awt.event.ActionListener() {
@@ -405,7 +397,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
         });
         mnuOpcoes.add(jMenuItem9);
 
-        itmMnuSair.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_F8, 0));
+        itmMnuSair.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_F8, java.awt.event.InputEvent.CTRL_MASK));
         itmMnuSair.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/edu/ifnmg/alvespereira/segurancadados/icones/halte-session-icone-4911-32.png"))); // NOI18N
         itmMnuSair.setText("     Sair           ");
         itmMnuSair.addActionListener(new java.awt.event.ActionListener() {
@@ -753,55 +745,36 @@ public class TelaPrincipal extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_itmMnuLancarHorasActionPerformed
 
-    private void itmMnuRelatorioUsuariosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itmMnuRelatorioUsuariosActionPerformed
-        UsuarioBO usuarioBO = new UsuarioBO();
-
-        //chamar o relatorio
-       /* try {
-         String relatorio = System.getProperty("user.dir")
-         + "/relatorios/RelatorioCadastroGerente.jasper";
-
-         //criar fonte de dados
-         //JRBeanCollectionDataSource fonteDados = new JRBeanCollectionDataSource((Collection<?>) usuarioBO.relatorioUsuarios());
-         JRBeanCollectionDataSource fonteDados = new JRBeanCollectionDataSource( usuarioBO.relatorioUsuarios());
-
-         //gerar relatorio
-         JasperPrint relatorioGerado = JasperFillManager.fillReport(relatorio, null, fonteDados);
-
-         //exibir o relatorio na tela
-         JasperViewer jasperViewer = new JasperViewer(relatorioGerado, false);
-         jasperViewer.setVisible(true);
-
-         } catch (JRException ex) {
-         System.out.println("Falha ao gerar Relatorio: " + ex.getMessage());
-         } catch (SQLException ex) {
-         Logger.getLogger(TelaPrincipal.class.getName()).log(Level.SEVERE, null, ex);
-         }*/
-    }//GEN-LAST:event_itmMnuRelatorioUsuariosActionPerformed
-
     private void itmMnuRelatorioProjetoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itmMnuRelatorioProjetoActionPerformed
+        if (usuarioLogado.getTipo().equals("Gerente") || usuarioLogado.getTipo().equals("Diretor")) {
+            ProjetoBO projetoBO = new ProjetoBO();
 
-        ProjetoBO projetoBO = new ProjetoBO();
+            //chamar o relatorio
+            try {
+                String relatorio = System.getProperty("user.dir")
+                        + "/relatorios/RelatorioProjetos.jasper";
 
-        //chamar o relatorio
-        try {
-            String relatorio = System.getProperty("user.dir")
-                    + "/relatorios/RelatorioProjetos.jasper";
+                //criar fonte de dados
+                JRBeanCollectionDataSource fonteDados = new JRBeanCollectionDataSource(projetoBO.listaProjeto(usuarioLogado));
 
-            //criar fonte de dados
-            JRBeanCollectionDataSource fonteDados = new JRBeanCollectionDataSource(projetoBO.listaProjeto(usuarioLogado));
+                //gerar relatorio
+                JasperPrint relatorioGerado = JasperFillManager.fillReport(relatorio, null, fonteDados);
 
-            //gerar relatorio
-            JasperPrint relatorioGerado = JasperFillManager.fillReport(relatorio, null, fonteDados);
+                //exibir o relatorio na tela
+                JasperViewer jasperViewer = new JasperViewer(relatorioGerado, false);
+                jasperViewer.setVisible(true);
 
-            //exibir o relatorio na tela
-            JasperViewer jasperViewer = new JasperViewer(relatorioGerado, false);
-            jasperViewer.setVisible(true);
+            } catch (JRException ex) {
+                System.out.println("Falha ao gerar Relatorio: " + ex.getMessage());
+            } catch (SQLException ex) {
+                Logger.getLogger(TelaPrincipal.class.getName()).log(Level.SEVERE, null, ex);
+            }
 
-        } catch (JRException ex) {
-            System.out.println("Falha ao gerar Relatorio: " + ex.getMessage());
-        } catch (SQLException ex) {
-            Logger.getLogger(TelaPrincipal.class.getName()).log(Level.SEVERE, null, ex);
+        } else {
+            JOptionPane.showMessageDialog(null, "Você não possui previlégios para acessar \n   "
+                    + " o Relatorio de Atividades de Projeto!",
+                    "Relatorio de Atividades de Projeto", JOptionPane.ERROR_MESSAGE);
+
         }
 
 
@@ -847,7 +820,6 @@ public class TelaPrincipal extends javax.swing.JFrame {
     private javax.swing.JMenuItem itmMnuProjeto;
     private javax.swing.JMenuItem itmMnuRelatorioAtividadesProjeto;
     private javax.swing.JMenuItem itmMnuRelatorioProjeto;
-    private javax.swing.JMenuItem itmMnuRelatorioUsuarios;
     private javax.swing.JMenuItem itmMnuSair;
     private javax.swing.JMenuItem itmMnu_Atividade;
     private javax.swing.JMenuItem itmMnu_Departamento;
@@ -856,7 +828,6 @@ public class TelaPrincipal extends javax.swing.JFrame {
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenuItem jMenuAtividadesAtrasadas;
     private javax.swing.JMenuBar jMenuBar1;
-    private javax.swing.JMenuItem jMenuItem4;
     private javax.swing.JMenuItem jMenuItem9;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JLabel lblData;

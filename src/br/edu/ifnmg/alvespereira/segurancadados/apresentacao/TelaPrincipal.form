@@ -212,19 +212,17 @@
             <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
               <Image iconType="3" name="/br/edu/ifnmg/alvespereira/segurancadados/icones/pdf-icone-5197-32.png"/>
             </Property>
-            <Property name="text" type="java.lang.String" value="Relat&#xf3;rios                         "/>
+            <Property name="text" type="java.lang.String" value="Relat&#xf3;rios                     "/>
           </Properties>
           <SubComponents>
-            <MenuItem class="javax.swing.JMenuItem" name="itmMnuRelatorioUsuarios">
-              <Properties>
-                <Property name="text" type="java.lang.String" value="Usu&#xe1;rios"/>
-              </Properties>
-              <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="itmMnuRelatorioUsuariosActionPerformed"/>
-              </Events>
-            </MenuItem>
             <MenuItem class="javax.swing.JMenuItem" name="itmMnuRelatorioAtividadesProjeto">
               <Properties>
+                <Property name="accelerator" type="javax.swing.KeyStroke" editor="org.netbeans.modules.form.editors.KeyStrokeEditor">
+                  <KeyStroke key="Ctrl+P"/>
+                </Property>
+                <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+                  <Image iconType="3" name="/br/edu/ifnmg/alvespereira/segurancadados/icones/pdf-icone-6590-32.png"/>
+                </Property>
                 <Property name="text" type="java.lang.String" value="Relat&#xf3;rio de Atividades de Projeto "/>
               </Properties>
               <Events>
@@ -233,16 +231,17 @@
             </MenuItem>
             <MenuItem class="javax.swing.JMenuItem" name="itmMnuRelatorioProjeto">
               <Properties>
+                <Property name="accelerator" type="javax.swing.KeyStroke" editor="org.netbeans.modules.form.editors.KeyStrokeEditor">
+                  <KeyStroke key="Ctrl+T"/>
+                </Property>
+                <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+                  <Image iconType="3" name="/br/edu/ifnmg/alvespereira/segurancadados/icones/pdf-icone-6590-32.png"/>
+                </Property>
                 <Property name="text" type="java.lang.String" value="Relat&#xf3;rio de Projeto"/>
               </Properties>
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="itmMnuRelatorioProjetoActionPerformed"/>
               </Events>
-            </MenuItem>
-            <MenuItem class="javax.swing.JMenuItem" name="jMenuItem4">
-              <Properties>
-                <Property name="text" type="java.lang.String" value="Departamentos"/>
-              </Properties>
             </MenuItem>
           </SubComponents>
         </Menu>
@@ -256,6 +255,9 @@
           <SubComponents>
             <MenuItem class="javax.swing.JMenuItem" name="jMenuItem9">
               <Properties>
+                <Property name="accelerator" type="javax.swing.KeyStroke" editor="org.netbeans.modules.form.editors.KeyStrokeEditor">
+                  <KeyStroke key="Ctrl+O"/>
+                </Property>
                 <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
                   <Image iconType="3" name="/br/edu/ifnmg/alvespereira/segurancadados/icones/edit-un-marqueur-utilisateur-icone-6327-32.png"/>
                 </Property>
@@ -268,7 +270,7 @@
             <MenuItem class="javax.swing.JMenuItem" name="itmMnuSair">
               <Properties>
                 <Property name="accelerator" type="javax.swing.KeyStroke" editor="org.netbeans.modules.form.editors.KeyStrokeEditor">
-                  <KeyStroke key="F8"/>
+                  <KeyStroke key="Ctrl+F8"/>
                 </Property>
                 <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
                   <Image iconType="3" name="/br/edu/ifnmg/alvespereira/segurancadados/icones/halte-session-icone-4911-32.png"/>

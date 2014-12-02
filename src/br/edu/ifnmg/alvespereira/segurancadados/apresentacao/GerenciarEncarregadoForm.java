@@ -25,6 +25,8 @@ public class GerenciarEncarregadoForm extends javax.swing.JInternalFrame {
         this.popularCmbDepartamentoBuscar();
         this.cmbDepartamento.setEnabled(false);
         this.listaTabela();
+        this.btnExcluir.setEnabled(false);
+        this.btnSalvarAlterações.setEnabled(false);
 
     }
 
@@ -495,7 +497,7 @@ public class GerenciarEncarregadoForm extends javax.swing.JInternalFrame {
             log = new logSegurancaDados("INFO",
                     "Exclusão de Encarregado realizada com sucesso pelo "
                     + userLogado.getTipo() + " : " + userLogado.getNome());
-            
+
             this.btnExcluir.setEnabled(false);
             this.btnSalvarAlterações.setEnabled(false);
             txtNome.setText("");

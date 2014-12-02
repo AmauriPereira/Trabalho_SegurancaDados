@@ -136,6 +136,9 @@
               </StringArray>
             </Property>
           </Properties>
+          <Events>
+            <EventHandler event="focusGained" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="cmbAtividadeFocusGained"/>
+          </Events>
         </Component>
         <Component class="javax.swing.JTextField" name="txtHoras">
         </Component>
