@@ -150,7 +150,7 @@ public class EscolhaProjetoForm extends javax.swing.JInternalFrame {
             System.out.println("Falha ao gerar Relatorio: " + ex.getMessage());
         } catch (SQLException ex) {
             Logger.getLogger(TelaPrincipal.class.getName()).log(Level.SEVERE, null, ex);
-        }        // TODO add your handling code here:
+        } 
     }//GEN-LAST:event_jButton1ActionPerformed
 
 
