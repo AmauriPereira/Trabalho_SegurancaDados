@@ -51,8 +51,8 @@ public class UsuarioDAO {
             + "USUARIO.COD_DEPARTAMENTO = ? WHERE USUARIO.ID_USUARIO = ?";
 
     private static final String SQL_ALTERACAO_DADOS_PESSOAIS = "UPDATE USUARIO SET USUARIO.NOME = ?, "
-            + "USUARIO.EMAIL = ?, USUARIO.SENHA =  ?, USUARIO.TIPO =  ? ,"
-            + " WHERE USUARIO.EMAIL = ?";
+            + "USUARIO.EMAIL = ?, USUARIO.SENHA =  ?"
+            + " WHERE USUARIO.ID_USUARIO = ?";
 
     private static final String SQL_DELETE_UM_GERENTE = "DELETE FROM USUARIO WHERE ID_USUARIO = ?";
 
@@ -60,9 +60,6 @@ public class UsuarioDAO {
 
     private static final String SQL_SELECT_RELATORIO_CADASTRO_GERENTE = "SELECT ID_USUARIO, NOME, SENHA, EMAIL FROM USUARIO WHERE TIPO = 'Encarregado'";
 
-    private static final String SQL_SELECT_REATORIO_CADASTRO_GERENTE = "SELECT ID_USUARIO, NOME, SENHA, EMAIL FROM USUARIO WHERE TIPO = 'Encarregado'";
-
-    //private static final String SQL_SELECT_RELATORIO_CADASTRO_GERENTE = "SELECT ID_USUARIO, NOME, SENHA, EMAIL FROM USUARIO WHERE TIPO = 'Encarregado'";
     // ABAIXO METODOS DE INSERÇÃO(INSERT), REMOÇÃO(DELETE), ATUALIZAÇÃO(UPDATE), RECUPERAÇÃO(SELECT)
     //INSERT DEPARTAMENTO 
     //INSERT USUÁRIOS(ENCARREGADO, DIRETOR, GERENTE)
@@ -641,8 +638,7 @@ public class UsuarioDAO {
             comando.setString(1, user.getNome());
             comando.setString(2, user.getEmail());
             comando.setString(3, user.getSenha());
-            comando.setString(4, user.getTipo());
-            comando.setString(5, user.getEmail());
+            comando.setInt(4, user.getIdUsuario());
 
             comando.executeUpdate();
             conexao.commit();
