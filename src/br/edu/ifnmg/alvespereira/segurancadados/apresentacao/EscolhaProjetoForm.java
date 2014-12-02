@@ -70,6 +70,10 @@ public class EscolhaProjetoForm extends javax.swing.JInternalFrame {
         cmbEscolhaProjeto = new javax.swing.JComboBox();
         jButton1 = new javax.swing.JButton();
 
+        setClosable(true);
+        setIconifiable(true);
+        setMaximizable(true);
+
         jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder("Escolha um Projeto"));
 
         cmbEscolhaProjeto.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));

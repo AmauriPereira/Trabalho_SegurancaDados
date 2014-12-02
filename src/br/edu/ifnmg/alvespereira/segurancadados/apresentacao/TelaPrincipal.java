@@ -360,7 +360,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
         });
         mnuRelatorios.add(itmMnuRelatorioUsuarios);
 
-        itmMnuRelatorioAtividadesProjeto.setText(" Relatório de Atividades de Projeto ");
+        itmMnuRelatorioAtividadesProjeto.setText("Relatório de Atividades de Projeto ");
         itmMnuRelatorioAtividadesProjeto.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 itmMnuRelatorioAtividadesProjetoActionPerformed(evt);
@@ -800,8 +800,8 @@ public class TelaPrincipal extends javax.swing.JFrame {
             JDP1.add(escolhaProjetoForm);
         } else {
             JOptionPane.showMessageDialog(null, "Você não possui previlégios para acessar \n   "
-                    + "a Tela de Gestão de Gerente!",
-                    "Cadastro de Gerente", JOptionPane.ERROR_MESSAGE);
+                    + " o Relatorio de Atividades de Projeto!",
+                    "Relatorio de Atividades de Projeto", JOptionPane.ERROR_MESSAGE);
 
         }
     }//GEN-LAST:event_itmMnuRelatorioAtividadesProjetoActionPerformed

@@ -10,8 +10,6 @@ import br.edu.ifnmg.alvespereira.segurancadados.negocio.ProjetoBO;
 import br.edu.ifnmg.alvespereira.segurancadados.negocio.UsuarioBO;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 
 public class CadastroAtividadeForm extends javax.swing.JInternalFrame {

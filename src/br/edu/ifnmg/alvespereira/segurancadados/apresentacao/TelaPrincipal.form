@@ -208,7 +208,7 @@
             </MenuItem>
             <MenuItem class="javax.swing.JMenuItem" name="itmMnuRelatorioAtividadesProjeto">
               <Properties>
-                <Property name="text" type="java.lang.String" value=" Relat&#xf3;rio de Atividades de Projeto "/>
+                <Property name="text" type="java.lang.String" value="Relat&#xf3;rio de Atividades de Projeto "/>
               </Properties>
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="itmMnuRelatorioAtividadesProjetoActionPerformed"/>
