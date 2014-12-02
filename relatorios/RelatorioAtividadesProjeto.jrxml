@@ -1,0 +1,168 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="null" language="groovy" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="100e1610-2eea-4973-8fe1-34aadf19973f">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<style name="Title" forecolor="#FFFFFF" fontName="Arial" fontSize="26" isBold="true" pdfFontName="Helvetica-Bold"/>
+	<style name="SubTitle" forecolor="#666666" fontName="Arial" fontSize="18"/>
+	<style name="Column header" forecolor="#666666" fontName="Arial" fontSize="12" isBold="true"/>
+	<style name="Detail" fontName="Arial" fontSize="12"/>
+	<field name="nome" class="java.lang.String"/>
+	<field name="idAtividade" class="java.lang.String"/>
+	<field name="projeto" class="java.lang.String"/>
+	<field name="encarregado" class="java.lang.String"/>
+	<field name="duracao" class="java.lang.String"/>
+	<field name="atividadesNaoIniciadas" class="java.lang.String"/>
+	<field name="atividadesIniciadas" class="java.lang.String"/>
+	<field name="atividadesConcluidas" class="java.lang.String"/>
+	<field name="totalAtividades" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="70" splitType="Stretch">
+			<image>
+				<reportElement x="-20" y="0" width="595" height="64" uuid="de257d67-1a64-49cf-886b-2d69e83bafc6"/>
+				<imageExpression><![CDATA["wood.jpg"]]></imageExpression>
+			</image>
+			<staticText>
+				<reportElement style="Title" x="0" y="5" width="433" height="33" uuid="b8b25f7c-ee1c-4304-85ba-ad66dd1667c8"/>
+				<textElement verticalAlignment="Middle"/>
+				<text><![CDATA[ Relatório de Atividades de Projeto ]]></text>
+			</staticText>
+		</band>
+	</title>
+	<pageHeader>
+		<band splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band height="22" splitType="Stretch">
+			<line>
+				<reportElement positionType="FixRelativeToBottom" x="0" y="21" width="802" height="1" uuid="35053a15-35cd-48c1-847f-70c26b27cae8"/>
+				<graphicElement>
+					<pen lineWidth="0.5" lineColor="#999999"/>
+				</graphicElement>
+			</line>
+			<staticText>
+				<reportElement x="0" y="0" width="36" height="20" uuid="73a9bc84-2030-4830-b577-49a3fe7a9f41"/>
+				<text><![CDATA[Cód.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="36" y="0" width="208" height="20" uuid="04d9582a-cf85-448a-aad9-24a2118c783f"/>
+				<text><![CDATA[Atividade]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="244" y="0" width="222" height="20" uuid="5cda699f-e430-4983-a423-e408257a7f07"/>
+				<text><![CDATA[Projeto]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="466" y="2" width="229" height="20" uuid="c40082d6-301f-455b-847d-9b9931280482"/>
+				<text><![CDATA[Encarregado]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="695" y="1" width="107" height="20" uuid="c3394c3a-040e-45b1-b573-f02a57c01453"/>
+				<text><![CDATA[Duração]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="21" splitType="Stretch">
+			<line>
+				<reportElement positionType="FixRelativeToBottom" x="0" y="20" width="802" height="1" uuid="bb2a2da3-8adb-4ce8-851c-b370543e7e46"/>
+				<graphicElement>
+					<pen lineWidth="0.5" lineColor="#999999"/>
+				</graphicElement>
+			</line>
+			<textField>
+				<reportElement x="0" y="1" width="36" height="20" uuid="0c121e35-7276-4f4c-9629-970dd1462f34"/>
+				<textFieldExpression><![CDATA[$F{idAtividade}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="36" y="1" width="208" height="20" uuid="78059a11-7a65-425a-b056-21728648e52d"/>
+				<textFieldExpression><![CDATA[$F{nome}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="244" y="1" width="222" height="20" uuid="63851694-daac-4e7c-8c51-5548d2244ea8"/>
+				<textFieldExpression><![CDATA[$F{projeto}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="466" y="1" width="229" height="20" uuid="945a00bb-d255-42ac-ac94-711683cfe6b4"/>
+				<textFieldExpression><![CDATA[$F{encarregado}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="695" y="1" width="107" height="20" uuid="8519e23e-82ac-4abe-a510-aa0b2d96a917"/>
+				<textFieldExpression><![CDATA[$F{duracao}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="45" splitType="Stretch">
+			<line>
+				<reportElement positionType="FixRelativeToBottom" x="0" y="44" width="802" height="1" uuid="a80cc4f2-bc8a-42d7-aa96-7ed1b521a11e"/>
+				<graphicElement>
+					<pen lineWidth="0.5" lineColor="#999999"/>
+				</graphicElement>
+			</line>
+			<staticText>
+				<reportElement x="17" y="0" width="180" height="20" uuid="d5beb467-1cbd-435e-9587-acc749bef55c"/>
+				<text><![CDATA[Quantidade de Atividade :]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="416" y="0" width="194" height="20" uuid="37111d52-acd5-4b4a-bfd2-8ef643bfbd96"/>
+				<text><![CDATA[Quantidade de Atividade Iniciada:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="416" y="20" width="194" height="20" uuid="8e08effe-b4ae-49f2-a9e3-bdb3f3cd91aa"/>
+				<text><![CDATA[Quantidade de Atividade Não Iniciada:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="17" y="20" width="180" height="20" uuid="059340fb-84a4-4f86-9a5d-513ae404ea95"/>
+				<text><![CDATA[Quantidade de Atividade Concluída:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="197" y="0" width="47" height="20" uuid="7d0e0ab9-bf32-4a43-a4ba-44259e96fe2a"/>
+				<textFieldExpression><![CDATA[$F{totalAtividades}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="197" y="20" width="47" height="20" uuid="065d7ef7-db40-481c-ae05-96e3523c8503"/>
+				<textFieldExpression><![CDATA[$F{atividadesConcluidas}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="610" y="0" width="47" height="20" uuid="46bc5b4a-e346-4fab-8cd1-8d80747b030f"/>
+				<textFieldExpression><![CDATA[$F{atividadesIniciadas}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="610" y="20" width="47" height="20" uuid="de1e5017-f560-4891-8956-f99bde6d0b5a"/>
+				<textFieldExpression><![CDATA[$F{atividadesNaoIniciadas}]]></textFieldExpression>
+			</textField>
+		</band>
+	</columnFooter>
+	<pageFooter>
+		<band height="20" splitType="Stretch">
+			<textField>
+				<reportElement style="Column header" x="433" y="0" width="80" height="20" uuid="7dc201fb-bfd8-4320-98d5-e4e07eb73270"/>
+				<textElement textAlignment="Right">
+					<font size="10" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Page "+$V{PAGE_NUMBER}+" of"]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report">
+				<reportElement style="Column header" x="513" y="0" width="40" height="20" uuid="cafa78cd-2590-42b1-a732-d97dd892b202"/>
+				<textElement>
+					<font size="10" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+			<textField pattern="EEEEE dd MMMMM yyyy">
+				<reportElement style="Column header" x="0" y="0" width="197" height="20" uuid="d8394e0a-1dea-44da-a315-7018690d4e9b"/>
+				<textElement>
+					<font size="10" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageFooter>
+	<summary>
+		<band splitType="Stretch"/>
+	</summary>
+</jasperReport>

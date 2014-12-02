@@ -49,20 +49,17 @@ public class AtividadeDAO {
             + "INNER JOIN USUARIO ON (USUARIO.ID_USUARIO =  ATIVIDADE.ID_USUARIO)"
             + "INNER JOIN PROJETO ON (PROJETO.ID_PROJETO =  ATIVIDADE.ID_PROJETO)"
             + " WHERE HORAS_TRABALHADAS >= DURACAO AND CONCLUSAO < '100' AND USUARIO.COD_DEPARTAMENTO = ?";
-<<<<<<< HEAD
 
     private static final String SQL_SELECT_RELATORIO_ATIVIDADE_PROJETO = "SELECT ID_ATIVIDADE,DURACAO,HORAS_TRABALHADAS,CONCLUSAO, USUARIO.NOME, PROJETO.NOME, \n"
             + "(SELECT COUNT(ID_ATIVIDADE) FROM ATIVIDADE WHERE ATIVIDADE.ID_PROJETO = PROJETO.ID_PROJETO ) AS QTD_ATIVIDADE_PROJETO, \n"
             + "(SELECT COUNT(ID_ATIVIDADE) FROM ATIVIDADE WHERE PROJETO.ID_PROJETO = ATIVIDADE.ID_PROJETO AND CONCLUSAO = '100') AS QTD_ATIVIDADE_CONCLUIDA, \n"
             + "(SELECT COUNT(ID_ATIVIDADE) FROM ATIVIDADE WHERE PROJETO.ID_PROJETO = ATIVIDADE.ID_PROJETO AND HORAS_TRABALHADAS > '0'AND HORAS_TRABALHADAS < '0') AS QTD_ATIVIDADE_INICIADA, \n"
             + "(SELECT COUNT(ID_ATIVIDADE) FROM ATIVIDADE WHERE PROJETO.ID_PROJETO = ATIVIDADE.ID_PROJETO AND CONCLUSAO IS NULL) AS QTD_ATIVIDADE_NAO_CONCLUIDA \n"
-            + "FROM ATIVIDADE \n"            
+            + "FROM ATIVIDADE \n"
             + "INNER JOIN PROJETO ON (PROJETO.ID_PROJETO =  ATIVIDADE.ID_PROJETO) \n"
             + "INNER JOIN DEPARTAMENTO ON (DEPARTAMENTO.COD_DEPARTAMENTO =  PROJETO.COD_DEPARTAMENTO)\n"
             + "INNER JOIN USUARIO ON (USUARIO.COD_DEPARTAMENTO =  DEPARTAMENTO.COD_DEPARTAMENTO) \n"
             + "WHERE PROJETO.NOME = ? AND USUARIO.TIPO ='Gerente'";
-=======
->>>>>>> origin/master
 
     public void criarAtividade(Atividade atividade) throws SQLException {
         Connection conexao = null;
@@ -273,7 +270,6 @@ public class AtividadeDAO {
 
     }
 
-<<<<<<< HEAD
     //SELECIONA TODOS OS PROJETOS DE TODOS OS DEPARTAMENTO E ARMAZENA EM UMA LISTA
     public ArrayList<RelatorioAtividadeProjeto> listaAtividade(String nomeProjeto) throws SQLException {
         ArrayList<RelatorioAtividadeProjeto> listaTodasAtividadeProjeto = new ArrayList<>();
@@ -336,7 +332,8 @@ public class AtividadeDAO {
             }
         }
         return listaTodasAtividadeProjeto;
-=======
+    }
+
     public ResultSet preencherTabelaATividadeGESTAO(String codDepartamento) throws SQLException {
 
         Connection conexao = null;
@@ -451,8 +448,6 @@ public class AtividadeDAO {
         }
 
         return atividade;
-
->>>>>>> origin/master
     }
 
 }

@@ -3,12 +3,8 @@ package br.edu.ifnmg.alvespereira.segurancadados.negocio;
 import br.edu.ifnmg.alvespereira.segurancadados.apresentacao.utilitarios.RelatorioAtividadeProjeto;
 import br.edu.ifnmg.alvespereira.segurancadados.dados.AtividadeDAO;
 import br.edu.ifnmg.alvespereira.segurancadados.entidades.Atividade;
-<<<<<<< HEAD
 import br.edu.ifnmg.alvespereira.segurancadados.entidades.Projeto;
-=======
 import br.edu.ifnmg.alvespereira.segurancadados.excecoes.atividadeExistente;
-
->>>>>>> origin/master
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -68,7 +64,7 @@ public class AtividadeBO {
         return resultPreencherTabela;
 
     }
-    
+
     public ArrayList<RelatorioAtividadeProjeto> listaAtividade(String nomeProjeto) throws SQLException {
 
         AtividadeDAO atividadeDAO = new AtividadeDAO();

@@ -3,11 +3,8 @@ package br.edu.ifnmg.alvespereira.segurancadados.negocio;
 import br.edu.ifnmg.alvespereira.segurancadados.apresentacao.utilitarios.RelatorioProjetos;
 import br.edu.ifnmg.alvespereira.segurancadados.dados.ProjetoDAO;
 import br.edu.ifnmg.alvespereira.segurancadados.entidades.Projeto;
-<<<<<<< HEAD
 import br.edu.ifnmg.alvespereira.segurancadados.entidades.Usuario;
-=======
 import br.edu.ifnmg.alvespereira.segurancadados.excecoes.ExcecaoprojetoExistente;
->>>>>>> origin/master
 import br.edu.ifnmg.alvespereira.segurancadados.excecoes.excecaoDeletarElemento;
 import java.sql.ResultSet;
 import java.sql.SQLException;
