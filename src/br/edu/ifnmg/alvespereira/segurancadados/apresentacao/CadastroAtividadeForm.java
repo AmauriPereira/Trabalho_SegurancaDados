@@ -1,5 +1,6 @@
 package br.edu.ifnmg.alvespereira.segurancadados.apresentacao;
 
+import br.edu.ifnmg.alvespereira.segurancadados.apresentacao.utilitarios.logSegurancaDados;
 import br.edu.ifnmg.alvespereira.segurancadados.entidades.Atividade;
 import br.edu.ifnmg.alvespereira.segurancadados.entidades.Projeto;
 import br.edu.ifnmg.alvespereira.segurancadados.entidades.Usuario;
@@ -270,6 +271,7 @@ public class CadastroAtividadeForm extends javax.swing.JInternalFrame {
                     atividade.setEncarregado(encarregado);
                     atividade.setProjeto(projet);
 
+                    logSegurancaDados log = null;
                     try {
                         if (validacao == true) {
                             AtividadeBO AtividadeBO = new AtividadeBO();
@@ -277,6 +279,11 @@ public class CadastroAtividadeForm extends javax.swing.JInternalFrame {
 
                             JOptionPane.showMessageDialog(null, "Atividade Cadastrada com Sucesso !!!",
                                     "Cadastro de Atividade", JOptionPane.INFORMATION_MESSAGE);
+
+                            log = new logSegurancaDados("INFO",
+                                    "Cadastro de Atividade realizado com sucesso pelo "
+                                    + usuarioLogado.getTipo() + " : " + usuarioLogado.getNome());
+
                             this.limpar();
                         }
 

@@ -2,6 +2,7 @@ package br.edu.ifnmg.alvespereira.segurancadados.apresentacao;
 
 import br.edu.ifnmg.alvespereira.segurancadados.apresentacao.utilitarios.ValidacaoEmail;
 import br.edu.ifnmg.alvespereira.segurancadados.apresentacao.utilitarios.criptografiaUtil;
+import br.edu.ifnmg.alvespereira.segurancadados.apresentacao.utilitarios.logSegurancaDados;
 import br.edu.ifnmg.alvespereira.segurancadados.entidades.Usuario;
 import br.edu.ifnmg.alvespereira.segurancadados.negocio.UsuarioBO;
 import java.sql.SQLException;
@@ -150,10 +151,17 @@ public class CadastroDiretorForm extends javax.swing.JFrame {
                 //Instacia um objeto do tipo usuarioBO 
                 //E passa o usuario que será cadastrado no banco(user) como parametro 
                 UsuarioBO userBO = new UsuarioBO();
+                logSegurancaDados log = null;
+
                 try {
                     userBO.criarDiretor(user);
                     JOptionPane.showMessageDialog(null, "Diretor Cadastrado com Sucesso !!!",
                             "Cadastro de Diretor", JOptionPane.INFORMATION_MESSAGE);
+
+                    log = new logSegurancaDados("INFO",
+                            "Cadastro de Departamento realizado com sucesso pelo "
+                            + user.getTipo() + " : " + user.getNome());
+
                     this.dispose();
                     Login login = new Login();
                     login.setVisible(true);

@@ -1,6 +1,8 @@
 package br.edu.ifnmg.alvespereira.segurancadados.apresentacao;
 
+import br.edu.ifnmg.alvespereira.segurancadados.apresentacao.utilitarios.logSegurancaDados;
 import br.edu.ifnmg.alvespereira.segurancadados.entidades.Departamento;
+import br.edu.ifnmg.alvespereira.segurancadados.entidades.Usuario;
 import br.edu.ifnmg.alvespereira.segurancadados.excecoes.excecaoCodDepartamentoInavlido;
 import br.edu.ifnmg.alvespereira.segurancadados.excecoes.excecaoDepartamento;
 import br.edu.ifnmg.alvespereira.segurancadados.negocio.DepartamentoBO;
@@ -9,8 +11,11 @@ import javax.swing.JOptionPane;
 
 public class CadastroDepInTform extends javax.swing.JInternalFrame {
 
-    public CadastroDepInTform() {
+    private static Usuario usuarioLogado = new Usuario();
+
+    public CadastroDepInTform(Usuario userLogado) {
         initComponents();
+        this.usuarioLogado = userLogado;
     }
 
     @SuppressWarnings("unchecked")
@@ -101,10 +106,16 @@ public class CadastroDepInTform extends javax.swing.JInternalFrame {
             DEP.setCodigo(CodDep);
 
             DepartamentoBO depBO = new DepartamentoBO();
+            logSegurancaDados log = null;
             try {
                 depBO.criarDep(DEP);
                 JOptionPane.showMessageDialog(null, "Departamento Cadastrado com Sucesso !!!",
                         "Cadastro de Departamento", JOptionPane.INFORMATION_MESSAGE);
+
+                log = new logSegurancaDados("INFO",
+                        "Cadastro de Departamento realizado com sucesso pelo "
+                        + usuarioLogado.getTipo() + " : " + usuarioLogado.getNome());
+
                 txtCodDep.setText("");
                 txtNomeDep.setText("");
 

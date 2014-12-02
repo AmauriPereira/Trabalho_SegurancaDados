@@ -1,5 +1,6 @@
 package br.edu.ifnmg.alvespereira.segurancadados.apresentacao;
 
+import br.edu.ifnmg.alvespereira.segurancadados.apresentacao.utilitarios.logSegurancaDados;
 import br.edu.ifnmg.alvespereira.segurancadados.entidades.Atividade;
 import br.edu.ifnmg.alvespereira.segurancadados.entidades.Projeto;
 import br.edu.ifnmg.alvespereira.segurancadados.entidades.Usuario;
@@ -449,6 +450,11 @@ public class GerenciarAtvidadeFom extends javax.swing.JInternalFrame {
                             AtividadeBO.UpdateAtividade(atividade);
                             JOptionPane.showMessageDialog(null, "Atividade Atualizada com Sucesso !!!",
                                     "Gestao de Atividade", JOptionPane.INFORMATION_MESSAGE);
+                            logSegurancaDados log = null;
+                            log = new logSegurancaDados("INFO",
+                                    "Atualização de Atividade realizada com sucesso pelo "
+                                    + UserLogado.getTipo() + " : " + UserLogado.getNome());
+
                             this.listarAtividadesGETSAO();
                             this.btnSalvarAlteracoes.setEnabled(false);
                             this.btnExcluir.setEnabled(false);
@@ -507,6 +513,12 @@ public class GerenciarAtvidadeFom extends javax.swing.JInternalFrame {
                     atividadeBO.deleteAtividade(IDatividade);
                     JOptionPane.showMessageDialog(null, "Atividade Deletada com Sucesso !!!",
                             "Gestao de Atividade", JOptionPane.INFORMATION_MESSAGE);
+
+                    logSegurancaDados log = null;
+                    log = new logSegurancaDados("INFO",
+                            "Exclusão de Atividade realizada com sucesso pelo "
+                            + UserLogado.getTipo() + " : " + UserLogado.getNome());
+
                     this.listarAtividadesGETSAO();
                     this.btnSalvarAlteracoes.setEnabled(false);
                     this.btnExcluir.setEnabled(false);

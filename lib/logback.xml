@@ -1,16 +1,21 @@
-<?xml version="1.0" encoding="UTF-8" ?>
-<configuration debug = "true">
+<configuration>
 
-<appender  nome = "STDOUT"  class = "ch.qos.logback.core.ConsoleAppender" > 
-    <! - encoders são atribuídos o tipo 
-         ch.qos.logback.classic.encoder.PatternLayoutEncoder por padrão -> 
-    < encoder> 
-      <pattern> % d {HH: mm: ss.SSS} [% thread]% -5level% logger {36} - %msg%n </pattern> 
-    </encoder> 
-  </appender> 
+  <appender name="FILE" class="ch.qos.logback.core.FileAppender">
+    <file>ArquivoLogSegurancaDados.log</file>
 
-  <root  level = "debug" > 
-    <appender-ref  ref = "STDOUT"  /> 
+    <encoder>
+      <pattern>%date %level %msg%n</pattern>
+    </encoder>
+  </appender>
+
+  <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+    <encoder>
+      <pattern>%msg%n</pattern>
+    </encoder>
+  </appender>
+
+  <root level="debug">
+    <appender-ref ref="FILE" />
   </root>
 </configuration>
 

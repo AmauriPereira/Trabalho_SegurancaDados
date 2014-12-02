@@ -1,5 +1,6 @@
 package br.edu.ifnmg.alvespereira.segurancadados.apresentacao;
 
+import br.edu.ifnmg.alvespereira.segurancadados.apresentacao.utilitarios.logSegurancaDados;
 import br.edu.ifnmg.alvespereira.segurancadados.entidades.Atividade;
 import br.edu.ifnmg.alvespereira.segurancadados.entidades.Usuario;
 import br.edu.ifnmg.alvespereira.segurancadados.negocio.AtividadeBO;
@@ -177,6 +178,13 @@ public class LancarHorasAtividadeForm extends javax.swing.JInternalFrame {
                     atividadeBO.andamentoAtividade(atividade, AtividadeSelcionada);
                     JOptionPane.showMessageDialog(null, "Lançamento realizado com Sucesso!",
                             "Lançamento de Atividade ", JOptionPane.INFORMATION_MESSAGE);
+
+                    logSegurancaDados log = null;
+                    log = new logSegurancaDados("INFO",
+                            "Lançamento de Horas na Atividade: " + cmbAtividade.getSelectedItem()
+                            + "realizada com sucesso pelo "
+                            + usuarioLogado.getTipo() + " : " + usuarioLogado.getNome());
+
                     txtConclusao.setText("");
                     txtHoras.setText("");
                     cmbAtividade.setSelectedItem("Selecione");

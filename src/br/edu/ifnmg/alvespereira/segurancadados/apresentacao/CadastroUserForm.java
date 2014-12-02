@@ -2,6 +2,7 @@ package br.edu.ifnmg.alvespereira.segurancadados.apresentacao;
 
 import br.edu.ifnmg.alvespereira.segurancadados.apresentacao.utilitarios.ValidacaoEmail;
 import br.edu.ifnmg.alvespereira.segurancadados.apresentacao.utilitarios.criptografiaUtil;
+import br.edu.ifnmg.alvespereira.segurancadados.apresentacao.utilitarios.logSegurancaDados;
 import br.edu.ifnmg.alvespereira.segurancadados.entidades.Departamento;
 import br.edu.ifnmg.alvespereira.segurancadados.entidades.Usuario;
 import br.edu.ifnmg.alvespereira.segurancadados.excecoes.excecaoControleAcesso;
@@ -240,12 +241,18 @@ public final class CadastroUserForm extends javax.swing.JInternalFrame {
                     userCadastro.setDepartamento(departamento);
 
                     UsuarioBO UsuarioBO = new UsuarioBO();
+                    logSegurancaDados log = null;
 
                     if (txtTipoUser.getText().equals("Gerente")) {
                         try {
                             UsuarioBO.criarGerente(userCadastro);
                             JOptionPane.showMessageDialog(null, "Gerente Cadastrado com Sucesso !!!",
                                     "Cadastro de Gerente", JOptionPane.INFORMATION_MESSAGE);
+
+                            log = new logSegurancaDados("INFO",
+                                    "Cadastro de Gerente realizado com sucesso pelo "
+                                    + usuarioLogado.getTipo() + " : " + usuarioLogado.getNome());
+
                             txtNome.setText("");
 
                             txtEmail.setText("");
@@ -272,6 +279,11 @@ public final class CadastroUserForm extends javax.swing.JInternalFrame {
                             UsuarioBO.criarEncarregado(userCadastro, usuarioLogado);
                             JOptionPane.showMessageDialog(null, "Encarregado Cadastrado com Sucesso !!!",
                                     "Encarregado de Gerente", JOptionPane.INFORMATION_MESSAGE);
+
+                            log = new logSegurancaDados("INFO",
+                                    "Cadastro de Encarregado realizado com sucesso pelo "
+                                    + usuarioLogado.getTipo() + " : " + usuarioLogado.getNome());
+
                             txtNome.setText("");
 
                             txtEmail.setText("");

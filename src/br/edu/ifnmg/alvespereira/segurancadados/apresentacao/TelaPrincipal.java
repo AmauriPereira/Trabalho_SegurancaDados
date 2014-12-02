@@ -461,7 +461,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
 
             CadastroDepInTform cadastroDepInTform = null;
 
-            cadastroDepInTform = new CadastroDepInTform();
+            cadastroDepInTform = new CadastroDepInTform(usuarioLogado);
             cadastroDepInTform.setVisible(true);
             centralizaForm(cadastroDepInTform);
             cadastroDepInTform.toFront();
@@ -560,7 +560,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
         if (usuarioLogado.getTipo().equals("Diretor")) {
 
             GestaoDepartamentoForm gestaoDepartamentoForm = null;
-            gestaoDepartamentoForm = new GestaoDepartamentoForm();
+            gestaoDepartamentoForm = new GestaoDepartamentoForm(usuarioLogado);
             gestaoDepartamentoForm.setVisible(true);
             centralizaForm(gestaoDepartamentoForm);
             JDP1.add(gestaoDepartamentoForm);

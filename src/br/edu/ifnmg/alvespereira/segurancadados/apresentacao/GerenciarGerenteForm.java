@@ -2,6 +2,7 @@ package br.edu.ifnmg.alvespereira.segurancadados.apresentacao;
 
 import br.edu.ifnmg.alvespereira.segurancadados.apresentacao.utilitarios.ValidacaoEmail;
 import br.edu.ifnmg.alvespereira.segurancadados.apresentacao.utilitarios.criptografiaUtil;
+import br.edu.ifnmg.alvespereira.segurancadados.apresentacao.utilitarios.logSegurancaDados;
 import br.edu.ifnmg.alvespereira.segurancadados.entidades.Departamento;
 import br.edu.ifnmg.alvespereira.segurancadados.entidades.Usuario;
 import br.edu.ifnmg.alvespereira.segurancadados.excecoes.excecaoDeletarElemento;
@@ -350,7 +351,7 @@ public class GerenciarGerenteForm extends javax.swing.JInternalFrame {
     private void btnSalvarAlteraçõesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalvarAlteraçõesActionPerformed
         if (txtNome.getText().equals("")
                 || txtEmail.getText().equals("")) {
-            
+
             JOptionPane.showMessageDialog(null, "Não foi possivel Atualizar o cadastro \n Preencha todos os campos",
                     "gestão de Gerente", JOptionPane.ERROR_MESSAGE);
         } else {
@@ -407,6 +408,12 @@ public class GerenciarGerenteForm extends javax.swing.JInternalFrame {
                         usuarioBO.UpdateUsuario(gerente);
                         JOptionPane.showMessageDialog(null, "Gerente Atualizado com Sucesso !!!",
                                 "Gestão de Usuário", JOptionPane.INFORMATION_MESSAGE);
+
+                        logSegurancaDados log = null;
+                        log = new logSegurancaDados("INFO",
+                                "Atualização de Gerente realizada com sucesso pelo "
+                                + usuarioLogado.getTipo() + " : " + usuarioLogado.getNome());
+
                         this.listarGerentes();
                         this.btnExcluir.setEnabled(false);
                         this.btnSalvarAlterações.setEnabled(false);
@@ -449,6 +456,11 @@ public class GerenciarGerenteForm extends javax.swing.JInternalFrame {
             usuarioBO.DeleteGerente(usuario);
             JOptionPane.showMessageDialog(null, "Gerente Deletado com Sucesso !!!",
                     "Gestão de Gerente", JOptionPane.INFORMATION_MESSAGE);
+
+            logSegurancaDados log = null;
+            log = new logSegurancaDados("INFO",
+                    "Exclusão de Gerente realizada com sucesso pelo "
+                    + usuarioLogado.getTipo() + " : " + usuarioLogado.getNome());
 
             this.listarGerentes();
             this.btnExcluir.setEnabled(false);

@@ -1,5 +1,6 @@
 package br.edu.ifnmg.alvespereira.segurancadados.apresentacao;
 
+import br.edu.ifnmg.alvespereira.segurancadados.apresentacao.utilitarios.logSegurancaDados;
 import br.edu.ifnmg.alvespereira.segurancadados.entidades.Departamento;
 import br.edu.ifnmg.alvespereira.segurancadados.entidades.Projeto;
 import br.edu.ifnmg.alvespereira.segurancadados.entidades.Usuario;
@@ -259,10 +260,17 @@ public class CadastroProjetoForm extends javax.swing.JInternalFrame {
                 //Cria um novo objeto do tipo ProjetoBO e 
                 //passa como parmetro o projeto que será cadastrado
                 ProjetoBO projetBO = new ProjetoBO();
+                logSegurancaDados log = null;
+
                 try {
                     projetBO.criarProjeto(projeto);
                     JOptionPane.showMessageDialog(null, "Projeto Cadastrado com Sucesso !!!",
                             "Cadastro de Projeto", JOptionPane.INFORMATION_MESSAGE);
+
+                    log = new logSegurancaDados("INFO",
+                            "Cadastro de Projeto realizado com sucesso pelo "
+                            + usuarioLogado.getTipo() + " : " + usuarioLogado.getNome());
+
                     txtNome.setText("");
                     txtDescricao.setText("");
                     txtDataFim.setText("");

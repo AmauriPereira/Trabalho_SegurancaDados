@@ -1,5 +1,6 @@
 package br.edu.ifnmg.alvespereira.segurancadados.apresentacao;
 
+import br.edu.ifnmg.alvespereira.segurancadados.apresentacao.utilitarios.logSegurancaDados;
 import br.edu.ifnmg.alvespereira.segurancadados.entidades.Departamento;
 import br.edu.ifnmg.alvespereira.segurancadados.entidades.Projeto;
 import br.edu.ifnmg.alvespereira.segurancadados.entidades.Usuario;
@@ -444,11 +445,16 @@ public class GerenciaProjetos extends javax.swing.JInternalFrame {
                 //Cria um novo objeto do tipo ProjetoBO e 
                 //passa como parmetro o projeto que será cadastrado
                 ProjetoBO projetBO = new ProjetoBO();
+                logSegurancaDados log = null;
 
                 try {
                     projetBO.UpdateProjeto(projeto);
                     JOptionPane.showMessageDialog(null, "Projeto Atualizado com Sucesso !!!",
                             "Gestão de Projeto", JOptionPane.INFORMATION_MESSAGE);
+
+                    log = new logSegurancaDados("INFO",
+                            "Atualização de Projeto realizado com sucesso pelo "
+                            + usuarioLogado.getTipo() + " : " + usuarioLogado.getNome());
 
                     txtNomeProjeto.setText("");
                     txtDescricaoProjeto.setText("");
@@ -480,11 +486,16 @@ public class GerenciaProjetos extends javax.swing.JInternalFrame {
         //Cria um novo objeto do tipo ProjetoBO e 
         //passa como parmetro o projeto que será Deletado
         ProjetoBO projetBO = new ProjetoBO();
-
+        logSegurancaDados log = null;
+        
         try {
             projetBO.DeleteProjeto(projeto);
             JOptionPane.showMessageDialog(null, "Projeto Deletado com Sucesso !!!",
                     "Gestão de Projeto", JOptionPane.INFORMATION_MESSAGE);
+
+            log = new logSegurancaDados("INFO",
+                    "Exclusão de Projeto realizado com sucesso pelo "
+                    + usuarioLogado.getTipo() + " : " + usuarioLogado.getNome());
 
             txtNomeProjeto.setText("");
             txtCod.setText("");

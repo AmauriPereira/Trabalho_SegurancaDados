@@ -1,7 +1,9 @@
 package br.edu.ifnmg.alvespereira.segurancadados.apresentacao;
 
+import br.edu.ifnmg.alvespereira.segurancadados.apresentacao.utilitarios.logSegurancaDados;
 import br.edu.ifnmg.alvespereira.segurancadados.dados.DepartamentoDAO;
 import br.edu.ifnmg.alvespereira.segurancadados.entidades.Departamento;
+import br.edu.ifnmg.alvespereira.segurancadados.entidades.Usuario;
 import br.edu.ifnmg.alvespereira.segurancadados.excecoes.excecaoDeletarElemento;
 import br.edu.ifnmg.alvespereira.segurancadados.excecoes.excecaoDepartamento;
 import br.edu.ifnmg.alvespereira.segurancadados.negocio.DepartamentoBO;
@@ -12,9 +14,11 @@ import net.proteanit.sql.DbUtils;
 public class GestaoDepartamentoForm extends javax.swing.JInternalFrame {
 
     private static String CodDepartamentoAntigo = null;
+    Usuario usuarioLogado = null;
 
-    public GestaoDepartamentoForm() {
+    public GestaoDepartamentoForm(Usuario userLogado) {
         initComponents();
+        this.usuarioLogado = userLogado;
         this.listarDepartamentos();
         this.btnExcluir.setEnabled(false);
         this.btnSalvarAlteracao.setEnabled(false);
@@ -281,6 +285,12 @@ public class GestaoDepartamentoForm extends javax.swing.JInternalFrame {
             departamentoBO.DeleteDepartamento(txtCodDepartamnento.getText());
             JOptionPane.showMessageDialog(null, "Departamento Deletado com Sucesso !!!",
                     "Gestão de Departamento", JOptionPane.INFORMATION_MESSAGE);
+
+            logSegurancaDados log = null;
+            log = new logSegurancaDados("INFO",
+                    "Exclusão de Departamento realizada com sucesso pelo "
+                    + usuarioLogado.getTipo() + " : " + usuarioLogado.getNome());
+
             txtCodDepartamnento.setText("");
             txtNomeDepartamento.setText("");
             this.listarDepartamentos();
@@ -311,6 +321,12 @@ public class GestaoDepartamentoForm extends javax.swing.JInternalFrame {
 
             JOptionPane.showMessageDialog(null, "Departamento Atuzalido com Sucesso !!!",
                     "Gestão de Departamento", JOptionPane.INFORMATION_MESSAGE);
+
+            logSegurancaDados log = null;
+            log = new logSegurancaDados("INFO",
+                    "Atualização de Departamento realizada com sucesso pelo "
+                    + usuarioLogado.getTipo() + " : " + usuarioLogado.getNome());
+
             txtCodDepartamnento.setText("");
             txtNomeDepartamento.setText("");
             this.listarDepartamentos();

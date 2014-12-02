@@ -2,6 +2,7 @@ package br.edu.ifnmg.alvespereira.segurancadados.apresentacao;
 
 import br.edu.ifnmg.alvespereira.segurancadados.apresentacao.utilitarios.ValidacaoEmail;
 import br.edu.ifnmg.alvespereira.segurancadados.apresentacao.utilitarios.criptografiaUtil;
+import br.edu.ifnmg.alvespereira.segurancadados.apresentacao.utilitarios.logSegurancaDados;
 import br.edu.ifnmg.alvespereira.segurancadados.entidades.Departamento;
 import br.edu.ifnmg.alvespereira.segurancadados.entidades.Usuario;
 import br.edu.ifnmg.alvespereira.segurancadados.excecoes.excecaoDeletarElemento;
@@ -444,6 +445,11 @@ public class GerenciarEncarregadoForm extends javax.swing.JInternalFrame {
                         JOptionPane.showMessageDialog(null, "Encarregado Atualizado com Sucesso !!!",
                                 "Gestão de Encarregado", JOptionPane.INFORMATION_MESSAGE);
 
+                        logSegurancaDados log = null;
+                        log = new logSegurancaDados("INFO",
+                                "Atualização de Encarregado realizada com sucesso pelo "
+                                + userLogado.getTipo() + " : " + userLogado.getNome());
+
                         this.btnExcluir.setEnabled(false);
                         this.btnSalvarAlterações.setEnabled(false);
                         txtNome.setText("");
@@ -484,6 +490,12 @@ public class GerenciarEncarregadoForm extends javax.swing.JInternalFrame {
             usuarioBO.DeleteEncarregado(usuario);
             JOptionPane.showMessageDialog(null, "Encarregado Deletado com Sucesso !!!",
                     "Gestão de Usuário", JOptionPane.INFORMATION_MESSAGE);
+
+            logSegurancaDados log = null;
+            log = new logSegurancaDados("INFO",
+                    "Exclusão de Encarregado realizada com sucesso pelo "
+                    + userLogado.getTipo() + " : " + userLogado.getNome());
+            
             this.btnExcluir.setEnabled(false);
             this.btnSalvarAlterações.setEnabled(false);
             txtNome.setText("");

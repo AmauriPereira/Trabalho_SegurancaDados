@@ -2,6 +2,7 @@ package br.edu.ifnmg.alvespereira.segurancadados.apresentacao;
 
 import br.edu.ifnmg.alvespereira.segurancadados.apresentacao.utilitarios.ValidacaoEmail;
 import br.edu.ifnmg.alvespereira.segurancadados.apresentacao.utilitarios.criptografiaUtil;
+import br.edu.ifnmg.alvespereira.segurancadados.apresentacao.utilitarios.logSegurancaDados;
 import br.edu.ifnmg.alvespereira.segurancadados.entidades.Departamento;
 import br.edu.ifnmg.alvespereira.segurancadados.entidades.Usuario;
 import br.edu.ifnmg.alvespereira.segurancadados.negocio.UsuarioBO;
@@ -214,6 +215,11 @@ public class alterarDadosPessoais extends javax.swing.JInternalFrame {
                     usuarioBO.AlteracaoDadosPessoais(usuario);
                     JOptionPane.showMessageDialog(null, "Dados Atualizados com Sucesso !!!",
                             "Alteração de Dados", JOptionPane.INFORMATION_MESSAGE);
+
+                    logSegurancaDados log = null;
+                    log = new logSegurancaDados("INFO",
+                            "Alteração de Dados Pessoais realizada com sucesso pelo "
+                            + usuarioLogado.getTipo() + " : " + usuarioLogado.getNome());
 
                     txtNome.setText("");
 
