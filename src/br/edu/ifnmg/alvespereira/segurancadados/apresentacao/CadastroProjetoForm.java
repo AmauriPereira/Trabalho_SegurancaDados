@@ -2,6 +2,8 @@ package br.edu.ifnmg.alvespereira.segurancadados.apresentacao;
 
 import br.edu.ifnmg.alvespereira.segurancadados.entidades.Departamento;
 import br.edu.ifnmg.alvespereira.segurancadados.entidades.Projeto;
+import br.edu.ifnmg.alvespereira.segurancadados.entidades.Usuario;
+import br.edu.ifnmg.alvespereira.segurancadados.excecoes.ExcecaoprojetoExistente;
 import br.edu.ifnmg.alvespereira.segurancadados.negocio.DepartamentoBO;
 import br.edu.ifnmg.alvespereira.segurancadados.negocio.ProjetoBO;
 import java.sql.SQLException;
@@ -9,13 +11,19 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 
 public class CadastroProjetoForm extends javax.swing.JInternalFrame {
 
-    public CadastroProjetoForm() {
+    private static Usuario usuarioLogado = null;
+
+    public CadastroProjetoForm(Usuario userLogado) {
         initComponents();
+        this.usuarioLogado = userLogado;
         this.popularCB();
+
     }
 
     //Metodo que add todos os departamentos cadastrados na ComboBox
@@ -24,7 +32,7 @@ public class CadastroProjetoForm extends javax.swing.JInternalFrame {
         DepartamentoBO depBO = new DepartamentoBO();
 
         try {
-            Departamentos = depBO.ComboBoxDepartamentos();
+            Departamentos = depBO.CMBDepartamento(this.usuarioLogado.getDepartamento().getCodigo());
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null, "Erro ao popular o departamento",
                     "Departamento", JOptionPane.ERROR_MESSAGE);
@@ -200,52 +208,79 @@ public class CadastroProjetoForm extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_txtNomeActionPerformed
 
     private void btnCadastrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCadastrarActionPerformed
-        String Nome, Descricao;
-        Date DataInicio = null, DataTermino = null;
-        Departamento departamento = null;
+        if (txtNome.getText().equals("") || txtDescricao.getText().equals("")
+                || txtDataInicio.getText().equals("  /  /    ")
+                || txtDataFim.getText().equals("  /  /    ")) {
 
-        //Seta o departamento do projeto
-        try {
-            DepartamentoBO depBO = new DepartamentoBO();
-            departamento = depBO.selectDepartamento(cbDepartamentos.getSelectedItem() + "");
-        } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(null, "Erro ao selecionar o departamento",
-                    "Cadastro de usuários", JOptionPane.ERROR_MESSAGE);
-        }
-
-        //Seta o Nome e a descrição projeto
-        Nome = txtNome.getText();
-        Descricao = txtDescricao.getText();
-
-        try {
-            //Converte e seta a data inicio e termino
-
-            DataInicio = formataData(txtDataInicio.getText());
-            DataTermino = formataData(txtDataFim.getText());
-        } catch (Exception ex) {
-            JOptionPane.showMessageDialog(null, "Erro na Data de  Inicio e Término do projeto",
+            JOptionPane.showMessageDialog(null, "Prencha todos os Campos !!!",
                     "Cadastro de Projeto", JOptionPane.ERROR_MESSAGE);
+
+        } else {
+
+            if (cbDepartamentos.getSelectedItem().equals("Selecione")) {
+
+                JOptionPane.showMessageDialog(null, "Selecione um Departamento!!!",
+                        "Cadastro de Projeto", JOptionPane.ERROR_MESSAGE);
+            } else {
+
+                String Nome, Descricao;
+                Date DataInicio = null, DataTermino = null;
+                Departamento departamento = null;
+
+                //Seta o departamento do projeto
+                try {
+                    DepartamentoBO depBO = new DepartamentoBO();
+                    departamento = depBO.selectDepartamento(cbDepartamentos.getSelectedItem() + "");
+                } catch (SQLException ex) {
+                    JOptionPane.showMessageDialog(null, "Erro ao selecionar o departamento",
+                            "Cadastro de usuários", JOptionPane.ERROR_MESSAGE);
+                }
+
+                //Seta o Nome e a descrição projeto
+                Nome = txtNome.getText();
+                Descricao = txtDescricao.getText();
+
+                try {
+                    //Converte e seta a data inicio e termino
+
+                    DataInicio = formataData(txtDataInicio.getText());
+                    DataTermino = formataData(txtDataFim.getText());
+                } catch (Exception ex) {
+                    JOptionPane.showMessageDialog(null, "Erro na Data de  Inicio e Término do projeto",
+                            "Cadastro de Projeto", JOptionPane.ERROR_MESSAGE);
+                }
+
+                //Cria um novo projeto e seta todos os dados
+                Projeto projeto = new Projeto();
+                projeto.setNome(Nome);
+                projeto.setDescricao(Descricao);
+                projeto.setDataInicio(DataInicio);
+                projeto.setDataTermino(DataTermino);
+                projeto.setDepartamento(departamento);
+
+                //Cria um novo objeto do tipo ProjetoBO e 
+                //passa como parmetro o projeto que será cadastrado
+                ProjetoBO projetBO = new ProjetoBO();
+                try {
+                    projetBO.criarProjeto(projeto);
+                    JOptionPane.showMessageDialog(null, "Projeto Cadastrado com Sucesso !!!",
+                            "Cadastro de Projeto", JOptionPane.INFORMATION_MESSAGE);
+                    txtNome.setText("");
+                    txtDescricao.setText("");
+                    txtDataFim.setText("");
+                    txtDataInicio.setText("");
+                    cbDepartamentos.setSelectedItem("Selecione");
+                } catch (SQLException ex) {
+                    JOptionPane.showMessageDialog(null, "Erro ao Cadastrar projeto",
+                            "Cadastro de Projeto", JOptionPane.ERROR_MESSAGE);
+                } catch (ExcecaoprojetoExistente ex) {
+                    JOptionPane.showMessageDialog(null, "Ja existe um projeto com este Nome !!!",
+                            "Cadastro de Projeto", JOptionPane.ERROR_MESSAGE);
+                }
+            }
+
         }
 
-        //Cria um novo projeto e seta todos os dados
-        Projeto projeto = new Projeto();
-        projeto.setNome(Nome);
-        projeto.setDescricao(Descricao);
-        projeto.setDataInicio(DataInicio);
-        projeto.setDataTermino(DataTermino);
-        projeto.setDepartamento(departamento);
-
-        //Cria um novo objeto do tipo ProjetoBO e 
-        //passa como parmetro o projeto que será cadastrado
-        ProjetoBO projetBO = new ProjetoBO();
-        try {
-            projetBO.criarProjeto(projeto);
-            JOptionPane.showMessageDialog(null, "Projeto Cadastrado com Sucesso !!!",
-                    "Cadastro de Projeto", JOptionPane.INFORMATION_MESSAGE);
-        } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(null, "Erro ao Cadastrar projeto",
-                    "Cadastro de Projeto", JOptionPane.ERROR_MESSAGE);
-        }
 
     }//GEN-LAST:event_btnCadastrarActionPerformed
 

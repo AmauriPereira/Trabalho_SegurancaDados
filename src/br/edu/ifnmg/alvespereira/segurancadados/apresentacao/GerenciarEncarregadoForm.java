@@ -1,5 +1,6 @@
 package br.edu.ifnmg.alvespereira.segurancadados.apresentacao;
 
+import br.edu.ifnmg.alvespereira.segurancadados.apresentacao.utilitarios.ValidacaoEmail;
 import br.edu.ifnmg.alvespereira.segurancadados.apresentacao.utilitarios.criptografiaUtil;
 import br.edu.ifnmg.alvespereira.segurancadados.entidades.Departamento;
 import br.edu.ifnmg.alvespereira.segurancadados.entidades.Usuario;
@@ -21,6 +22,8 @@ public class GerenciarEncarregadoForm extends javax.swing.JInternalFrame {
         userLogado = usuarioLogado;
         this.popularCmbDepartamento();
         this.popularCmbDepartamentoBuscar();
+        this.cmbDepartamento.setEnabled(false);
+        this.listaTabela();
 
     }
 
@@ -28,17 +31,52 @@ public class GerenciarEncarregadoForm extends javax.swing.JInternalFrame {
         ArrayList<String> Departamentos = new ArrayList<>();
         DepartamentoBO departamentoBO = new DepartamentoBO();
 
-        try {
-            Departamentos = departamentoBO.ComboBoxDepartamentos();
-        } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(null, "Erro ao popular o departamento",
-                    "Departamento", JOptionPane.ERROR_MESSAGE);
+        if (userLogado.getTipo().equals("Diretor")) {
+            try {
+                Departamentos = departamentoBO.ComboBoxDepartamentos();
+            } catch (SQLException ex) {
+                JOptionPane.showMessageDialog(null, "Erro ao popular o departamento",
+                        "Departamento", JOptionPane.ERROR_MESSAGE);
+            }
+        } else {
+
+            try {
+                Departamentos = departamentoBO.CMBDepartamento(userLogado.getDepartamento().getCodigo());
+            } catch (SQLException ex) {
+                JOptionPane.showMessageDialog(null, "Erro ao popular o departamento",
+                        "Departamento", JOptionPane.ERROR_MESSAGE);
+            }
+
         }
 
         cmbBuscaFuncionario.removeAllItems();
         cmbBuscaFuncionario.addItem("Selecione");
         for (String item : Departamentos) {
             cmbBuscaFuncionario.addItem(item);
+        }
+
+    }
+
+    public void listaTabela() {
+
+        UsuarioBO Encarregados = new UsuarioBO();
+        if (userLogado.getTipo().equals("Gerente")) {
+            try {
+
+                tbResultadoBusca.setModel(DbUtils.resultSetToTableModel(Encarregados.preencheTabelaEncarregadoPorDepartamento(userLogado.getDepartamento().getCodigo())));
+
+            } catch (SQLException ex) {
+
+            }
+        } else {
+            try {
+
+                tbResultadoBusca.setModel(DbUtils.resultSetToTableModel(Encarregados.preencheTabelaEncarregadoStODOS()));
+
+            } catch (SQLException ex) {
+
+            }
+
         }
 
     }
@@ -116,7 +154,7 @@ public class GerenciarEncarregadoForm extends javax.swing.JInternalFrame {
             jPanelBuscarUsuarioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanelBuscarUsuarioLayout.createSequentialGroup()
                 .addGap(34, 34, 34)
-                .addComponent(cmbBuscaFuncionario, 0, 344, Short.MAX_VALUE)
+                .addComponent(cmbBuscaFuncionario, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGap(18, 18, 18)
                 .addComponent(btnBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(25, 25, 25))
@@ -133,7 +171,7 @@ public class GerenciarEncarregadoForm extends javax.swing.JInternalFrame {
 
         jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder(null, " Buscar usuário por departamento", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 12), new java.awt.Color(0, 102, 102))); // NOI18N
 
-        lbbTipoUsuario.setText("Tipo de Usuário:");
+        lbbTipoUsuario.setText("Cargo:");
 
         lblNome.setText("Nome:");
 
@@ -143,11 +181,26 @@ public class GerenciarEncarregadoForm extends javax.swing.JInternalFrame {
 
         lblSenha.setText("Senha:");
 
+        txtTipo.setEditable(false);
+        txtTipo.setBackground(new java.awt.Color(204, 204, 204));
+        txtTipo.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+
+        txtNome.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtNomeActionPerformed(evt);
+            }
+        });
+
         cmbDepartamento.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
         cmbDepartamento.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         cmbDepartamento.setOpaque(false);
 
         lblCodigo.setText("Código:");
+
+        txtCodigo.setEditable(false);
+        txtCodigo.setBackground(new java.awt.Color(204, 204, 204));
+        txtCodigo.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        txtCodigo.setForeground(new java.awt.Color(0, 102, 102));
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -157,31 +210,38 @@ public class GerenciarEncarregadoForm extends javax.swing.JInternalFrame {
                 .addContainerGap()
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addComponent(lbbTipoUsuario)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(txtTipo)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(lblCodigo)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(txtCodigo, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel2Layout.createSequentialGroup()
                         .addComponent(lblDepartamento)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(cmbDepartamento, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addComponent(lblNome)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(txtNome))
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addComponent(lblEmail)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(txtEmail, javax.swing.GroupLayout.DEFAULT_SIZE, 248, Short.MAX_VALUE)
-                        .addGap(18, 18, 18)
-                        .addComponent(lblSenha)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(txtSenha, javax.swing.GroupLayout.PREFERRED_SIZE, 151, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel2Layout.createSequentialGroup()
+                                .addComponent(lbbTipoUsuario)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(txtTipo, javax.swing.GroupLayout.PREFERRED_SIZE, 319, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(lblCodigo)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(txtCodigo, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(jPanel2Layout.createSequentialGroup()
+                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(lblNome)
+                                    .addComponent(lblEmail, javax.swing.GroupLayout.DEFAULT_SIZE, 39, Short.MAX_VALUE))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addGroup(jPanel2Layout.createSequentialGroup()
+                                        .addComponent(txtEmail)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                        .addComponent(lblSenha)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                        .addComponent(txtSenha, javax.swing.GroupLayout.PREFERRED_SIZE, 151, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addComponent(txtNome, javax.swing.GroupLayout.PREFERRED_SIZE, 450, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
+
+        jPanel2Layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {lbbTipoUsuario, lblEmail, lblNome});
+
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
@@ -231,7 +291,7 @@ public class GerenciarEncarregadoForm extends javax.swing.JInternalFrame {
             .addGroup(jPanelGerenciarUsuarioLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanelGerenciarUsuarioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 531, Short.MAX_VALUE)
+                    .addComponent(jScrollPane1)
                     .addComponent(jPanelBuscarUsuario, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelGerenciarUsuarioLayout.createSequentialGroup()
@@ -293,14 +353,19 @@ public class GerenciarEncarregadoForm extends javax.swing.JInternalFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
+        if (cmbBuscaFuncionario.getSelectedItem().equals("Selecione")) {
+            JOptionPane.showMessageDialog(null, "Erro selecione o departamento",
+                    "Departamento", JOptionPane.ERROR_MESSAGE);
 
-        String departamento = this.cmbBuscaFuncionario.getSelectedItem().toString();
-        UsuarioBO encarregado = new UsuarioBO();
+        } else {
+            String departamento = this.cmbBuscaFuncionario.getSelectedItem().toString();
+            UsuarioBO encarregado = new UsuarioBO();
 
-        try {
-            tbResultadoBusca.setModel(DbUtils.resultSetToTableModel(encarregado.preencheTabelaEncarregado(departamento)));
-        } catch (SQLException ex) {
+            try {
+                tbResultadoBusca.setModel(DbUtils.resultSetToTableModel(encarregado.preencheTabelaEncarregado(departamento)));
+            } catch (SQLException ex) {
 
+            }
         }
 
 
@@ -319,53 +384,86 @@ public class GerenciarEncarregadoForm extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_tbResultadoBuscaMouseClicked
 
     private void btnSalvarAlteraçõesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalvarAlteraçõesActionPerformed
-        int idUsuario;
-        String Nome;
-        String Email;
-        String Tipo;
-        String Senha = null;
-        Departamento Departamento = null;
+        if (txtNome.getText().equals("") || txtSenha.getText().equals("")
+                || txtEmail.getText().equals("")) {
+            JOptionPane.showMessageDialog(null, "Não foi possivel Atualizar o cadastro \n Preencha todos os campos",
+                    "gestão de Encarregago", JOptionPane.ERROR_MESSAGE);
+        } else {
+            if (cmbDepartamento.getSelectedItem().equals("Selecione")) {
+                JOptionPane.showMessageDialog(null, "Não foi possivel Atualizar o cadastro \n Selecione um Departamento",
+                        "gestão de Encarregago", JOptionPane.ERROR_MESSAGE);
+            } else {
+                boolean emailValidado;
+                ValidacaoEmail validacao = new ValidacaoEmail();
+                emailValidado = validacao.validaEmail(txtEmail.getText());
 
-        //Seta o departamento do encarregado
-        try {
-            DepartamentoBO depBO = new DepartamentoBO();
-            Departamento = depBO.selectDepartamento(cmbDepartamento.getSelectedItem() + "");
-        } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(null, "Erro ao selecionar o departamento",
-                    "Alteração de Dados", JOptionPane.ERROR_MESSAGE);
-        }
+                if (emailValidado == true) {
+                    int idUsuario;
+                    String Nome;
+                    String Email;
+                    String Tipo;
+                    String Senha = null;
+                    Departamento Departamento = null;
 
-        //Seta o Nome e a descrição projeto
-        Nome = txtNome.getText();
-        Email = txtEmail.getText();
-        Tipo = txtTipo.getText();
-        Senha = txtSenha.getText();
-        idUsuario = Integer.parseInt(txtCodigo.getText());
+                    //Seta o departamento do encarregado
+                    try {
+                        DepartamentoBO depBO = new DepartamentoBO();
+                        Departamento = depBO.selectDepartamento(cmbDepartamento.getSelectedItem() + "");
+                    } catch (SQLException ex) {
+                        JOptionPane.showMessageDialog(null, "Erro ao selecionar o departamento",
+                                "Alteração de Dados", JOptionPane.ERROR_MESSAGE);
+                    }
 
-        //codigo abaixo chama mtodo q realiza a criptografia da senha
-        criptografiaUtil criptografiaSenha = new criptografiaUtil();
-        Senha = criptografiaSenha.criptografiaSenha(Senha);
+                    //Seta o Nome e a descrição projeto
+                    Nome = txtNome.getText();
+                    Email = txtEmail.getText();
+                    Tipo = txtTipo.getText();
+                    Senha = txtSenha.getText();
+                    idUsuario = Integer.parseInt(txtCodigo.getText());
 
-        //Cria um novo projeto e seta todos os dados
-        Usuario encarregado = new Usuario();
-        encarregado.setIdUsuario(idUsuario);
-        encarregado.setNome(Nome);
-        encarregado.setEmail(Email);
-        encarregado.setSenha(Senha);
-        encarregado.setDepartamento(Departamento);
-        encarregado.setTipo(Tipo);
+                    //codigo abaixo chama mtodo q realiza a criptografia da senha
+                    criptografiaUtil criptografiaSenha = new criptografiaUtil();
+                    Senha = criptografiaSenha.criptografiaSenha(Senha);
 
-        //Cria um novo objeto do tipo ProjetoBO e 
-        //passa como parmetro o projeto que será cadastrado
-        UsuarioBO usuarioBO = new UsuarioBO();
+                    //Cria um novo projeto e seta todos os dados
+                    Usuario encarregado = new Usuario();
+                    encarregado.setIdUsuario(idUsuario);
+                    encarregado.setNome(Nome);
+                    encarregado.setEmail(Email);
+                    encarregado.setSenha(Senha);
+                    encarregado.setDepartamento(Departamento);
+                    encarregado.setTipo(Tipo);
 
-        try {
-            usuarioBO.UpdateUsuario(encarregado);
-            JOptionPane.showMessageDialog(null, "Encarregado Atualizado com Sucesso !!!",
-                    "Gestão de Encarregado", JOptionPane.INFORMATION_MESSAGE);
-        } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(null, "Erro ao Atualizar o Encarregado",
-                    "Gestão de Encarregado", JOptionPane.ERROR_MESSAGE);
+                    //Cria um novo objeto do tipo ProjetoBO e 
+                    //passa como parmetro o projeto que será cadastrado
+                    UsuarioBO usuarioBO = new UsuarioBO();
+
+                    try {
+                        usuarioBO.UpdateUsuario(encarregado);
+                        JOptionPane.showMessageDialog(null, "Encarregado Atualizado com Sucesso !!!",
+                                "Gestão de Encarregado", JOptionPane.INFORMATION_MESSAGE);
+
+                        this.btnExcluir.setEnabled(false);
+                        this.btnSalvarAlterações.setEnabled(false);
+                        txtNome.setText("");
+                        txtCodigo.setText("");
+                        txtEmail.setText("");
+                        txtSenha.setText("");
+                        cmbBuscaFuncionario.setSelectedItem("Selecione");
+                        txtTipo.setText("");
+                        cmbDepartamento.setSelectedItem("Selecione");
+                        this.listaTabela();
+
+                    } catch (SQLException ex) {
+                        JOptionPane.showMessageDialog(null, "Erro ao Atualizar o Encarregado",
+                                "Gestão de Encarregado", JOptionPane.ERROR_MESSAGE);
+                    }
+                } else {
+                    JOptionPane.showMessageDialog(null, "Email Inválido !!!", "Gestão de Encarregado", JOptionPane.ERROR_MESSAGE);
+
+                }
+
+            }
         }
     }//GEN-LAST:event_btnSalvarAlteraçõesActionPerformed
 
@@ -385,6 +483,17 @@ public class GerenciarEncarregadoForm extends javax.swing.JInternalFrame {
             usuarioBO.DeleteEncarregado(usuario);
             JOptionPane.showMessageDialog(null, "Encarregado Deletado com Sucesso !!!",
                     "Gestão de Usuário", JOptionPane.INFORMATION_MESSAGE);
+            this.btnExcluir.setEnabled(false);
+            this.btnSalvarAlterações.setEnabled(false);
+            txtNome.setText("");
+            txtCodigo.setText("");
+            txtEmail.setText("");
+            txtSenha.setText("");
+            cmbBuscaFuncionario.setSelectedItem("Selecione");
+            txtTipo.setText("");
+            cmbDepartamento.setSelectedItem("Selecione");
+            this.listaTabela();
+
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null, "Erro ao Deletar  Encarregado",
                     "Gestão de Encarregado", JOptionPane.ERROR_MESSAGE);
@@ -392,6 +501,7 @@ public class GerenciarEncarregadoForm extends javax.swing.JInternalFrame {
             JOptionPane.showMessageDialog(null, "Erro ao Deletar  Encarregado",
                     "Gestão de Encarregado", JOptionPane.ERROR_MESSAGE);
         }
+
     }//GEN-LAST:event_btnExcluirActionPerformed
 
     private void btnOKActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnOKActionPerformed
@@ -402,6 +512,10 @@ public class GerenciarEncarregadoForm extends javax.swing.JInternalFrame {
 
 
     }//GEN-LAST:event_cmbBuscaFuncionarioKeyPressed
+
+    private void txtNomeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtNomeActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtNomeActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -434,11 +548,22 @@ public class GerenciarEncarregadoForm extends javax.swing.JInternalFrame {
         ArrayList<String> Departamentos = new ArrayList<>();
         DepartamentoBO depBO = new DepartamentoBO();
 
-        try {
-            Departamentos = depBO.ComboBoxDepartamentos();
-        } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(null, "Erro ao popular o departamento",
-                    "Departamento", JOptionPane.ERROR_MESSAGE);
+        if (userLogado.getTipo().equals("Diretor")) {
+            try {
+                Departamentos = depBO.ComboBoxDepartamentos();
+            } catch (SQLException ex) {
+                JOptionPane.showMessageDialog(null, "Erro ao popular o departamento",
+                        "Departamento", JOptionPane.ERROR_MESSAGE);
+            }
+        } else {
+
+            try {
+                Departamentos = depBO.CMBDepartamento(userLogado.getDepartamento().getCodigo());
+            } catch (SQLException ex) {
+                JOptionPane.showMessageDialog(null, "Erro ao popular o departamento",
+                        "Departamento", JOptionPane.ERROR_MESSAGE);
+            }
+
         }
 
         cmbDepartamento.removeAllItems();

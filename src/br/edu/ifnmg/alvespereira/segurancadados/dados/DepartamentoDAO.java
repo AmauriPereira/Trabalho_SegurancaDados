@@ -396,4 +396,43 @@ public class DepartamentoDAO {
         return Departamentos;
     }
 
+    public ArrayList<String> CMBDepartamento(String CodDepartamento) throws SQLException {
+        ArrayList<String> Departamentos = new ArrayList<>();
+
+        Connection conexao = null;
+        PreparedStatement comando = null;
+        ResultSet resultado = null;
+
+        try {
+
+            conexao = BancoDadosUtil.getConnection();
+            comando = conexao.prepareStatement(SQL_SELECT_DEPARTAMENTO_POR_COD);
+            comando.setString(1, CodDepartamento);
+
+            resultado = comando.executeQuery();
+            Departamentos.removeAll(Departamentos);
+
+            while (resultado.next()) {
+                Departamentos.add(resultado.getString("NOME"));
+            }
+
+            conexao.commit();
+
+        } catch (Exception e) {
+            if (conexao != null) {
+                conexao.rollback();
+            }
+            throw new RuntimeException(e);
+
+        } finally {
+            if (comando != null && !comando.isClosed()) {
+                comando.close();
+            }
+            if (conexao != null && !conexao.isClosed()) {
+                conexao.close();
+            }
+        }
+        return Departamentos;
+    }
+
 }

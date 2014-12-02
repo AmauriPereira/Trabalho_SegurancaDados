@@ -3,7 +3,6 @@ package br.edu.ifnmg.alvespereira.segurancadados.negocio;
 import br.edu.ifnmg.alvespereira.segurancadados.dados.DepartamentoDAO;
 import br.edu.ifnmg.alvespereira.segurancadados.dados.UsuarioDAO;
 import br.edu.ifnmg.alvespereira.segurancadados.entidades.Usuario;
-import br.edu.ifnmg.alvespereira.segurancadados.excecoes.excecaoControlAcessDepartamento;
 import br.edu.ifnmg.alvespereira.segurancadados.excecoes.excecaoControleAcesso;
 import br.edu.ifnmg.alvespereira.segurancadados.excecoes.excecaoDeletarElemento;
 import br.edu.ifnmg.alvespereira.segurancadados.excecoes.excecaoEncarregadoExistente;
@@ -65,7 +64,7 @@ public class UsuarioBO {
     //INSERT ENCARREGADO: VERIFICA SE HA ALGUM ENCARREGADO CADASTRADO COM O MESMO NOME, CASO HAJA 
     //INFORMA AO USUARIO DO SISTEMA, VERIFICA SE O GERENTE ESTAR CADASTRANDO O ENCARREGADO 
     //NO SEU DEPARTAMENTO, Obs: GERENTE SÓ PODE CADASTRAR ENCARREGADOS EM SEU DEPARTAMENTO
-    public void criarEncarregado(Usuario Encarregado, Usuario userLogado) throws SQLException, excecaoEncarregadoExistente, excecaoControleAcesso, excecaoControlAcessDepartamento {
+    public void criarEncarregado(Usuario Encarregado, Usuario userLogado) throws SQLException, excecaoEncarregadoExistente, excecaoControleAcesso {
         UsuarioDAO userDAO = new UsuarioDAO();
         DepartamentoDAO DepDAO = new DepartamentoDAO();
 
@@ -80,9 +79,6 @@ public class UsuarioBO {
 
                     if (Encarregado.getDepartamento().getCodigo().equals(userLogado.getDepartamento().getCodigo())) {
                         userDAO.criaUSER(Encarregado);
-
-                    } else {
-                        throw new excecaoControlAcessDepartamento();
 
                     }
 
@@ -131,6 +127,17 @@ public class UsuarioBO {
 
     }
 
+    public ArrayList<String> ComboBoxEncarregadoPorDepartamento(String CodDepartamento) throws SQLException {
+
+        UsuarioDAO usuarioDAO = new UsuarioDAO();
+        ArrayList<String> Encarregado = new ArrayList<>();
+
+        Encarregado = usuarioDAO.cmbEncarregadosPorDepartamento(CodDepartamento);
+
+        return Encarregado;
+
+    }
+
     public ResultSet preencheTabelaGerente() throws SQLException {
         UsuarioDAO Gerente = new UsuarioDAO();
         ResultSet resultPreencherTabela = Gerente.preencherTabelaGerente();
@@ -142,6 +149,22 @@ public class UsuarioBO {
     public ResultSet preencheTabelaEncarregado(String Departamento) throws SQLException {
         UsuarioDAO Encarregado = new UsuarioDAO();
         ResultSet resultPreencherTabela = Encarregado.preencherTabelaEncarregado(Departamento);
+
+        return resultPreencherTabela;
+
+    }
+
+    public ResultSet preencheTabelaEncarregadoPorDepartamento(String CodDepartamento) throws SQLException {
+        UsuarioDAO Encarregado = new UsuarioDAO();
+        ResultSet resultPreencherTabela = Encarregado.preencherTabelaEncarregadOPordepartamento(CodDepartamento);
+
+        return resultPreencherTabela;
+
+    }
+
+    public ResultSet preencheTabelaEncarregadoStODOS() throws SQLException {
+        UsuarioDAO Encarregado = new UsuarioDAO();
+        ResultSet resultPreencherTabela = Encarregado.preencherTabelaEncarregadOTodosdepartamento();
 
         return resultPreencherTabela;
 

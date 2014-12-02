@@ -1,5 +1,6 @@
 package br.edu.ifnmg.alvespereira.segurancadados.apresentacao;
 
+import br.edu.ifnmg.alvespereira.segurancadados.apresentacao.utilitarios.ValidacaoEmail;
 import br.edu.ifnmg.alvespereira.segurancadados.apresentacao.utilitarios.criptografiaUtil;
 import br.edu.ifnmg.alvespereira.segurancadados.entidades.Departamento;
 import br.edu.ifnmg.alvespereira.segurancadados.entidades.Usuario;
@@ -8,8 +9,6 @@ import br.edu.ifnmg.alvespereira.segurancadados.negocio.DepartamentoBO;
 import br.edu.ifnmg.alvespereira.segurancadados.negocio.UsuarioBO;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import net.proteanit.sql.DbUtils;
 
@@ -349,53 +348,85 @@ public class GerenciarGerenteForm extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_tbResultadoBuscaMouseClicked
 
     private void btnSalvarAlteraçõesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalvarAlteraçõesActionPerformed
-        int idUsuario;
-        String Nome;
-        String Email;
-        String Tipo;
-        String Senha = null;
-        Departamento Departamento = null;
+        if (txtNome.getText().equals("") || txtSenha.getText().equals("")
+                || txtEmail.getText().equals("")) {
+            JOptionPane.showMessageDialog(null, "Não foi possivel Atualizar o cadastro \n Preencha todos os campos",
+                    "gestão de Gerente", JOptionPane.ERROR_MESSAGE);
+        } else {
+            if (cmbDepartamento.getSelectedItem().equals("Selecione")) {
+                JOptionPane.showMessageDialog(null, "Não foi possivel Atualizar o cadastro \n Selecione um Departamento",
+                        "gestão de Gerente", JOptionPane.ERROR_MESSAGE);
+            } else {
+                boolean emailValidado;
+                ValidacaoEmail validacao = new ValidacaoEmail();
+                emailValidado = validacao.validaEmail(txtEmail.getText());
 
-        //Seta o departamento do usuario
-        try {
-            DepartamentoBO depBO = new DepartamentoBO();
-            Departamento = depBO.selectDepartamento(cmbDepartamento.getSelectedItem() + "");
-        } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(null, "Erro ao selecionar o departamento",
-                    "Cadastro de usuários", JOptionPane.ERROR_MESSAGE);
-        }
+                if (emailValidado == true) {
+                    int idUsuario;
+                    String Nome;
+                    String Email;
+                    String Tipo;
+                    String Senha = null;
+                    Departamento Departamento = null;
 
-        //Seta o Nome e a descrição projeto
-        Nome = txtNome.getText();
-        Email = txtEmail.getText();
-        Tipo = txtTipo.getText();
-        Senha = txtSenha.getText();
-        idUsuario = Integer.parseInt(txtCodigo.getText());
+                    //Seta o departamento do usuario
+                    try {
+                        DepartamentoBO depBO = new DepartamentoBO();
+                        Departamento = depBO.selectDepartamento(cmbDepartamento.getSelectedItem() + "");
+                    } catch (SQLException ex) {
+                        JOptionPane.showMessageDialog(null, "Erro ao selecionar o departamento",
+                                "Cadastro de usuários", JOptionPane.ERROR_MESSAGE);
+                    }
 
-        //codigo abaixo chama mtodo q realiza a criptografia da senha
-        criptografiaUtil criptografiaSenha = new criptografiaUtil();
-        Senha = criptografiaSenha.criptografiaSenha(Senha);
+                    //Seta o Nome e a descrição projeto
+                    Nome = txtNome.getText();
+                    Email = txtEmail.getText();
+                    Tipo = txtTipo.getText();
+                    Senha = txtSenha.getText();
+                    idUsuario = Integer.parseInt(txtCodigo.getText());
 
-        //Cria um novo projeto e seta todos os dados
-        Usuario gerente = new Usuario();
-        gerente.setIdUsuario(idUsuario);
-        gerente.setNome(Nome);
-        gerente.setEmail(Email);
-        gerente.setSenha(Senha);
-        gerente.setDepartamento(Departamento);
-        gerente.setTipo(Tipo);
+                    //codigo abaixo chama mtodo q realiza a criptografia da senha
+                    criptografiaUtil criptografiaSenha = new criptografiaUtil();
+                    Senha = criptografiaSenha.criptografiaSenha(Senha);
 
-        //Cria um novo objeto do tipo ProjetoBO e 
-        //passa como parmetro o projeto que será cadastrado
-        UsuarioBO usuarioBO = new UsuarioBO();
+                    //Cria um novo projeto e seta todos os dados
+                    Usuario gerente = new Usuario();
+                    gerente.setIdUsuario(idUsuario);
+                    gerente.setNome(Nome);
+                    gerente.setEmail(Email);
+                    gerente.setSenha(Senha);
+                    gerente.setDepartamento(Departamento);
+                    gerente.setTipo(Tipo);
 
-        try {
-            usuarioBO.UpdateUsuario(gerente);
-            JOptionPane.showMessageDialog(null, "Gerente Atualizado com Sucesso !!!",
-                    "Gestão de Usuário", JOptionPane.INFORMATION_MESSAGE);
-        } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(null, "Erro ao Atualizado Gerente",
-                    "Gestão de Gerente", JOptionPane.ERROR_MESSAGE);
+                    //Cria um novo objeto do tipo ProjetoBO e 
+                    //passa como parmetro o projeto que será cadastrado
+                    UsuarioBO usuarioBO = new UsuarioBO();
+
+                    try {
+                        usuarioBO.UpdateUsuario(gerente);
+                        JOptionPane.showMessageDialog(null, "Gerente Atualizado com Sucesso !!!",
+                                "Gestão de Usuário", JOptionPane.INFORMATION_MESSAGE);
+                        this.listarGerentes();
+                        this.btnExcluir.setEnabled(false);
+                        this.btnSalvarAlterações.setEnabled(false);
+                        txtNome.setText("");
+                        txtCodigo.setText("");
+                        txtEmail.setText("");
+                        txtSenha.setText("");
+                        txtCampoBuscaGerente.setText("");
+                        txtTipo.setText("");
+                        cmbDepartamento.setSelectedItem("Selecione");
+
+                    } catch (SQLException ex) {
+                        JOptionPane.showMessageDialog(null, "Erro ao Atualizado Gerente",
+                                "Gestão de Gerente", JOptionPane.ERROR_MESSAGE);
+                    }
+
+                } else {
+                    JOptionPane.showMessageDialog(null, "Email Inválido !!!", "Gestão de Gerente", JOptionPane.ERROR_MESSAGE);
+
+                }
+            }
         }
     }//GEN-LAST:event_btnSalvarAlteraçõesActionPerformed
 
@@ -404,28 +435,40 @@ public class GerenciarGerenteForm extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_txtTipoActionPerformed
 
     private void btnExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExcluirActionPerformed
-        //Cria um novo projeto e seta o ID do  projetoque sera excluido
+
         Usuario usuario = new Usuario();
 
         int codGerente = Integer.parseInt(txtCodigo.getText());
         usuario.setIdUsuario(codGerente);
         usuario.setTipo("Gerente");
 
-        //Cria um novo objeto do tipo ProjetoBO e 
-        //passa como parmetro o projeto que será Deletado
         UsuarioBO usuarioBO = new UsuarioBO();
 
         try {
             usuarioBO.DeleteGerente(usuario);
             JOptionPane.showMessageDialog(null, "Gerente Deletado com Sucesso !!!",
                     "Gestão de Gerente", JOptionPane.INFORMATION_MESSAGE);
+
+            this.listarGerentes();
+            this.btnExcluir.setEnabled(false);
+            this.btnSalvarAlterações.setEnabled(false);
+            txtNome.setText("");
+            txtCodigo.setText("");
+            txtEmail.setText("");
+            txtSenha.setText("");
+            txtCampoBuscaGerente.setText("");
+            txtTipo.setText("");
+            cmbDepartamento.setSelectedItem("Selecione");
+
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null, "Erro ao Deletado Gerente",
                     "Gestão de Gerente", JOptionPane.ERROR_MESSAGE);
+
         } catch (excecaoDeletarElemento ex) {
             JOptionPane.showMessageDialog(null, "Erro ao Deletado Gerente",
                     "Gestão de Gerente", JOptionPane.ERROR_MESSAGE);
         }
+
     }//GEN-LAST:event_btnExcluirActionPerformed
 
     private void btnOKActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnOKActionPerformed

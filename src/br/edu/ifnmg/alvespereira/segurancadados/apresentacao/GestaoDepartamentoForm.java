@@ -307,7 +307,7 @@ public class GestaoDepartamentoForm extends javax.swing.JInternalFrame {
 
         DepartamentoBO departamentoBO = new DepartamentoBO();
         try {
-            departamentoBO.UpdateDep(DEP, CodDepartamentoAntigo);
+            departamentoBO.UpdateDep(DEP);
 
             JOptionPane.showMessageDialog(null, "Departamento Atuzalido com Sucesso !!!",
                     "Gestão de Departamento", JOptionPane.INFORMATION_MESSAGE);

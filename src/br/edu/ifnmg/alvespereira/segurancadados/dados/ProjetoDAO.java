@@ -38,6 +38,8 @@ public class ProjetoDAO {
     private static final String SQL_SELECT_UM_PROJETO = "SELECT NOME, DESCRICAO, DATA_INCIO, "
             + "DATA_TERMINO, COD_DEPARTAMENTO, ID_PROJETO FROM PROJETO WHERE  PROJETO.NOME = ?";
 
+    private static final String SQL_SELECT_PROJETOS_POR_DEPARTAMENTO = "SELECT NOME   AS PROJETO FROM PROJETO   WHERE PROJETO.COD_DEPARTAMENTO = ?";
+
     private static final String SQL_UPDATE_UM_PROJETO = "UPDATE PROJETO SET PROJETO.NOME = ?, "
             + "PROJETO.DESCRICAO = ?, PROJETO.DATA_INCIO =  ? , PROJETO.DATA_TERMINO =  ?,"
             + "PROJETO.COD_DEPARTAMENTO = ? WHERE PROJETO.ID_PROJETO = ?";
@@ -206,6 +208,46 @@ public class ProjetoDAO {
             }
         }
         return projet;
+    }
+
+    public ArrayList<String> CMBProjetos(String CodDepartamento) throws SQLException {
+        ArrayList<String> Projeto = new ArrayList<>();
+
+        Connection conexao = null;
+        PreparedStatement comando = null;
+        ResultSet resultado = null;
+
+        try {
+
+            conexao = BancoDadosUtil.getConnection();
+            comando = conexao.prepareStatement(SQL_SELECT_PROJETOS_POR_DEPARTAMENTO);
+            comando.setString(1, CodDepartamento);
+
+    
+            resultado = comando.executeQuery();
+            Projeto.removeAll(Projeto);
+
+            while (resultado.next()) {
+                Projeto.add(resultado.getString("NOME"));
+            }
+
+            conexao.commit();
+
+        } catch (Exception e) {
+            if (conexao != null) {
+                conexao.rollback();
+            }
+            throw new RuntimeException(e);
+
+        } finally {
+            if (comando != null && !comando.isClosed()) {
+                comando.close();
+            }
+            if (conexao != null && !conexao.isClosed()) {
+                conexao.close();
+            }
+        }
+        return Projeto;
     }
 
     public Projeto selectTodosProjetos() throws SQLException {

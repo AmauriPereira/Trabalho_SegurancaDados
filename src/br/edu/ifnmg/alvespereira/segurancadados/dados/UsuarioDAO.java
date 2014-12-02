@@ -18,8 +18,13 @@ public class UsuarioDAO {
     private static final String SQL_SELECT_DIRETOR = "SELECT  NOME, TIPO, SENHA, EMAIL, ID_USUARIO FROM USUARIO WHERE TIPO LIKE ?";
     private static final String SQL_SELECT_GERENTE = "SELECT  NOME, TIPO, SENHA, EMAIL, COD_DEPARTAMENTO , ID_USUARIO FROM USUARIO WHERE NOME = ? AND TIPO = ?";
     private static final String SQL_SELECT_ENCARREGADO = "SELECT  NOME, TIPO, SENHA, EMAIL, COD_DEPARTAMENTO, ID_USUARIO FROM USUARIO WHERE NOME = ? AND TIPO = ?";
+    private static final String SQL_SELECT_ENCARREGADO_POR_DEPARTAMENTO = "SELECT  NOME FROM USUARIO WHERE COD_DEPARTAMENTO = ? AND TIPO = 'Encarregado'";
 
     private static final String SQL_SELECT_TODOS_ENCARREGADO = "SELECT NOME, TIPO, SENHA, EMAIL, COD_DEPARTAMENTO, ID_USUARIO FROM USUARIO WHERE TIPO = ?";
+
+    private static final String SQL_SELECT_TODOS_ENCARREGADOss = "SELECT ID_USUARIO AS Código, NOME ,TIPO AS Cargo,DEPARTAMENTO.NOME AS Departamento, EMAIL AS Email FROM USUARIO "
+            + "inner join DEPARTAMENTO on (USUARIO.COD_DEPARTAMENTO =  DEPARTAMENTO.COD_DEPARTAMENTO)"
+            + "WHERE TIPO = 'Encarregado'";
 
     private static final String SQL_SELECT_TODOS_GERENTE = "SELECT ID_USUARIO AS Código, NOME ,TIPO AS Cargo,DEPARTAMENTO.NOME AS Departamento, EMAIL AS Email FROM USUARIO "
             + "inner join DEPARTAMENTO on (USUARIO.COD_DEPARTAMENTO =  DEPARTAMENTO.COD_DEPARTAMENTO)"
@@ -29,11 +34,15 @@ public class UsuarioDAO {
             + "inner join DEPARTAMENTO on (USUARIO.COD_DEPARTAMENTO =  DEPARTAMENTO.COD_DEPARTAMENTO)"
             + "WHERE TIPO = 'Encarregado' AND DEPARTAMENTO.NOME = ?";
 
+    private static final String SQL_SELECT_TODOS_ENCARREGADO_doDepartaemento = "SELECT ID_USUARIO AS Código, NOME ,TIPO AS Cargo,DEPARTAMENTO.NOME AS Departamento, EMAIL AS Email FROM USUARIO "
+            + "inner join DEPARTAMENTO on (USUARIO.COD_DEPARTAMENTO =  DEPARTAMENTO.COD_DEPARTAMENTO)"
+            + "WHERE TIPO = 'Encarregado' AND DEPARTAMENTO.COD_DEPARTAMENTO = ?";
+
     private static final String SQL_SELECT_TODOS_GERENTE_PESQUISA = "SELECT ID_USUARIO AS Código, NOME ,TIPO AS Cargo,DEPARTAMENTO.NOME AS Departamento, EMAIL AS Email  FROM USUARIO "
             + "inner join DEPARTAMENTO on (USUARIO.COD_DEPARTAMENTO =  DEPARTAMENTO.COD_DEPARTAMENTO)"
             + "WHERE NOME LIKE ? AND TIPO = 'Gerente'";
 
-    private static final String SQL_SELECT_GERENTE_POR_DEPARTAMENTO = "SELECT  NOME, EMAIL, SENHA, TIPO, DEPARTAMENTO.NOME, ID_USUARIO FROM USUARIO "
+    private static final String SQL_SELECT_GERENTE_POR_DEPARTAMENTO = "SELECT  NOME, EMAIL, SENHA, TIPO, USUARIO.COD_DEPARTAMENTO, DEPARTAMENTO.NOME,  ID_USUARIO FROM USUARIO "
             + "inner join DEPARTAMENTO on (DEPARTAMENTO.COD_DEPARTAMENTO =  USUARIO.COD_DEPARTAMENTO)"
             + "WHERE USUARIO.TIPO =  ?  AND  USUARIO.COD_DEPARTAMENTO = ?";
 
@@ -47,6 +56,9 @@ public class UsuarioDAO {
 
     private static final String SQL_SELECT_RELATORIO_CADASTRO_GERENTE = "SELECT ID_USUARIO, NOME, SENHA, EMAIL FROM USUARIO WHERE TIPO = 'Encarregado'";
 
+    private static final String SQL_SELECT_REATORIO_CADASTRO_GERENTE = "SELECT ID_USUARIO, NOME, SENHA, EMAIL FROM USUARIO WHERE TIPO = 'Encarregado'";
+
+    //private static final String SQL_SELECT_RELATORIO_CADASTRO_GERENTE = "SELECT ID_USUARIO, NOME, SENHA, EMAIL FROM USUARIO WHERE TIPO = 'Encarregado'";
     // ABAIXO METODOS DE INSERÇÃO(INSERT), REMOÇÃO(DELETE), ATUALIZAÇÃO(UPDATE), RECUPERAÇÃO(SELECT)
     //INSERT DEPARTAMENTO 
     //INSERT USUÁRIOS(ENCARREGADO, DIRETOR, GERENTE)
@@ -397,6 +409,77 @@ public class UsuarioDAO {
 
     }
 
+    public ResultSet preencherTabelaEncarregadOPordepartamento(String CodDepartamento) throws SQLException {
+
+        Connection conexao = null;
+        PreparedStatement comando = null;
+        ResultSet resultado = null;
+
+        try {
+
+            conexao = BancoDadosUtil.getConnection();
+
+            comando = conexao.prepareStatement(SQL_SELECT_TODOS_ENCARREGADO_doDepartaemento);
+            comando.setString(1, CodDepartamento);
+
+            resultado = comando.executeQuery();
+
+            conexao.commit();
+
+        } catch (Exception e) {
+            if (conexao != null) {
+                conexao.rollback();
+            }
+            throw new RuntimeException(e);
+
+        } finally {
+            if (comando != null && !comando.isClosed()) {
+                comando.close();
+            }
+            if (conexao != null && !conexao.isClosed()) {
+                conexao.close();
+            }
+        }
+
+        return resultado;
+
+    }
+
+    public ResultSet preencherTabelaEncarregadOTodosdepartamento() throws SQLException {
+
+        Connection conexao = null;
+        PreparedStatement comando = null;
+        ResultSet resultado = null;
+
+        try {
+
+            conexao = BancoDadosUtil.getConnection();
+
+            comando = conexao.prepareStatement(SQL_SELECT_TODOS_ENCARREGADOss);
+
+            resultado = comando.executeQuery();
+
+            conexao.commit();
+
+        } catch (Exception e) {
+            if (conexao != null) {
+                conexao.rollback();
+            }
+            throw new RuntimeException(e);
+
+        } finally {
+            if (comando != null && !comando.isClosed()) {
+                comando.close();
+            }
+            if (conexao != null && !conexao.isClosed()) {
+                conexao.close();
+            }
+        }
+
+        return resultado;
+
+    }
+
     //SELECIONA TODOS OS ENCARREGADOS, E ARMAZENA EM UMA LISTA
     public ArrayList<String> cbEncarregado() throws SQLException {
         ArrayList<String> Encaregado = new ArrayList<>();
@@ -409,6 +492,44 @@ public class UsuarioDAO {
             conexao = BancoDadosUtil.getConnection();
             comando = conexao.prepareStatement(SQL_SELECT_TODOS_ENCARREGADO);
             comando.setString(1, "Encarregado");
+
+            resultado = comando.executeQuery();
+            Encaregado.removeAll(Encaregado);
+
+            while (resultado.next()) {
+                Encaregado.add(resultado.getString("NOME"));
+            }
+
+            conexao.commit();
+
+        } catch (Exception e) {
+            if (conexao != null) {
+                conexao.rollback();
+            }
+            throw new RuntimeException(e);
+
+        } finally {
+            if (comando != null && !comando.isClosed()) {
+                comando.close();
+            }
+            if (conexao != null && !conexao.isClosed()) {
+                conexao.close();
+            }
+        }
+        return Encaregado;
+    }
+
+    public ArrayList<String> cmbEncarregadosPorDepartamento(String CodDepartamento) throws SQLException {
+        ArrayList<String> Encaregado = new ArrayList<>();
+        Connection conexao = null;
+        PreparedStatement comando = null;
+        ResultSet resultado = null;
+
+        try {
+
+            conexao = BancoDadosUtil.getConnection();
+            comando = conexao.prepareStatement(SQL_SELECT_ENCARREGADO_POR_DEPARTAMENTO);
+            comando.setString(1, CodDepartamento);
 
             resultado = comando.executeQuery();
             Encaregado.removeAll(Encaregado);

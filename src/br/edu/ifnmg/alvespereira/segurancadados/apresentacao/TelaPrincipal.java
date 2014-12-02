@@ -281,7 +281,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
         jMenuBar1.add(mnuCadastros);
 
         mnuAtualizar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/edu/ifnmg/alvespereira/segurancadados/icones/tous-refresh-reload-onglets-icone-7131-32.png"))); // NOI18N
-        mnuAtualizar.setText("Gestão de  Cadastros             ");
+        mnuAtualizar.setText("Gestão de  Cadastros          ");
 
         itmMnu_Departamento.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_F1, java.awt.event.InputEvent.ALT_MASK));
         itmMnu_Departamento.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/edu/ifnmg/alvespereira/segurancadados/icones/0258.png"))); // NOI18N
@@ -336,9 +336,10 @@ public class TelaPrincipal extends javax.swing.JFrame {
         jMenuBar1.add(mnuAtualizar);
 
         jMenu1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/edu/ifnmg/alvespereira/segurancadados/icones/listes-icone-3873-32.png"))); // NOI18N
-        jMenu1.setText("Controle de Atividades");
+        jMenu1.setText("Controle de Atividades            ");
 
         itmMnuLancarHoras.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_L, java.awt.event.InputEvent.CTRL_MASK));
+        itmMnuLancarHoras.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/edu/ifnmg/alvespereira/segurancadados/icones/choisir-consulter-icone-6964-32.png"))); // NOI18N
         itmMnuLancarHoras.setText("Lançar Horas");
         itmMnuLancarHoras.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -349,7 +350,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
 
         jMenuBar1.add(jMenu1);
 
-        mnuRelatorios.setText("Relatórios");
+        mnuRelatorios.setText("Relatórios                         ");
 
         itmMnuRelatorioUsuarios.setText("Usuários");
         itmMnuRelatorioUsuarios.addActionListener(new java.awt.event.ActionListener() {
@@ -601,7 +602,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
 
             if (usuarioLogado.getTipo().equals("Gerente")) {
 
-                CadastroProjetoForm cadastroProjetoForm = new CadastroProjetoForm();
+                CadastroProjetoForm cadastroProjetoForm = new CadastroProjetoForm(usuarioLogado);
 
                 cadastroProjetoForm.setVisible(true);
                 centralizaForm(cadastroProjetoForm);
@@ -654,12 +655,12 @@ public class TelaPrincipal extends javax.swing.JFrame {
                 //Obs: Somente diretor e gerente podem cadastrar Encarregados.
                 if (usuarioLogado.getTipo().equals("Gerente")) {
 
-                    CadastroAtividadeForm cadastroAtividadeForm = new CadastroAtividadeForm();
+                    CadastroAtividadeForm cadastroAtividade = new CadastroAtividadeForm(usuarioLogado);
 
-                    cadastroAtividadeForm.setVisible(true);
-                    centralizaForm(cadastroAtividadeForm);
+                    cadastroAtividade.setVisible(true);
+                    centralizaForm(cadastroAtividade);
 
-                    JDP1.add(cadastroAtividadeForm);
+                    JDP1.add(cadastroAtividade);
 
                 } else {
                     JOptionPane.showMessageDialog(null, "Você não possui previlégios para acessar \n   "
@@ -691,6 +692,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
 
     private void itmMnu_AtividadeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itmMnu_AtividadeActionPerformed
         if (usuarioLogado.getTipo().equals("Gerente")) {
+
             GerenciarAtvidadeFom gerenciarAtvidadeFom = null;
             gerenciarAtvidadeFom = new GerenciarAtvidadeFom(usuarioLogado);
             gerenciarAtvidadeFom.setVisible(true);
@@ -700,7 +702,6 @@ public class TelaPrincipal extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "Você não possui previlégios para acessar \n   "
                     + "a Tela de Gestão de Atividades!",
                     "Gestão de Atividades", JOptionPane.ERROR_MESSAGE);
-
         }
 
     }//GEN-LAST:event_itmMnu_AtividadeActionPerformed
@@ -729,8 +730,8 @@ public class TelaPrincipal extends javax.swing.JFrame {
             JDP1.add(lancarHorasAtividadeForm);
         } else {
             JOptionPane.showMessageDialog(null, "Você não possui previlégios para acessar \n   "
-                    + "a Tela de Gestão de Gerente!",
-                    "Cadastro de Gerente", JOptionPane.ERROR_MESSAGE);
+                    + "a Tela de Laçamento de Horas Trabalhadas!",
+                    "Laçamento de Horas Trabalhadas", JOptionPane.ERROR_MESSAGE);
 
         }
     }//GEN-LAST:event_itmMnuLancarHorasActionPerformed

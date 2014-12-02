@@ -3,7 +3,11 @@ package br.edu.ifnmg.alvespereira.segurancadados.negocio;
 import br.edu.ifnmg.alvespereira.segurancadados.apresentacao.utilitarios.RelatorioProjetos;
 import br.edu.ifnmg.alvespereira.segurancadados.dados.ProjetoDAO;
 import br.edu.ifnmg.alvespereira.segurancadados.entidades.Projeto;
+<<<<<<< HEAD
 import br.edu.ifnmg.alvespereira.segurancadados.entidades.Usuario;
+=======
+import br.edu.ifnmg.alvespereira.segurancadados.excecoes.ExcecaoprojetoExistente;
+>>>>>>> origin/master
 import br.edu.ifnmg.alvespereira.segurancadados.excecoes.excecaoDeletarElemento;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -11,17 +15,31 @@ import java.util.ArrayList;
 
 public class ProjetoBO {
 
-    public void criarProjeto(Projeto projeto) throws SQLException {
+    public void criarProjeto(Projeto projeto) throws SQLException, ExcecaoprojetoExistente {
 
         ProjetoDAO projetDAO = new ProjetoDAO();
-        projetDAO.criarProjeto(projeto);
+        Projeto projet = new Projeto();
+        projet = projetDAO.selectUmProjeto(projeto.getNome());
+
+        if (projet == null) {
+            projetDAO.criarProjeto(projeto);
+        } else {
+            throw new ExcecaoprojetoExistente();
+        }
 
     }
 
-    public void UpdateProjeto(Projeto projeto) throws SQLException {
+    public void UpdateProjeto(Projeto projeto) throws SQLException, ExcecaoprojetoExistente {
 
         ProjetoDAO projetDAO = new ProjetoDAO();
-        projetDAO.AtualizarProjeto(projeto);
+        Projeto projet = new Projeto();
+        projet = projetDAO.selectUmProjeto(projeto.getNome());
+
+        if (projet == null || projet.getIdProjeto() == projeto.getIdProjeto()) {
+            projetDAO.AtualizarProjeto(projeto);
+        } else {
+            throw new ExcecaoprojetoExistente();
+        }
 
     }
 
@@ -69,6 +87,17 @@ public class ProjetoBO {
         ArrayList<String> Projeto = new ArrayList<>();
 
         Projeto = projetoDAO.cbEscolhaProjetos(codDepartamento);
+
+        return Projeto;
+
+    }
+
+    public ArrayList<String> CMBProjeto(String CodDepartamento) throws SQLException {
+
+        ProjetoDAO projetoDAO = new ProjetoDAO();
+        ArrayList<String> Projeto = new ArrayList<>();
+
+        Projeto = projetoDAO.CMBProjetos(CodDepartamento);
 
         return Projeto;
 

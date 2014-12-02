@@ -3,19 +3,27 @@ package br.edu.ifnmg.alvespereira.segurancadados.apresentacao;
 import br.edu.ifnmg.alvespereira.segurancadados.entidades.Atividade;
 import br.edu.ifnmg.alvespereira.segurancadados.entidades.Projeto;
 import br.edu.ifnmg.alvespereira.segurancadados.entidades.Usuario;
+import br.edu.ifnmg.alvespereira.segurancadados.excecoes.atividadeExistente;
+
 import br.edu.ifnmg.alvespereira.segurancadados.negocio.AtividadeBO;
 import br.edu.ifnmg.alvespereira.segurancadados.negocio.ProjetoBO;
 import br.edu.ifnmg.alvespereira.segurancadados.negocio.UsuarioBO;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 
 public class CadastroAtividadeForm extends javax.swing.JInternalFrame {
 
-    public CadastroAtividadeForm() {
+    private static Usuario usuarioLogado = new Usuario();
+
+    public CadastroAtividadeForm(Usuario userLogado) {
         initComponents();
+        this.usuarioLogado = userLogado;
         this.popularCbProjeto();
         this.popularCbEncarregado();
+
     }
 
     //Metodo que add todos os projetos cadastrados na ComboBox
@@ -24,7 +32,7 @@ public class CadastroAtividadeForm extends javax.swing.JInternalFrame {
         ProjetoBO projetoBO = new ProjetoBO();
 
         try {
-            Projetos = projetoBO.ComboBoxProjeto();
+            Projetos = projetoBO.CMBProjeto(usuarioLogado.getDepartamento().getCodigo());
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null, "Erro ao popular o projetos",
                     "Projetos", JOptionPane.ERROR_MESSAGE);
@@ -44,7 +52,7 @@ public class CadastroAtividadeForm extends javax.swing.JInternalFrame {
         UsuarioBO EncarregadoBO = new UsuarioBO();
 
         try {
-            Encarregado = EncarregadoBO.ComboBoxEncarregado();
+            Encarregado = EncarregadoBO.ComboBoxEncarregadoPorDepartamento(this.usuarioLogado.getDepartamento().getCodigo());
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null, "Erro ao popular os Encarregados",
                     "Projetos", JOptionPane.ERROR_MESSAGE);
@@ -58,6 +66,15 @@ public class CadastroAtividadeForm extends javax.swing.JInternalFrame {
 
     }
 
+    public void limpar() {
+
+        txtNome.setText("");
+        txtDuracao.setText("");
+
+        cmbProjeto.setSelectedItem("Selecione");
+        cmbEncarregado.setSelectedItem("Selecione");
+    }
+
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -67,11 +84,11 @@ public class CadastroAtividadeForm extends javax.swing.JInternalFrame {
         lblDuracao = new javax.swing.JLabel();
         txtNome = new javax.swing.JTextField();
         lblEncarregado = new javax.swing.JLabel();
-        cmbEncarregado = new javax.swing.JComboBox();
         lblProjeto = new javax.swing.JLabel();
         cmbProjeto = new javax.swing.JComboBox();
         btnCadastrar = new javax.swing.JButton();
         txtDuracao = new javax.swing.JTextField();
+        cmbEncarregado = new javax.swing.JComboBox();
 
         setClosable(true);
         setIconifiable(true);
@@ -83,11 +100,9 @@ public class CadastroAtividadeForm extends javax.swing.JInternalFrame {
 
         lblNome.setText("Nome:");
 
-        lblDuracao.setText("Duração:");
+        lblDuracao.setText("Duração(HH:mm):");
 
         lblEncarregado.setText("Encarregado:");
-
-        cmbEncarregado.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
         lblProjeto.setText("Projeto:");
 
@@ -105,6 +120,8 @@ public class CadastroAtividadeForm extends javax.swing.JInternalFrame {
                 btnCadastrarActionPerformed(evt);
             }
         });
+
+        cmbEncarregado.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
         javax.swing.GroupLayout jPanelDadosAtividadeLayout = new javax.swing.GroupLayout(jPanelDadosAtividade);
         jPanelDadosAtividade.setLayout(jPanelDadosAtividadeLayout);
@@ -133,13 +150,13 @@ public class CadastroAtividadeForm extends javax.swing.JInternalFrame {
                                 .addComponent(lblEncarregado)
                                 .addGap(18, 18, 18)))
                         .addGroup(jPanelDadosAtividadeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(cmbEncarregado, 0, 297, Short.MAX_VALUE)
-                            .addComponent(cmbProjeto, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                            .addComponent(cmbProjeto, 0, 297, Short.MAX_VALUE)
+                            .addComponent(cmbEncarregado, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
                 .addContainerGap())
             .addGroup(jPanelDadosAtividadeLayout.createSequentialGroup()
                 .addGap(149, 149, 149)
                 .addComponent(btnCadastrar)
-                .addContainerGap(134, Short.MAX_VALUE))
+                .addContainerGap(155, Short.MAX_VALUE))
         );
 
         jPanelDadosAtividadeLayout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {lblDuracao, lblEncarregado, lblNome, lblProjeto});
@@ -164,7 +181,8 @@ public class CadastroAtividadeForm extends javax.swing.JInternalFrame {
                     .addComponent(lblEncarregado)
                     .addComponent(cmbEncarregado, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
-                .addComponent(btnCadastrar, javax.swing.GroupLayout.DEFAULT_SIZE, 49, Short.MAX_VALUE))
+                .addComponent(btnCadastrar, javax.swing.GroupLayout.DEFAULT_SIZE, 46, Short.MAX_VALUE)
+                .addContainerGap())
         );
 
         jPanelDadosAtividadeLayout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {cmbProjeto, txtNome});
@@ -190,56 +208,95 @@ public class CadastroAtividadeForm extends javax.swing.JInternalFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnCadastrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCadastrarActionPerformed
+        if (txtNome.getText().equals("") || txtDuracao.getText().equals("")) {
+            JOptionPane.showMessageDialog(null, "Erro - Preencha todos os Campos",
+                    "Gestão de Atividade", JOptionPane.ERROR_MESSAGE);
+        } else {
 
-        //Tela de Cadastro de Atividades
-        String Nome = txtNome.getText();
-        float Horas = Float.parseFloat(txtDuracao.getText());
+            if (cmbProjeto.getSelectedItem().equals("Selecione")) {
+                JOptionPane.showMessageDialog(null, "Erro selecione o Projeto",
+                        "Gestão de Atividade", JOptionPane.ERROR_MESSAGE);
+            } else {
 
-        Float Duracao = Horas;
+                if (cmbEncarregado.getSelectedItem().equals("Selecione")) {
+                    JOptionPane.showMessageDialog(null, "Erro selecione o Encarregado",
+                            "Gestão de Atividade", JOptionPane.ERROR_MESSAGE);
+                } else {
+                    //Tela de Cadastro de Atividades
+                    String Nome = txtNome.getText();
 
-///Busca o Encarregado referente ao nome selecionado na combobox encarregado
-        //e armazena os dados na variavel encarregado
-        Usuario encarregado = null;
+                    Float Duracao = null;
+                    boolean validacao = false;
 
-        try {
-            UsuarioBO EncarregadoBO = new UsuarioBO();
-            encarregado = EncarregadoBO.selectUmEncarregado(cmbEncarregado.getSelectedItem() + "", "Encarregado");
-        } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(null, "Erro ao selecionar o Encarregado",
-                    "Cadastro de Atividade", JOptionPane.ERROR_MESSAGE);
-        }
+                    try {
+                        float Horas = Float.parseFloat(txtDuracao.getText());
 
-        //Busca o projeto referente ao nome selecionado na combobox projeto
-        //e armazena os dados na variavel projet
-        Projeto projet = null;
+                        Duracao = Horas;
+                        validacao = true;
 
-        try {
-            ProjetoBO projetBO = new ProjetoBO();
-            projet = projetBO.selectUmProjeto(cmbProjeto.getSelectedItem() + "");
-        } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(null, "Erro ao selecionar o Projeto",
-                    "Cadastro de Atividade", JOptionPane.ERROR_MESSAGE);
-        }
+                    } catch (NumberFormatException ex) {
+                        JOptionPane.showMessageDialog(null, "Digite somente numeros no campo Duracao!!! \n "
+                                + "Formato aceitavel(Hrs.Min) - Ex(10.30)",
+                                "Cadastro de Atividade", JOptionPane.ERROR_MESSAGE);
+                    }
 
-        //Cria a variavel do tipo atividade e seta os dados na mesma
-        Atividade atividade = new Atividade();
-        atividade.setNome(Nome);
-        atividade.setDuracao(Duracao);
-        atividade.setEncarregado(encarregado);
-        atividade.setProjeto(projet);
+                    ///Busca o Encarregado referente ao nome selecionado na combobox encarregado
+                    //e armazena os dados na variavel encarregado
+                    Usuario encarregado = null;
 
-        try {
-            AtividadeBO AtividadeBO = new AtividadeBO();
-            AtividadeBO.criarAtividade(atividade);
+                    try {
+                        UsuarioBO EncarregadoBO = new UsuarioBO();
+                        encarregado = EncarregadoBO.selectUmEncarregado(cmbEncarregado.getSelectedItem() + "", "Encarregado");
+                    } catch (SQLException ex) {
+                        JOptionPane.showMessageDialog(null, "Erro ao selecionar o Encarregado",
+                                "Cadastro de Atividade", JOptionPane.ERROR_MESSAGE);
+                    }
 
-            JOptionPane.showMessageDialog(null, "Atividade Cadastrada com Sucesso !!!",
-                    "Cadastro de Atividade", JOptionPane.INFORMATION_MESSAGE);
+                    //Busca o projeto referente ao nome selecionado na combobox projeto
+                    //e armazena os dados na variavel projet
+                    Projeto projet = null;
 
-        } catch (SQLException ex) {
+                    try {
+                        ProjetoBO projetBO = new ProjetoBO();
+                        projet = projetBO.selectUmProjeto(cmbProjeto.getSelectedItem() + "");
 
-            JOptionPane.showMessageDialog(null, "Erro ao Cadastrar a Atividade",
-                    "Cadastro de Atividade", JOptionPane.ERROR_MESSAGE);
+                    } catch (SQLException ex) {
+                        JOptionPane.showMessageDialog(null, "Erro ao selecionar o Projeto",
+                                "Cadastro de Atividade", JOptionPane.ERROR_MESSAGE);
+                    }
 
+                    //Cria a variavel do tipo atividade e seta os dados na mesma
+                    Atividade atividade = new Atividade();
+                    atividade.setNome(Nome);
+                    atividade.setDuracao(Duracao);
+                    atividade.setEncarregado(encarregado);
+                    atividade.setProjeto(projet);
+
+                    try {
+                        if (validacao == true) {
+                            AtividadeBO AtividadeBO = new AtividadeBO();
+                            AtividadeBO.criarAtividade(atividade);
+
+                            JOptionPane.showMessageDialog(null, "Atividade Cadastrada com Sucesso !!!",
+                                    "Cadastro de Atividade", JOptionPane.INFORMATION_MESSAGE);
+                            this.limpar();
+                        }
+
+                    } catch (SQLException ex) {
+
+                        JOptionPane.showMessageDialog(null, "Erro ao Cadastrar a Atividade",
+                                "Cadastro de Atividade", JOptionPane.ERROR_MESSAGE);
+
+                    } catch (NumberFormatException ex) {
+                        JOptionPane.showMessageDialog(null, "Digite somente numeros no campo Duracão!!! \n "
+                                + "Formato aceitavel(Hrs.Min) - Ex(10.30)",
+                                "Cadastro de Atividade", JOptionPane.ERROR_MESSAGE);
+                    } catch (atividadeExistente ex) {
+                        JOptionPane.showMessageDialog(null, "Ja existe uma Atividade com este Nome!!!",
+                                "Cadastro de Atividade", JOptionPane.ERROR_MESSAGE);
+                    }
+                }
+            }
         }
 
 
