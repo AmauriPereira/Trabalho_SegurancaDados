@@ -114,6 +114,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
         itmMnu_Atividade = new javax.swing.JMenuItem();
         jMenu1 = new javax.swing.JMenu();
         itmMnuLancarHoras = new javax.swing.JMenuItem();
+        jMenuItem1 = new javax.swing.JMenuItem();
         mnuRelatorios = new javax.swing.JMenu();
         itmMnuRelatorioUsuarios = new javax.swing.JMenuItem();
         jMenuItem2 = new javax.swing.JMenuItem();
@@ -260,7 +261,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
         mnuCadastros.add(itmMnuEncarregado);
 
         itmMnuProjeto.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_F4, java.awt.event.InputEvent.ALT_MASK | java.awt.event.InputEvent.CTRL_MASK));
-        itmMnuProjeto.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/edu/ifnmg/alvespereira/segurancadados/icones/liste-texte-vue-icone-4177-32.png"))); // NOI18N
+        itmMnuProjeto.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/edu/ifnmg/alvespereira/segurancadados/icones/dossier-page-blanche-icone-4464-32.png"))); // NOI18N
         itmMnuProjeto.setText("       Projeto");
         itmMnuProjeto.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -270,7 +271,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
         mnuCadastros.add(itmMnuProjeto);
 
         itmMnuAtividade.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_F5, java.awt.event.InputEvent.ALT_MASK | java.awt.event.InputEvent.CTRL_MASK));
-        itmMnuAtividade.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/edu/ifnmg/alvespereira/segurancadados/icones/cabinet-dossiers-icone-8056-32.png"))); // NOI18N
+        itmMnuAtividade.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/edu/ifnmg/alvespereira/segurancadados/icones/modifier-la-page-blanche-icone-8253-32.png"))); // NOI18N
         itmMnuAtividade.setText("       Atividade");
         itmMnuAtividade.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -315,7 +316,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
         mnuAtualizar.add(itmMnu_Encarregado);
 
         MenuProjeto.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_F4, java.awt.event.InputEvent.ALT_MASK));
-        MenuProjeto.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/edu/ifnmg/alvespereira/segurancadados/icones/liste-texte-vue-icone-4177-32.png"))); // NOI18N
+        MenuProjeto.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/edu/ifnmg/alvespereira/segurancadados/icones/dossier-page-blanche-icone-4464-32.png"))); // NOI18N
         MenuProjeto.setText("     Projeto");
         MenuProjeto.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -325,7 +326,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
         mnuAtualizar.add(MenuProjeto);
 
         itmMnu_Atividade.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_F5, java.awt.event.InputEvent.ALT_MASK));
-        itmMnu_Atividade.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/edu/ifnmg/alvespereira/segurancadados/icones/cabinet-dossiers-icone-8056-32.png"))); // NOI18N
+        itmMnu_Atividade.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/edu/ifnmg/alvespereira/segurancadados/icones/modifier-la-page-blanche-icone-8253-32.png"))); // NOI18N
         itmMnu_Atividade.setText("     Atividade");
         itmMnu_Atividade.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -340,7 +341,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
         jMenu1.setText("Controle de Atividades            ");
 
         itmMnuLancarHoras.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_L, java.awt.event.InputEvent.CTRL_MASK));
-        itmMnuLancarHoras.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/edu/ifnmg/alvespereira/segurancadados/icones/choisir-consulter-icone-6964-32.png"))); // NOI18N
+        itmMnuLancarHoras.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/edu/ifnmg/alvespereira/segurancadados/icones/aller-page-blanche-icone-6235-32.png"))); // NOI18N
         itmMnuLancarHoras.setText("Lançar Horas");
         itmMnuLancarHoras.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -349,8 +350,19 @@ public class TelaPrincipal extends javax.swing.JFrame {
         });
         jMenu1.add(itmMnuLancarHoras);
 
+        jMenuItem1.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_K, java.awt.event.InputEvent.CTRL_MASK));
+        jMenuItem1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/edu/ifnmg/alvespereira/segurancadados/icones/editdelete-icone-9521-32.png"))); // NOI18N
+        jMenuItem1.setText("Atividades Atrasadas   ");
+        jMenuItem1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem1ActionPerformed(evt);
+            }
+        });
+        jMenu1.add(jMenuItem1);
+
         jMenuBar1.add(jMenu1);
 
+        mnuRelatorios.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/edu/ifnmg/alvespereira/segurancadados/icones/pdf-icone-5197-32.png"))); // NOI18N
         mnuRelatorios.setText("Relatórios                         ");
 
         itmMnuRelatorioUsuarios.setText("Usuários");
@@ -380,6 +392,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
         mnuOpcoes.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/edu/ifnmg/alvespereira/segurancadados/icones/engrenages-package-systeme-roues-icone-8982-32.png"))); // NOI18N
         mnuOpcoes.setText("      Opções    ");
 
+        jMenuItem9.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/edu/ifnmg/alvespereira/segurancadados/icones/edit-un-marqueur-utilisateur-icone-6327-32.png"))); // NOI18N
         jMenuItem9.setText("     Alterar Dados Pessoais");
         jMenuItem9.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -572,7 +585,11 @@ public class TelaPrincipal extends javax.swing.JFrame {
     }//GEN-LAST:event_itmMnu_EncarregadoActionPerformed
 
     private void jMenuItem9ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem9ActionPerformed
-        // TODO add your handling code here:
+        alterarDadosPessoais dadosPessoais = new alterarDadosPessoais(usuarioLogado);
+        dadosPessoais.setVisible(true);
+        centralizaForm(dadosPessoais);
+
+        JDP1.add(dadosPessoais);
     }//GEN-LAST:event_jMenuItem9ActionPerformed
 
     private void itmMnuProjetoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itmMnuProjetoActionPerformed
@@ -761,6 +778,17 @@ public class TelaPrincipal extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jMenuItem3ActionPerformed
 
+    private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
+        if (usuarioLogado.getTipo().equals("Gerente")) {
+            this.atividadesAtrasadas();
+        } else {
+
+            JOptionPane.showMessageDialog(null, "Você não possui previlégios para acessar \n   "
+                    + "a Tela de Atividades Trabalhadas!",
+                    " Atividades Trabalhadas", JOptionPane.ERROR_MESSAGE);
+        }
+    }//GEN-LAST:event_jMenuItem1ActionPerformed
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel Data;
     private javax.swing.JLabel Hora;
@@ -780,6 +808,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
     private javax.swing.JMenuItem itmMnu_Gerente;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenuBar jMenuBar1;
+    private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JMenuItem jMenuItem2;
     private javax.swing.JMenuItem jMenuItem3;
     private javax.swing.JMenuItem jMenuItem4;

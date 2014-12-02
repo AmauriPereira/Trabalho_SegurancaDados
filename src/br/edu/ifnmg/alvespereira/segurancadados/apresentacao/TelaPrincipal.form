@@ -65,7 +65,7 @@
                   <KeyStroke key="Ctrl+Alt+F4"/>
                 </Property>
                 <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                  <Image iconType="3" name="/br/edu/ifnmg/alvespereira/segurancadados/icones/liste-texte-vue-icone-4177-32.png"/>
+                  <Image iconType="3" name="/br/edu/ifnmg/alvespereira/segurancadados/icones/dossier-page-blanche-icone-4464-32.png"/>
                 </Property>
                 <Property name="text" type="java.lang.String" value="       Projeto"/>
               </Properties>
@@ -79,7 +79,7 @@
                   <KeyStroke key="Ctrl+Alt+F5"/>
                 </Property>
                 <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                  <Image iconType="3" name="/br/edu/ifnmg/alvespereira/segurancadados/icones/cabinet-dossiers-icone-8056-32.png"/>
+                  <Image iconType="3" name="/br/edu/ifnmg/alvespereira/segurancadados/icones/modifier-la-page-blanche-icone-8253-32.png"/>
                 </Property>
                 <Property name="text" type="java.lang.String" value="       Atividade"/>
               </Properties>
@@ -145,7 +145,7 @@
                   <KeyStroke key="Alt+F4"/>
                 </Property>
                 <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                  <Image iconType="3" name="/br/edu/ifnmg/alvespereira/segurancadados/icones/liste-texte-vue-icone-4177-32.png"/>
+                  <Image iconType="3" name="/br/edu/ifnmg/alvespereira/segurancadados/icones/dossier-page-blanche-icone-4464-32.png"/>
                 </Property>
                 <Property name="text" type="java.lang.String" value="     Projeto"/>
               </Properties>
@@ -159,7 +159,7 @@
                   <KeyStroke key="Alt+F5"/>
                 </Property>
                 <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                  <Image iconType="3" name="/br/edu/ifnmg/alvespereira/segurancadados/icones/cabinet-dossiers-icone-8056-32.png"/>
+                  <Image iconType="3" name="/br/edu/ifnmg/alvespereira/segurancadados/icones/modifier-la-page-blanche-icone-8253-32.png"/>
                 </Property>
                 <Property name="text" type="java.lang.String" value="     Atividade"/>
               </Properties>
@@ -183,7 +183,7 @@
                   <KeyStroke key="Ctrl+L"/>
                 </Property>
                 <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                  <Image iconType="3" name="/br/edu/ifnmg/alvespereira/segurancadados/icones/choisir-consulter-icone-6964-32.png"/>
+                  <Image iconType="3" name="/br/edu/ifnmg/alvespereira/segurancadados/icones/aller-page-blanche-icone-6235-32.png"/>
                 </Property>
                 <Property name="text" type="java.lang.String" value="Lan&#xe7;ar Horas"/>
               </Properties>
@@ -191,10 +191,27 @@
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="itmMnuLancarHorasActionPerformed"/>
               </Events>
             </MenuItem>
+            <MenuItem class="javax.swing.JMenuItem" name="jMenuItem1">
+              <Properties>
+                <Property name="accelerator" type="javax.swing.KeyStroke" editor="org.netbeans.modules.form.editors.KeyStrokeEditor">
+                  <KeyStroke key="Ctrl+K"/>
+                </Property>
+                <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+                  <Image iconType="3" name="/br/edu/ifnmg/alvespereira/segurancadados/icones/editdelete-icone-9521-32.png"/>
+                </Property>
+                <Property name="text" type="java.lang.String" value="Atividades Atrasadas   "/>
+              </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jMenuItem1ActionPerformed"/>
+              </Events>
+            </MenuItem>
           </SubComponents>
         </Menu>
         <Menu class="javax.swing.JMenu" name="mnuRelatorios">
           <Properties>
+            <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+              <Image iconType="3" name="/br/edu/ifnmg/alvespereira/segurancadados/icones/pdf-icone-5197-32.png"/>
+            </Property>
             <Property name="text" type="java.lang.String" value="Relat&#xf3;rios                         "/>
           </Properties>
           <SubComponents>
@@ -236,6 +253,9 @@
           <SubComponents>
             <MenuItem class="javax.swing.JMenuItem" name="jMenuItem9">
               <Properties>
+                <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+                  <Image iconType="3" name="/br/edu/ifnmg/alvespereira/segurancadados/icones/edit-un-marqueur-utilisateur-icone-6327-32.png"/>
+                </Property>
                 <Property name="text" type="java.lang.String" value="     Alterar Dados Pessoais"/>
               </Properties>
               <Events>

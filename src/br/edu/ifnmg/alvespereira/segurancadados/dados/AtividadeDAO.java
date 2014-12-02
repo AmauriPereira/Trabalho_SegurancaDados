@@ -38,7 +38,7 @@ public class AtividadeDAO {
 
     private static final String SQL_TODAS_ATIVIDADE_POR_USUARIO = "SELECT NOME, ID_ATIVIDADE FROM ATIVIDADE "
             + "INNER JOIN USUARIO ON (USUARIO.ID_USUARIO =  ATIVIDADE.ID_USUARIO)"
-            + " WHERE USUARIO.NOME = ? ";
+            + " WHERE USUARIO.NOME = ? AND ATIVIDADE.CONCLUSAO < 100 ";
 
     private static final String SQL_DELETE_ATIVIDADE = "DELETE FROM ATIVIDADE  "
             + "WHERE ATIVIDADE.ID_ATIVIDADE = ?";

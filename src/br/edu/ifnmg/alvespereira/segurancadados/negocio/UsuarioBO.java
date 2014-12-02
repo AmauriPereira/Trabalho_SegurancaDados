@@ -185,6 +185,13 @@ public class UsuarioBO {
 
     }
 
+    public void AlteracaoDadosPessoais(Usuario user) throws SQLException {
+
+        UsuarioDAO usuarioDAO = new UsuarioDAO();
+        usuarioDAO.AlteracaoDadosPessoais(user);
+
+    }
+
     public void DeleteGerente(Usuario usuario) throws SQLException, excecaoDeletarElemento {
 
         UsuarioDAO usuarioDAO = new UsuarioDAO();
