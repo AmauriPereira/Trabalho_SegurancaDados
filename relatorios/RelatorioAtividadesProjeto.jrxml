@@ -16,6 +16,8 @@
 	<field name="atividadesIniciadas" class="java.lang.String"/>
 	<field name="atividadesConcluidas" class="java.lang.String"/>
 	<field name="totalAtividades" class="java.lang.String"/>
+	<field name="horasTrabalhadas" class="java.lang.String"/>
+	<field name="conlusao" class="java.lang.String"/>
 	<background>
 		<band splitType="Stretch"/>
 	</background>
@@ -48,19 +50,30 @@
 				<text><![CDATA[Cód.]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="36" y="0" width="208" height="20" uuid="04d9582a-cf85-448a-aad9-24a2118c783f"/>
+				<reportElement x="36" y="0" width="190" height="20" uuid="04d9582a-cf85-448a-aad9-24a2118c783f"/>
 				<text><![CDATA[Atividade]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="244" y="0" width="222" height="20" uuid="5cda699f-e430-4983-a423-e408257a7f07"/>
+				<reportElement x="226" y="0" width="172" height="20" uuid="5cda699f-e430-4983-a423-e408257a7f07"/>
 				<text><![CDATA[Projeto]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="466" y="2" width="229" height="20" uuid="c40082d6-301f-455b-847d-9b9931280482"/>
+				<reportElement x="398" y="2" width="129" height="20" uuid="c40082d6-301f-455b-847d-9b9931280482"/>
 				<text><![CDATA[Encarregado]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="695" y="1" width="107" height="20" uuid="c3394c3a-040e-45b1-b573-f02a57c01453"/>
+				<reportElement x="635" y="2" width="82" height="20" uuid="3ac609b0-549a-4f2b-8322-7ad181f2cb4a"/>
+				<textElement textAlignment="Center"/>
+				<text><![CDATA[Hr. Trabalhadas]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="717" y="1" width="85" height="20" uuid="8e898442-1b4d-4504-b55f-2855beb740c1"/>
+				<textElement textAlignment="Center"/>
+				<text><![CDATA[Conclusão]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="528" y="2" width="107" height="20" uuid="c3394c3a-040e-45b1-b573-f02a57c01453"/>
+				<textElement textAlignment="Center"/>
 				<text><![CDATA[Duração]]></text>
 			</staticText>
 		</band>
@@ -75,23 +88,35 @@
 			</line>
 			<textField>
 				<reportElement x="0" y="1" width="36" height="20" uuid="0c121e35-7276-4f4c-9629-970dd1462f34"/>
+				<textElement textAlignment="Center"/>
 				<textFieldExpression><![CDATA[$F{idAtividade}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="36" y="1" width="208" height="20" uuid="78059a11-7a65-425a-b056-21728648e52d"/>
+				<reportElement x="36" y="1" width="190" height="20" uuid="78059a11-7a65-425a-b056-21728648e52d"/>
 				<textFieldExpression><![CDATA[$F{nome}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="244" y="1" width="222" height="20" uuid="63851694-daac-4e7c-8c51-5548d2244ea8"/>
+				<reportElement x="226" y="1" width="172" height="20" uuid="63851694-daac-4e7c-8c51-5548d2244ea8"/>
 				<textFieldExpression><![CDATA[$F{projeto}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="466" y="1" width="229" height="20" uuid="945a00bb-d255-42ac-ac94-711683cfe6b4"/>
+				<reportElement x="398" y="1" width="129" height="20" uuid="945a00bb-d255-42ac-ac94-711683cfe6b4"/>
 				<textFieldExpression><![CDATA[$F{encarregado}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="695" y="1" width="107" height="20" uuid="8519e23e-82ac-4abe-a510-aa0b2d96a917"/>
+				<reportElement x="528" y="1" width="106" height="20" uuid="8519e23e-82ac-4abe-a510-aa0b2d96a917"/>
+				<textElement textAlignment="Center"/>
 				<textFieldExpression><![CDATA[$F{duracao}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="634" y="1" width="83" height="20" uuid="678afa1e-6894-4c1a-9193-c4463e1e8489"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$F{horasTrabalhadas}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="717" y="1" width="85" height="20" uuid="6590476a-d387-4fd0-a3c4-6793e9f20b13"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$F{conlusao}]]></textFieldExpression>
 			</textField>
 		</band>
 	</detail>
