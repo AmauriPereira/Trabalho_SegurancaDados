@@ -542,7 +542,8 @@ public class UsuarioDAO {
     //SELECIONA TODOS OS GERENTES, E ARMAZENA EM UMA LISTA
     public ArrayList<Usuario> listaUsuario() throws SQLException {
         ArrayList<Usuario> listaUsuarios = new ArrayList<>();
-        Usuario usuario = new Usuario();
+        //Usuario usuario = new Usuario();
+        Usuario usuario = null;
         Connection conexao = null;
         PreparedStatement comando = null;
         ResultSet resultado = null;
@@ -555,16 +556,23 @@ public class UsuarioDAO {
             resultado = comando.executeQuery();
             listaUsuarios.removeAll(listaUsuarios);
 
-            while (resultado.next()) {
-                usuario.setIdUsuario(resultado.getInt("ID_USUARIO"));
-                usuario.setNome(resultado.getString("NOME"));
-                usuario.setEmail(resultado.getString("EMAIL"));
-                //usuario.setDepartamento(resultado.getObject("DEPARTAMENTO"));
+            //percorrendo os registros encontrados  
+            if (resultado.next()) {
+                listaUsuarios = new ArrayList<Usuario>();
+                do {
+                    //instanciando objeto   
+                    usuario = new Usuario();
 
-                listaUsuarios.add(usuario);
+                    /*setando atributos de acordo com os seus tipos primitivos*/
+                    usuario.setIdUsuario(resultado.getInt("ID_USUARIO"));
+                    usuario.setNome(resultado.getString("NOME"));
+                    usuario.setEmail(resultado.getString("EMAIL"));
 
+                    //add a lista de objetos encontrados e setados  
+                    listaUsuarios.add(usuario);
+                } while (resultado.next());
             }
-            //Encarregado.add(usuario);
+
             conexao.commit();
 
         } catch (Exception e) {

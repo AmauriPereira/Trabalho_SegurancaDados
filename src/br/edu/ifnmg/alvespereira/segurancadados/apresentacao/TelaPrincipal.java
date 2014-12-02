@@ -13,7 +13,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.SQLException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.logging.Level;
@@ -116,8 +115,8 @@ public class TelaPrincipal extends javax.swing.JFrame {
         itmMnuLancarHoras = new javax.swing.JMenuItem();
         mnuRelatorios = new javax.swing.JMenu();
         itmMnuRelatorioUsuarios = new javax.swing.JMenuItem();
-        jMenuItem2 = new javax.swing.JMenuItem();
-        jMenuItem3 = new javax.swing.JMenuItem();
+        itmMnuRelatorioAtividadesProjeto = new javax.swing.JMenuItem();
+        itmMnuRelatorioProjeto = new javax.swing.JMenuItem();
         jMenuItem4 = new javax.swing.JMenuItem();
         mnuOpcoes = new javax.swing.JMenu();
         jMenuItem9 = new javax.swing.JMenuItem();
@@ -360,16 +359,21 @@ public class TelaPrincipal extends javax.swing.JFrame {
         });
         mnuRelatorios.add(itmMnuRelatorioUsuarios);
 
-        jMenuItem2.setText("Projetos");
-        mnuRelatorios.add(jMenuItem2);
-
-        jMenuItem3.setText("Atividades de Projeto");
-        jMenuItem3.addActionListener(new java.awt.event.ActionListener() {
+        itmMnuRelatorioAtividadesProjeto.setText(" Relatório de Atividades de Projeto ");
+        itmMnuRelatorioAtividadesProjeto.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem3ActionPerformed(evt);
+                itmMnuRelatorioAtividadesProjetoActionPerformed(evt);
             }
         });
-        mnuRelatorios.add(jMenuItem3);
+        mnuRelatorios.add(itmMnuRelatorioAtividadesProjeto);
+
+        itmMnuRelatorioProjeto.setText("Relatório de Projeto");
+        itmMnuRelatorioProjeto.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                itmMnuRelatorioProjetoActionPerformed(evt);
+            }
+        });
+        mnuRelatorios.add(itmMnuRelatorioProjeto);
 
         jMenuItem4.setText("Departamentos");
         mnuRelatorios.add(jMenuItem4);
@@ -735,12 +739,39 @@ public class TelaPrincipal extends javax.swing.JFrame {
         UsuarioBO usuarioBO = new UsuarioBO();
 
         //chamar o relatorio
+       /* try {
+         String relatorio = System.getProperty("user.dir")
+         + "/relatorios/RelatorioCadastroGerente.jasper";
+
+         //criar fonte de dados
+         //JRBeanCollectionDataSource fonteDados = new JRBeanCollectionDataSource((Collection<?>) usuarioBO.relatorioUsuarios());
+         JRBeanCollectionDataSource fonteDados = new JRBeanCollectionDataSource( usuarioBO.relatorioUsuarios());
+
+         //gerar relatorio
+         JasperPrint relatorioGerado = JasperFillManager.fillReport(relatorio, null, fonteDados);
+
+         //exibir o relatorio na tela
+         JasperViewer jasperViewer = new JasperViewer(relatorioGerado, false);
+         jasperViewer.setVisible(true);
+
+         } catch (JRException ex) {
+         System.out.println("Falha ao gerar Relatorio: " + ex.getMessage());
+         } catch (SQLException ex) {
+         Logger.getLogger(TelaPrincipal.class.getName()).log(Level.SEVERE, null, ex);
+         }*/
+    }//GEN-LAST:event_itmMnuRelatorioUsuariosActionPerformed
+
+    private void itmMnuRelatorioProjetoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itmMnuRelatorioProjetoActionPerformed
+
+        ProjetoBO projetoBO = new ProjetoBO();
+
+        //chamar o relatorio
         try {
             String relatorio = System.getProperty("user.dir")
-                    + "/relatorios/RelatorioCadastroGerente.jasper";
+                    + "/relatorios/RelatorioProjetos.jasper";
 
             //criar fonte de dados
-            JRBeanCollectionDataSource fonteDados = new JRBeanCollectionDataSource(usuarioBO.relatorioUsuarios());
+            JRBeanCollectionDataSource fonteDados = new JRBeanCollectionDataSource(projetoBO.listaProjeto(usuarioLogado));
 
             //gerar relatorio
             JasperPrint relatorioGerado = JasperFillManager.fillReport(relatorio, null, fonteDados);
@@ -754,11 +785,25 @@ public class TelaPrincipal extends javax.swing.JFrame {
         } catch (SQLException ex) {
             Logger.getLogger(TelaPrincipal.class.getName()).log(Level.SEVERE, null, ex);
         }
-    }//GEN-LAST:event_itmMnuRelatorioUsuariosActionPerformed
 
-    private void jMenuItem3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem3ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jMenuItem3ActionPerformed
+
+    }//GEN-LAST:event_itmMnuRelatorioProjetoActionPerformed
+
+    private void itmMnuRelatorioAtividadesProjetoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itmMnuRelatorioAtividadesProjetoActionPerformed
+
+        if (usuarioLogado.getTipo().equals("Gerente")) {
+            EscolhaProjetoForm escolhaProjetoForm = null;
+            escolhaProjetoForm = new EscolhaProjetoForm(usuarioLogado);
+            escolhaProjetoForm.setVisible(true);
+            centralizaForm(escolhaProjetoForm);
+            JDP1.add(escolhaProjetoForm);
+        } else {
+            JOptionPane.showMessageDialog(null, "Você não possui previlégios para acessar \n   "
+                    + "a Tela de Gestão de Gerente!",
+                    "Cadastro de Gerente", JOptionPane.ERROR_MESSAGE);
+
+        }
+    }//GEN-LAST:event_itmMnuRelatorioAtividadesProjetoActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel Data;
@@ -771,6 +816,8 @@ public class TelaPrincipal extends javax.swing.JFrame {
     private javax.swing.JMenuItem itmMnuGerente;
     private javax.swing.JMenuItem itmMnuLancarHoras;
     private javax.swing.JMenuItem itmMnuProjeto;
+    private javax.swing.JMenuItem itmMnuRelatorioAtividadesProjeto;
+    private javax.swing.JMenuItem itmMnuRelatorioProjeto;
     private javax.swing.JMenuItem itmMnuRelatorioUsuarios;
     private javax.swing.JMenuItem itmMnuSair;
     private javax.swing.JMenuItem itmMnu_Atividade;
@@ -779,8 +826,6 @@ public class TelaPrincipal extends javax.swing.JFrame {
     private javax.swing.JMenuItem itmMnu_Gerente;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenuBar jMenuBar1;
-    private javax.swing.JMenuItem jMenuItem2;
-    private javax.swing.JMenuItem jMenuItem3;
     private javax.swing.JMenuItem jMenuItem4;
     private javax.swing.JMenuItem jMenuItem9;
     private javax.swing.JPanel jPanel1;
@@ -807,7 +852,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
         }
     }
 
-    // metodo de chamar tela de atividades em atraso
+// metodo de chamar tela de atividades em atraso
     private void atividadesAtrasadas() {
         if (usuarioLogado.getTipo().equals("Gerente")) {
             AtividadesAtrazadasForm atividadesAtrazadasForm = null;
