@@ -206,4 +206,26 @@ public class UsuarioBO {
 
     }
 
+    public void demitirFuncionario(int CodFuncionario) throws SQLException, excecaoDeletarElemento {
+
+        UsuarioDAO usuarioDAO = new UsuarioDAO();
+        usuarioDAO.DEMITIUsuario(CodFuncionario);
+
+    }
+
+    public ResultSet tabeleaFuncionarios() throws SQLException {
+        UsuarioDAO funcionario = new UsuarioDAO();
+        ResultSet resultPreencherTabela = funcionario.Funcionarios();
+
+        return resultPreencherTabela;
+
+    }
+
+    public ResultSet bUSCARtabeleaFuncionarios(String DEPARTAMENTO) throws SQLException {
+        UsuarioDAO funcionario = new UsuarioDAO();
+        ResultSet resultPreencherTabela = funcionario.BuscarFuncionarios(DEPARTAMENTO);
+
+        return resultPreencherTabela;
+
+    }
 }

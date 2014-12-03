@@ -8,7 +8,7 @@ import java.sql.SQLException;
 
 public class LoginDAO {
 
-    private static final String SQL_SELECT_LOGIN = "SELECT ID_USUARIO, NOME, TIPO, SENHA, EMAIL, COD_DEPARTAMENTO FROM USUARIO WHERE EMAIL LIKE ? AND SENHA LIKE ?";
+    private static final String SQL_SELECT_LOGIN = "SELECT ID_USUARIO, NOME, TIPO, SENHA, EMAIL, COD_DEPARTAMENTO FROM USUARIO WHERE EMAIL LIKE ? AND SENHA LIKE ?  AND STATUS = 'ATIVO'";
 
     //SELECIONA O USUARIO QUE POSSUI LOGIN IGUAL AOS PARAMETROS(LOGIN E SENHA)
     public Usuario selectLogin(String login, String Senha) throws SQLException {

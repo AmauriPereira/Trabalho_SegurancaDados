@@ -120,6 +120,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
         mnuOpcoes = new javax.swing.JMenu();
         jMenuItem9 = new javax.swing.JMenuItem();
         itmMnuSair = new javax.swing.JMenuItem();
+        jMenuItem1 = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Gestão de Usuários");
@@ -406,6 +407,16 @@ public class TelaPrincipal extends javax.swing.JFrame {
             }
         });
         mnuOpcoes.add(itmMnuSair);
+
+        jMenuItem1.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_H, java.awt.event.InputEvent.CTRL_MASK));
+        jMenuItem1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/edu/ifnmg/alvespereira/segurancadados/icones/homme-costume-cravate-utilisateur-icone-7362-32.png"))); // NOI18N
+        jMenuItem1.setText("      Demissão de Funcionários   ");
+        jMenuItem1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem1ActionPerformed(evt);
+            }
+        });
+        mnuOpcoes.add(jMenuItem1);
 
         jMenuBar1.add(mnuOpcoes);
 
@@ -807,6 +818,22 @@ public class TelaPrincipal extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_jMenuAtividadesAtrasadasActionPerformed
 
+    private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
+
+        if (usuarioLogado.getTipo().equals("Diretor")) {
+            DemissaoForm demissaoForm = new DemissaoForm(usuarioLogado);
+            demissaoForm.setVisible(true);
+            centralizaForm(demissaoForm);
+            JDP1.add(demissaoForm);
+
+        } else {
+            JOptionPane.showMessageDialog(null, "Você não possui previlégios para acessar \n   "
+                    + " a Tela de Demissão de Funcionários!",
+                    "Relatorio de Atividades de Projeto", JOptionPane.ERROR_MESSAGE);
+
+        }
+    }//GEN-LAST:event_jMenuItem1ActionPerformed
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel Data;
     private javax.swing.JLabel Hora;
@@ -828,6 +855,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenuItem jMenuAtividadesAtrasadas;
     private javax.swing.JMenuBar jMenuBar1;
+    private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JMenuItem jMenuItem9;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JLabel lblData;

@@ -10,6 +10,8 @@ import java.util.logging.Logger;
 public class criptografiaUtil {
 
     public String criptografiaSenha(String Senha) {
+        
+        
         MessageDigest algorithm;
         try {
             algorithm = MessageDigest.getInstance("SHA-256");
